@@ -7,8 +7,8 @@ export default [
     prefix: "🇺🇸",
   },
   {
-    key: "pt-BR",
-    nativeName: "Português (Brasil)",
-    prefix: "🇧🇷",
+    key: "zh",
+    nativeName: "中文",
+    prefix: "🇨🇳",
   },
 ] satisfies Language[];

@@ -10,8 +10,8 @@ export default function BaseLayout({
   return (
     <>
       <DragWindowRegion title="electron-shadcn" />
-      <NavigationMenu />
-      <main className="h-screen pb-20 p-2">{children}</main>
+      {/* <NavigationMenu /> */}
+      <main className="h-screen p-2">{children}</main>
     </>
   );
 }

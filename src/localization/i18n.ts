@@ -9,13 +9,47 @@ i18n.use(initReactI18next).init({
         appName: "electron-shadcn",
         titleHomePage: "Home Page",
         titleSecondPage: "Second Page",
+        menu: {
+          file: {
+            title: "File",
+            openFile: "Open File",
+            openFolder: "Open Folder",
+            openRecent: "Open Recent",
+            exit: "Exit"
+          },
+          settings: {
+            title: "Settings",
+          },
+          help: {
+            title: "Help",
+            documentation: "Documentation",
+            about: "About"
+          }
+        }
       },
     },
-    "pt-BR": {
+    zh: {
       translation: {
         appName: "electron-shadcn",
-        titleHomePage: "Página Inicial",
-        titleSecondPage: "Segunda Página",
+        titleHomePage: "首页",
+        titleSecondPage: "第二页",
+        menu: {
+          file: {
+            title: "文件",
+            openFile: "打开文件",
+            openFolder: "打开文件夹",
+            openRecent: "打开最近",
+            exit: "退出"
+          },
+          settings: {
+            title: "设置",
+          },
+          help: {
+            title: "帮助",
+            documentation: "文档",
+            about: "关于"
+          }
+        }
       },
     },
   },

@@ -4,20 +4,64 @@ import {
   minimizeWindow,
 } from "@/helpers/window_helpers";
 import React, { type ReactNode } from "react";
+import ToggleTheme from "./ToggleTheme";
+import LangToggle from "./LangToggle";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+  DropdownMenuSeparator,
+} from "./ui/dropdown-menu";
+import { useTranslation } from "react-i18next";
+import { Link } from "@tanstack/react-router";
 
 interface DragWindowRegionProps {
   title?: ReactNode;
 }
 
 export default function DragWindowRegion({ title }: DragWindowRegionProps) {
+  const { t } = useTranslation();
+  
   return (
     <div className="flex w-screen items-stretch justify-between">
-      <div className="draglayer w-full">
-        {title && (
-          <div className="flex flex-1 select-none whitespace-nowrap p-2 text-xs text-gray-400">
-            {title}
-          </div>
-        )}
+      <div className="flex w-full items-center">
+        <div className="flex items-center gap-2 px-2">
+          <DropdownMenu>
+            <DropdownMenuTrigger className="px-2 py-1 text-sm hover:bg-accent rounded-sm">
+              {t('menu.file.title')}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>{t('menu.file.openFile')}</DropdownMenuItem>
+              <DropdownMenuItem>{t('menu.file.openFolder')}</DropdownMenuItem>
+              <DropdownMenuItem>{t('menu.file.openRecent')}</DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={closeWindow}>{t('menu.file.exit')}</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+
+          <Link 
+            to="/setting" 
+            className="px-2 py-1 text-sm hover:bg-accent rounded-sm"
+          >
+            {t('menu.settings.title')}
+          </Link>
+
+          <DropdownMenu>
+            <DropdownMenuTrigger className="px-2 py-1 text-sm hover:bg-accent rounded-sm">
+              {t('menu.help.title')}
+            </DropdownMenuTrigger>
+            <DropdownMenuContent>
+              <DropdownMenuItem>{t('menu.help.documentation')}</DropdownMenuItem>
+              <DropdownMenuItem>{t('menu.help.about')}</DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+        <div className="draglayer flex-1 h-8"></div>
+        <div className="flex items-center gap-2 px-2">
+          <ToggleTheme />
+          <LangToggle />
+        </div>
       </div>
       <WindowButtons />
     </div>
