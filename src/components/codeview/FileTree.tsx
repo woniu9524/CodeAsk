@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { ChevronRight, ChevronDown, File, Folder } from 'lucide-react';
-import { cn } from '@/lib/utils';
 
 export type FileNode = {
   id: string;
