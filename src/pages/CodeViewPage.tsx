@@ -1,25 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import Sidebar from "@/components/codeview/Sidebar";
 import TabsBar, { Tab } from "@/components/codeview/TabsBar";
+import { useFileStore } from "@/store/useFileStore";
+import path from "@/utils/path";
 
 export default function CodeViewPage() {
   const { t } = useTranslation();
-  const [tabs, setTabs] = useState<Tab[]>([
-    { id: '1', title: 'example.tsx', active: true },
-    { id: '2', title: 'index.ts', active: false },
-  ]);
-
-  const handleTabClick = (id: string) => {
-    setTabs(tabs.map(tab => ({
-      ...tab,
-      active: tab.id === id
-    })));
-  };
-
-  const handleTabClose = (id: string) => {
-    setTabs(tabs.filter(tab => tab.id !== id));
-  };
+  const { openedFiles, activeFile, setActiveFile, closeFile } = useFileStore();
+  
+  // 将文件路径转换为标签数据
+  const tabs: Tab[] = openedFiles.map(filePath => ({
+    id: filePath,
+    title: path.basename(filePath),
+    isActive: filePath === activeFile
+  }));
 
   return (
     <div className="flex h-full">
@@ -30,12 +25,20 @@ export default function CodeViewPage() {
       <div className="flex flex-1 flex-col">
         <TabsBar 
           tabs={tabs}
-          onTabClick={handleTabClick}
-          onTabClose={handleTabClose}
+          onTabClick={setActiveFile}
+          onTabClose={closeFile}
         />
         <div className="flex-1 bg-background p-4">
-          {/* 内容区域 */}
-          {tabs.find(tab => tab.active)?.title || '没有打开的文件'}
+          {/* TODO: 添加代码编辑器组件 */}
+          {activeFile ? (
+            <div className="text-sm">
+              {activeFile}
+            </div>
+          ) : (
+            <div className="flex h-full items-center justify-center text-muted-foreground">
+              {t('codeView.noOpenedFile')}
+            </div>
+          )}
         </div>
       </div>
     </div>

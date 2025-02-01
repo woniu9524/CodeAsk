@@ -2,6 +2,7 @@ import { dialog, ipcMain } from "electron";
 import fs from "fs";
 import path from "path";
 import type { FileNode } from "@/components/codeview/FileTree";
+import { FOLDER_READ_CHANNEL, FOLDER_SELECT_CHANNEL } from "./folder-channels";
 
 // 递归读取指定目录的文件和子目录
 function readDirectory(dir: string): FileNode[] {
@@ -25,13 +26,27 @@ function readDirectory(dir: string): FileNode[] {
   });
 }
 
-// 新增"folder:read" IPC 处理，用于读取指定路径的文件结构
-ipcMain.handle("folder:read", async (event, folderPath: string) => {
-  try {
-    const tree = readDirectory(folderPath);
-    return tree;
-  } catch (error) {
-    console.error("读取文件夹失败", error);
-    throw error;
-  }
-}); 
+export function addFolderEventListeners() {
+  // 处理选择文件夹的请求
+  ipcMain.handle(FOLDER_SELECT_CHANNEL, async () => {
+    const result = await dialog.showOpenDialog({
+      properties: ['openDirectory']
+    });
+    
+    if (!result.canceled && result.filePaths.length > 0) {
+      return result.filePaths[0];
+    }
+    return null;
+  });
+
+  // 处理读取文件夹结构的请求
+  ipcMain.handle(FOLDER_READ_CHANNEL, async (event, folderPath: string) => {
+    try {
+      const tree = readDirectory(folderPath);
+      return tree;
+    } catch (error) {
+      console.error("读取文件夹失败", error);
+      throw error;
+    }
+  });
+} 

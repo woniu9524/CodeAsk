@@ -2,46 +2,20 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { FolderTree, Search } from "lucide-react";
 import FileTree, { FileNode } from './FileTree';
+import { useFileStore } from '@/store/useFileStore';
 
 type SidebarProps = {
   className?: string;
 }
 
-// 示例数据
-const sampleData: FileNode[] = [
-  {
-    id: '1',
-    name: 'src',
-    type: 'directory',
-    children: [
-      {
-        id: '2',
-        name: 'components',
-        type: 'directory',
-        children: [
-          { id: '3', name: 'FileTree.tsx', type: 'file' },
-          { id: '4', name: 'Sidebar.tsx', type: 'file' }
-        ]
-      },
-      { id: '5', name: 'App.tsx', type: 'file' }
-    ]
-  },
-  {
-    id: '6',
-    name: 'public',
-    type: 'directory',
-    children: [
-      { id: '7', name: 'index.html', type: 'file' }
-    ]
-  }
-];
-
 export default function Sidebar({ className = "" }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<'explorer' | 'search'>('explorer');
+  const { fileTree, openFile } = useFileStore();
 
   const handleFileClick = (file: FileNode) => {
-    console.log('File clicked:', file);
-    // TODO: 实现文件打开逻辑
+    if (file.type === 'file') {
+      openFile(file.id);
+    }
   };
 
   return (
@@ -70,7 +44,7 @@ export default function Sidebar({ className = "" }: SidebarProps) {
         {activeTab === 'explorer' ? (
           <div>
             <h2 className="mb-2 px-2 text-sm font-semibold">资源管理器</h2>
-            <FileTree data={sampleData} onFileClick={handleFileClick} />
+            <FileTree data={fileTree} onFileClick={handleFileClick} />
           </div>
         ) : (
           <div>

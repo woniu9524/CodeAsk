@@ -6,6 +6,8 @@ import {
 import React, { type ReactNode } from "react";
 import ToggleTheme from "./ToggleTheme";
 import LangToggle from "./LangToggle";
+import { useFileStore } from "@/store/useFileStore";
+import { useNavigate } from "@tanstack/react-router";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,6 +24,20 @@ interface DragWindowRegionProps {
 
 export default function DragWindowRegion({ title }: DragWindowRegionProps) {
   const { t } = useTranslation();
+  const setCurrentFolder = useFileStore(state => state.setCurrentFolder);
+  const navigate = useNavigate();
+  
+  const handleOpenFolder = async () => {
+    try {
+      const folderPath = await window.folderAPI.selectFolder();
+      if (folderPath) {
+        await setCurrentFolder(folderPath);
+        navigate({ to: "/code-view" });
+      }
+    } catch (error) {
+      console.error('Failed to open folder:', error);
+    }
+  };
   
   return (
     <div className="flex w-screen items-stretch justify-between">
@@ -33,7 +49,7 @@ export default function DragWindowRegion({ title }: DragWindowRegionProps) {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem>{t('menu.file.openFile')}</DropdownMenuItem>
-              <DropdownMenuItem>{t('menu.file.openFolder')}</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleOpenFolder}>{t('menu.file.openFolder')}</DropdownMenuItem>
               <DropdownMenuItem>{t('menu.file.openRecent')}</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={closeWindow}>{t('menu.file.exit')}</DropdownMenuItem>
