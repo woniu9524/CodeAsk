@@ -1,7 +1,7 @@
 import { dialog, ipcMain } from "electron";
 import fs from "fs";
 import path from "path";
-import type { FileNode } from "@/components/codeview/FileTree";
+import type { FileNode } from "@/components/codeview/side/FileTree";
 import { FOLDER_READ_CHANNEL, FOLDER_SELECT_CHANNEL } from "./folder-channels";
 
 // 递归读取指定目录的文件和子目录
@@ -32,7 +32,7 @@ export function addFolderEventListeners() {
     const result = await dialog.showOpenDialog({
       properties: ['openDirectory']
     });
-    
+
     if (!result.canceled && result.filePaths.length > 0) {
       return result.filePaths[0];
     }
@@ -49,4 +49,4 @@ export function addFolderEventListeners() {
       throw error;
     }
   });
-} 
+}

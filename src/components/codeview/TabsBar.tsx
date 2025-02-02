@@ -1,7 +1,7 @@
 import React from 'react';
 import { X } from 'lucide-react';
 import { cn } from '@/utils/tailwind';
-import { getFileIcon } from './FileTree';
+import { getFileIcon } from './side/FileTree';
 
 export type Tab = {
   id: string;
@@ -47,4 +47,4 @@ export default function TabsBar({ tabs, onTabClick, onTabClose }: TabsBarProps) 
       ))}
     </div>
   );
-} 
+}

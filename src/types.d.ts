@@ -4,7 +4,7 @@
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;
 
-import type { FileNode } from "@/components/codeview/FileTree";
+import type { FileNode } from "@/components/codeview/side/FileTree";
 
 // Preload types
 interface ThemeModeContext {

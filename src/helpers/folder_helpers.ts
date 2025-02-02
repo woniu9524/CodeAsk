@@ -1,4 +1,4 @@
-import type { FileNode } from "@/components/codeview/FileTree";
+import type { FileNode } from "@/components/codeview/side/FileTree";
 
 /**
  * 异步读取指定文件夹的文件结构

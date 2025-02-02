@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import type { FileNode } from '@/components/codeview/FileTree';
+import type { FileNode } from '@/components/codeview/side/FileTree';
 import { readFolder } from '@/helpers/folder_helpers';
 
 interface FileStore {
@@ -39,8 +39,8 @@ export const useFileStore = create<FileStore>((set) => ({
 
   openFile: (path: string) => {
     set((state) => ({
-      openedFiles: state.openedFiles.includes(path) 
-        ? state.openedFiles 
+      openedFiles: state.openedFiles.includes(path)
+        ? state.openedFiles
         : [...state.openedFiles, path],
       activeFile: path
     }));
@@ -52,8 +52,8 @@ export const useFileStore = create<FileStore>((set) => ({
       return {
         openedFiles: newOpenedFiles,
         // 如果关闭的是当前活动文件，则设置最后一个打开的文件为活动文件
-        activeFile: state.activeFile === path 
-          ? newOpenedFiles[newOpenedFiles.length - 1] || null 
+        activeFile: state.activeFile === path
+          ? newOpenedFiles[newOpenedFiles.length - 1] || null
           : state.activeFile
       };
     });
@@ -62,4 +62,4 @@ export const useFileStore = create<FileStore>((set) => ({
   setActiveFile: (path: string) => {
     set({ activeFile: path });
   }
-})); 
+}));
