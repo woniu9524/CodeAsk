@@ -13,8 +13,8 @@ const inDevelopment = process.env.NODE_ENV === "development";
 function createWindow() {
   const preload = path.join(__dirname, "preload.js");
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
       devTools: inDevelopment,
       contextIsolation: true,
@@ -33,6 +33,10 @@ function createWindow() {
     mainWindow.loadFile(
       path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`),
     );
+  }
+  // 如果当前为开发模式，则自动打开开发者工具
+  if (inDevelopment) {
+    mainWindow.webContents.openDevTools();
   }
 }
 

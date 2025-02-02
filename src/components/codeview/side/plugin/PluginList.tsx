@@ -3,8 +3,9 @@ import { usePluginStore } from "@/store/usePluginStore";
 import { useModelStore } from "@/store/useModelStore";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { PlusCircle } from "lucide-react";
+import { PlusCircle, PlayCircle } from "lucide-react";
 import { PluginConfigDialog } from "./PluginConfigDialog";
+import { PluginExecuteDialog } from "./PluginExecuteDialog";
 
 export default function PluginList() {
   const { plugins, togglePlugin } = usePluginStore();
@@ -35,10 +36,17 @@ export default function PluginList() {
                   使用模型：{model?.name || "未知模型"}
                 </div>
               </div>
-              <Switch
-                checked={plugin.enabled}
-                onCheckedChange={() => togglePlugin(plugin.id)}
-              />
+              <div className="flex items-center gap-2">
+                <PluginExecuteDialog pluginId={plugin.id} pluginName={plugin.name}>
+                  <Button variant="ghost" size="icon">
+                    <PlayCircle className="h-4 w-4" />
+                  </Button>
+                </PluginExecuteDialog>
+                <Switch
+                  checked={plugin.enabled}
+                  onCheckedChange={() => togglePlugin(plugin.id)}
+                />
+              </div>
             </div>
           );
         })}

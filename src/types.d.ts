@@ -26,8 +26,14 @@ interface FolderAPI {
   selectFolder: () => Promise<string | null>;
 }
 
+interface FileAPI {
+  readTextFile: (filePath: string) => Promise<string>;
+  writeTextFile: (filePath: string, content: string) => Promise<void>;
+}
+
 declare interface Window {
   themeMode: ThemeModeContext;
   electronWindow: ElectronWindow;
   folderAPI: FolderAPI;
+  fileAPI: FileAPI;
 }

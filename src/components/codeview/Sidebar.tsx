@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { FolderTree, Search, Puzzle } from "lucide-react";
+import { FolderTree, Search, Puzzle, Settings } from "lucide-react";
 import FileTree, { FileNode } from './side/FileTree';
 import { useFileStore } from '@/store/useFileStore';
 import PluginList from './side/plugin/PluginList';
+import ModelList from './side/model/ModelList';
 
 type SidebarProps = {
   className?: string;
 }
 
-type TabType = 'explorer' | 'search' | 'plugin';
+type TabType = 'explorer' | 'search' | 'plugin' | 'model';
 
 export default function Sidebar({ className = "" }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<TabType>('explorer');
@@ -36,14 +37,22 @@ export default function Sidebar({ className = "" }: SidebarProps) {
         <Button
           variant={activeTab === 'plugin' ? 'secondary' : 'ghost'}
           size="icon"
+          className="mb-1"
           onClick={() => setActiveTab('plugin')}
         >
           <Puzzle className="h-5 w-5" />
         </Button>
         <Button
-          variant={activeTab === 'search' ? 'secondary' : 'ghost'}
+          variant={activeTab === 'model' ? 'secondary' : 'ghost'}
           size="icon"
           className="mb-1"
+          onClick={() => setActiveTab('model')}
+        >
+          <Settings className="h-5 w-5" />
+        </Button>
+        <Button
+          variant={activeTab === 'search' ? 'secondary' : 'ghost'}
+          size="icon"
           onClick={() => setActiveTab('search')}
         >
           <Search className="h-5 w-5" />
@@ -65,6 +74,7 @@ export default function Sidebar({ className = "" }: SidebarProps) {
           </div>
         )}
         {activeTab === 'plugin' && <PluginList />}
+        {activeTab === 'model' && <ModelList />}
       </div>
     </div>
   );

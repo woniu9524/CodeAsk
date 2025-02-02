@@ -27,8 +27,18 @@ export function extname(filePath: string): string {
   return dot === -1 ? '' : base.slice(dot);
 }
 
+/**
+ * 连接路径片段
+ * @param paths 路径片段
+ * @returns 连接后的路径
+ */
+export function join(...paths: string[]): string {
+  return paths.filter(Boolean).join('/').replace(/\/+/g, '/');
+}
+
 export default {
   basename,
   dirname,
-  extname
+  extname,
+  join
 }; 
