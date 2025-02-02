@@ -17,6 +17,7 @@ import {
 } from "./ui/dropdown-menu";
 import { useTranslation } from "react-i18next";
 import { Link } from "@tanstack/react-router";
+import { selectFolder } from "@/helpers/folder_helpers";
 
 interface DragWindowRegionProps {
   title?: ReactNode;
@@ -26,19 +27,19 @@ export default function DragWindowRegion({ title }: DragWindowRegionProps) {
   const { t } = useTranslation();
   const setCurrentFolder = useFileStore(state => state.setCurrentFolder);
   const navigate = useNavigate();
-  
+
   const handleOpenFolder = async () => {
     try {
-      const folderPath = await window.folderAPI.selectFolder();
+      const folderPath = await selectFolder();
       if (folderPath) {
         await setCurrentFolder(folderPath);
-        navigate({ to: "/code-view" });
+        await navigate({ to: "/code-view" });
       }
     } catch (error) {
       console.error('Failed to open folder:', error);
     }
   };
-  
+
   return (
     <div className="flex w-screen items-stretch justify-between">
       <div className="flex w-full items-center">
@@ -56,8 +57,8 @@ export default function DragWindowRegion({ title }: DragWindowRegionProps) {
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <Link 
-            to="/setting" 
+          <Link
+            to="/setting"
             className="px-2 py-1 text-sm hover:bg-accent rounded-sm"
           >
             {t('menu.settings.title')}

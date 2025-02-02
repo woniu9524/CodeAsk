@@ -7,5 +7,11 @@ import type { FileNode } from "@/components/codeview/FileTree";
  */
 export async function readFolder(folderPath: string): Promise<FileNode[]> {
   // 利用暴露在 window 对象上的 folderAPI 调用 IPC 方法
+  // @ts-ignore
   return await window.folderAPI.readFolder(folderPath);
-} 
+}
+
+export async function selectFolder(): Promise<string | null> {
+  // @ts-ignore
+  return await window.folderAPI.selectFolder();
+}
