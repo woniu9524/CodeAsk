@@ -2,7 +2,7 @@ import { create } from 'zustand';
 import { readTextFile, writeTextFile } from '@/helpers/file_helpers';
 import { join } from '@/utils/path';
 
-interface PluginExecutionFile {
+export interface PluginExecutionFile {
   filename: string;
   fileHash: string;
   result: string;

@@ -77,6 +77,20 @@ export function ModelConfigDialog({ children }: ModelConfigDialogProps) {
               })}
             />
           </div>
+          <div className="space-y-2">
+            <Label htmlFor="concurrency">并发数</Label>
+            <Input
+              id="concurrency"
+              type="number"
+              min="1"
+              defaultValue={1}
+              {...register("concurrency", {
+                required: true,
+                valueAsNumber: true,
+                min: 1,
+              })}
+            />
+          </div>
           <Button type="submit" className="w-full">保存</Button>
         </form>
       </DialogContent>

@@ -15,6 +15,7 @@ import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import type { FileNode } from '@/components/codeview/side/FileTree';
 import { relative, join } from "@/utils/path";
+import type { PluginExecutionFile } from "@/store/usePluginExecutionStore";
 
 interface PluginExecuteDialogProps {
   children?: React.ReactNode;
@@ -295,47 +296,56 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
         }
       });
 
-      // 处理每个文件
-      const processedFiles = await Promise.all(
-        selectedFiles.map(async filename => {
-          try {
-            // 读取文件内容
-            const content = await readTextFile(filename);
-            const fileHash = await getFileHash(filename);
+      // 处理单个文件的函数
+      const processFile = async (filename: string) => {
+        try {
+          // 读取文件内容
+          const content = await readTextFile(filename);
+          const fileHash = await getFileHash(filename);
 
-            // 获取相对路径
-            const relativePath = currentFolderPath ? relative(currentFolderPath, filename) : filename;
+          // 获取相对路径
+          const relativePath = currentFolderPath ? relative(currentFolderPath, filename) : filename;
 
-            // 构建消息
-            const messages = [
-              new SystemMessage(plugin.systemPrompt),
-              new HumanMessage(plugin.userPrompt + "\n\n" + content)
-            ];
+          // 构建消息
+          const messages = [
+            new SystemMessage(plugin.systemPrompt),
+            new HumanMessage(plugin.userPrompt + "\n\n" + content)
+          ];
 
-            // 调用模型分析
-            const response = await chat.invoke(messages);
-            const result = typeof response.content === 'string' 
-              ? response.content 
-              : JSON.stringify(response.content);
+          // 调用模型分析
+          const response = await chat.invoke(messages);
+          const result = typeof response.content === 'string' 
+            ? response.content 
+            : JSON.stringify(response.content);
 
-            return {
-              filename: relativePath,
-              fileHash,
-              result,
-              status: "success" as const
-            };
-          } catch (error) {
-            console.error(`处理文件失败: ${filename}`, error);
-            const relativePath = currentFolderPath ? relative(currentFolderPath, filename) : filename;
-            return {
-              filename: relativePath,
-              fileHash: await getFileHash(filename),
-              result: error instanceof Error ? error.message : '未知错误',
-              status: "error" as const
-            };
-          }
-        })
-      );
+          return {
+            filename: relativePath,
+            fileHash,
+            result,
+            status: "success" as const
+          };
+        } catch (error) {
+          console.error(`处理文件失败: ${filename}`, error);
+          const relativePath = currentFolderPath ? relative(currentFolderPath, filename) : filename;
+          return {
+            filename: relativePath,
+            fileHash: await getFileHash(filename),
+            result: error instanceof Error ? error.message : '未知错误',
+            status: "error" as const
+          };
+        }
+      };
+
+      // 并发处理文件
+      const concurrency = model.concurrency ?? 1;
+      const processedFiles: PluginExecutionFile[] = [];
+      
+      // 使用 for 循环分批处理文件
+      for (let i = 0; i < selectedFiles.length; i += concurrency) {
+        const batch = selectedFiles.slice(i, i + concurrency);
+        const batchResults = await Promise.all(batch.map(processFile));
+        processedFiles.push(...batchResults);
+      }
       
       const rules = {
         fileExtensions: extensions,

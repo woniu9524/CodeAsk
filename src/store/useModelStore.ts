@@ -10,6 +10,7 @@ export interface ModelConfig {
   maxContextTokens: number
   maxOutputTokens: number
   enabled: boolean
+  concurrency: number
 }
 
 interface ModelState {
