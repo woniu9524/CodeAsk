@@ -8,7 +8,11 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ChevronRight, ChevronDown, Folder, File } from "lucide-react";
 import { useFileStore } from "@/store/useFileStore";
 import { usePluginExecutionStore } from "@/store/usePluginExecutionStore";
-import { getFileHash } from "@/helpers/file_helpers";
+import { usePluginStore } from "@/store/usePluginStore";
+import { useModelStore } from "@/store/useModelStore";
+import { getFileHash, readTextFile } from "@/helpers/file_helpers";
+import { ChatOpenAI } from "@langchain/openai";
+import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import type { FileNode } from '@/components/codeview/side/FileTree';
 
 interface PluginExecuteDialogProps {
@@ -108,12 +112,15 @@ type FileDisplayMode = "all" | "unprocessed" | "unprocessed_and_updated";
 export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginExecuteDialogProps) {
   const { fileTree, currentFolderPath } = useFileStore();
   const { initializeDataFile, getPluginExecution, savePluginExecution } = usePluginExecutionStore();
+  const { plugins } = usePluginStore();
+  const { models } = useModelStore();
   
   const [selectableTree, setSelectableTree] = useState<FileNodeWithSelection[]>([]);
   const [fileExtensions, setFileExtensions] = useState("");
   const [displayMode, setDisplayMode] = useState<FileDisplayMode>("all");
   const [isOpen, setIsOpen] = useState(false);
   const [fileHashes, setFileHashes] = useState<Record<string, string>>({});
+  const [isProcessing, setIsProcessing] = useState(false);
 
   // 获取所有文件的哈希值
   const updateFileHashes = async (nodes: FileNodeWithSelection[]) => {
@@ -262,33 +269,91 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
   };
 
   const handleExecute = async () => {
-    const selectedFiles = getSelectedFiles(selectableTree);
-    const extensions = fileExtensions.split(',').map(ext => ext.trim()).filter(Boolean);
-    
-    const rules = {
-      fileExtensions: extensions,
-      showProcessed: displayMode === "all",
-      showUpdated: displayMode === "unprocessed_and_updated"
-    };
+    try {
+      setIsProcessing(true);
+      const selectedFiles = getSelectedFiles(selectableTree);
+      const extensions = fileExtensions.split(',').map(ext => ext.trim()).filter(Boolean);
+      
+      // 获取插件配置
+      const plugin = plugins.find(p => p.id === pluginId);
+      if (!plugin) {
+        throw new Error('插件未找到');
+      }
 
-    // 获取所有选中文件的哈希值
-    const processedFiles = await Promise.all(
-      selectedFiles.map(async filename => ({
-        filename,
-        fileHash: await getFileHash(filename),
-        result: "处理结果示例",
-        status: "success" as const
-      }))
-    );
-    
-    const execution = {
-      pluginName,
-      rules,
-      files: processedFiles
-    };
+      // 获取模型配置
+      const model = models.find(m => m.id === plugin.modelId);
+      if (!model) {
+        throw new Error('模型未找到');
+      }
 
-    await savePluginExecution(pluginId, execution);
-    setIsOpen(false);
+      // 初始化 ChatOpenAI
+      const chat = new ChatOpenAI({
+        openAIApiKey: model.apiKey,
+        modelName: model.name,
+        temperature: model.temperature,
+        maxTokens: model.maxOutputTokens,
+        configuration: {
+          baseURL: model.baseUrl
+        }
+      });
+
+      // 处理每个文件
+      const processedFiles = await Promise.all(
+        selectedFiles.map(async filename => {
+          try {
+            // 读取文件内容
+            const content = await readTextFile(filename);
+            const fileHash = await getFileHash(filename);
+
+            // 构建消息
+            const messages = [
+              new SystemMessage(plugin.systemPrompt),
+              new HumanMessage(plugin.userPrompt + "\n\n" + content)
+            ];
+
+            // 调用模型分析
+            const response = await chat.invoke(messages);
+            const result = typeof response.content === 'string' 
+              ? response.content 
+              : JSON.stringify(response.content);
+
+            return {
+              filename,
+              fileHash,
+              result,
+              status: "success" as const
+            };
+          } catch (error) {
+            console.error(`处理文件失败: ${filename}`, error);
+            return {
+              filename,
+              fileHash: await getFileHash(filename),
+              result: error instanceof Error ? error.message : '未知错误',
+              status: "error" as const
+            };
+          }
+        })
+      );
+      
+      const rules = {
+        fileExtensions: extensions,
+        showProcessed: displayMode === "all",
+        showUpdated: displayMode === "unprocessed_and_updated"
+      };
+
+      const execution = {
+        pluginName,
+        rules,
+        files: processedFiles
+      };
+
+      await savePluginExecution(pluginId, execution);
+      setIsOpen(false);
+    } catch (error) {
+      console.error('执行失败:', error);
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -343,8 +408,8 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
             </div>
           </div>
 
-          <Button onClick={handleExecute} className="w-full">
-            执行
+          <Button onClick={handleExecute} className="w-full" disabled={isProcessing}>
+            {isProcessing ? "处理中..." : "执行"}
           </Button>
         </div>
       </DialogContent>
