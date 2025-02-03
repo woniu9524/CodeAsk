@@ -5,6 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { ChevronRight, ChevronDown, Folder, File } from "lucide-react";
 import { useFileStore } from "@/store/useFileStore";
 import { usePluginExecutionStore } from "@/store/usePluginExecutionStore";
 import type { FileNode } from '@/components/codeview/side/FileTree';
@@ -40,19 +41,48 @@ function FileTree({
   onSelect: (node: FileNodeWithSelection, selected: boolean) => void;
   parentSelected?: boolean;
 }) {
+  const [isExpanded, setIsExpanded] = useState(true);
   // 如果父节点被选中，当前节点也应该被选中
   const effectiveSelected = parentSelected || node.selected;
 
+  const handleToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setIsExpanded(!isExpanded);
+  };
+
+  const isDirectory = node.type === 'directory';
+
   return (
-    <div className="pl-4">
-      <div className="flex items-center gap-2">
-        <Checkbox
-          checked={effectiveSelected}
-          onCheckedChange={(checked) => onSelect(node, !!checked)}
-        />
-        <span>{node.name}</span>
+    <div className="pl-2">
+      <div 
+        className="flex items-center gap-2 py-1 hover:bg-gray-100 rounded cursor-pointer"
+        onClick={isDirectory ? handleToggle : undefined}
+      >
+        <div className="flex items-center gap-1">
+          {isDirectory && (
+            <span className="w-4 h-4" onClick={handleToggle}>
+              {isExpanded ? (
+                <ChevronDown className="w-4 h-4" />
+              ) : (
+                <ChevronRight className="w-4 h-4" />
+              )}
+            </span>
+          )}
+          {!isDirectory && <span className="w-4" />}
+          <Checkbox
+            checked={effectiveSelected}
+            onCheckedChange={(checked) => onSelect(node, !!checked)}
+            onClick={(e) => e.stopPropagation()}
+          />
+          {isDirectory ? (
+            <Folder className="w-4 h-4 text-blue-500" />
+          ) : (
+            <File className="w-4 h-4 text-gray-500" />
+          )}
+          <span className="text-sm">{node.name}</span>
+        </div>
       </div>
-      {node.type === 'directory' && node.children && (
+      {isDirectory && node.children && isExpanded && (
         <div className="pl-4">
           {node.children.map((child) => (
             <FileTree
