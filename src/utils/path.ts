@@ -4,7 +4,9 @@
  * @returns 文件名
  */
 export function basename(filePath: string): string {
-  return filePath.split(/[\\/]/).pop() || filePath;
+  if (!filePath) return '';
+  const parts = filePath.split(/[\\/]/);
+  return parts[parts.length - 1] || '';
 }
 
 /**
@@ -13,7 +15,9 @@ export function basename(filePath: string): string {
  * @returns 目录名
  */
 export function dirname(filePath: string): string {
-  return filePath.split(/[\\/]/).slice(0, -1).join('/');
+  if (!filePath) return '';
+  const parts = filePath.split(/[\\/]/);
+  return parts.slice(0, -1).join('/') || '';
 }
 
 /**
@@ -22,6 +26,7 @@ export function dirname(filePath: string): string {
  * @returns 扩展名（包含点号）
  */
 export function extname(filePath: string): string {
+  if (!filePath) return '';
   const base = basename(filePath);
   const dot = base.lastIndexOf('.');
   return dot === -1 ? '' : base.slice(dot);
@@ -43,6 +48,8 @@ export function join(...paths: string[]): string {
  * @returns 相对路径
  */
 export function relative(from: string, to: string): string {
+  if (!from || !to) return to || '';
+  
   // 标准化路径分隔符
   const fromParts = from.replace(/\\/g, '/').split('/');
   const toParts = to.replace(/\\/g, '/').split('/');

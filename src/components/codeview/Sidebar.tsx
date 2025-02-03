@@ -8,17 +8,18 @@ import ModelList from './side/model/ModelList';
 
 type SidebarProps = {
   className?: string;
+  onFileClick?: (filePath: string) => void;
 }
 
 type TabType = 'explorer' | 'search' | 'plugin' | 'model';
 
-export default function Sidebar({ className = "" }: SidebarProps) {
+export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<TabType>('explorer');
   const { fileTree, openFile } = useFileStore();
 
   const handleFileClick = (file: FileNode) => {
     if (file.type === 'file') {
-      openFile(file.id);
+      onFileClick?.(file.id);
     }
   };
 

@@ -14,7 +14,7 @@ import { getFileHash, readTextFile } from "@/helpers/file_helpers";
 import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import type { FileNode } from '@/components/codeview/side/FileTree';
-import { relative } from "@/utils/path";
+import { relative, join } from "@/utils/path";
 
 interface PluginExecuteDialogProps {
   children?: React.ReactNode;
@@ -361,6 +361,10 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
     } finally {
       setIsProcessing(false);
     }
+  };
+
+  const getAbsolutePath = (relativePath: string, rootPath: string) => {
+    return join(rootPath, relativePath);
   };
 
   return (
