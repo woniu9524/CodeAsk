@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useFileStore } from "@/store/useFileStore";
 import { usePluginExecutionStore } from "@/store/usePluginExecutionStore";
 import type { FileNode } from '@/components/codeview/side/FileTree';
@@ -68,14 +68,15 @@ function FileTree({
   );
 }
 
+type FileDisplayMode = "all" | "unprocessed" | "unprocessed_and_updated";
+
 export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginExecuteDialogProps) {
   const { fileTree, currentFolderPath } = useFileStore();
   const { initializeDataFile, getPluginExecution, savePluginExecution } = usePluginExecutionStore();
   
   const [selectableTree, setSelectableTree] = useState<FileNodeWithSelection[]>([]);
   const [fileExtensions, setFileExtensions] = useState("");
-  const [showProcessed, setShowProcessed] = useState(false);
-  const [showUpdated, setShowUpdated] = useState(false);
+  const [displayMode, setDisplayMode] = useState<FileDisplayMode>("all");
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
@@ -91,8 +92,14 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       const execution = getPluginExecution(pluginId);
       if (execution) {
         setFileExtensions(execution.rules.fileExtensions.join(','));
-        setShowProcessed(execution.rules.showProcessed);
-        setShowUpdated(execution.rules.showUpdated);
+        // 根据历史配置设置显示模式
+        if (!execution.rules.showProcessed) {
+          setDisplayMode("unprocessed");
+        } else if (execution.rules.showUpdated) {
+          setDisplayMode("unprocessed_and_updated");
+        } else {
+          setDisplayMode("all");
+        }
       }
     }
   }, [isOpen, currentFolderPath, fileTree, pluginId]);
@@ -155,14 +162,16 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
     const selectedFiles = getSelectedFiles(selectableTree);
     const extensions = fileExtensions.split(',').map(ext => ext.trim()).filter(Boolean);
     
-    // 这里是 mock 的执行结果，实际实现时需要替换
+    // 根据显示模式设置规则
+    const rules = {
+      fileExtensions: extensions,
+      showProcessed: displayMode === "all",
+      showUpdated: displayMode === "unprocessed_and_updated"
+    };
+    
     const execution = {
       pluginName,
-      rules: {
-        fileExtensions: extensions,
-        showProcessed,
-        showUpdated
-      },
+      rules,
       files: selectedFiles.map(filename => ({
         filename,
         fileHash: "mock-hash-" + Math.random(),
@@ -198,20 +207,18 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
                 />
               </div>
               
-              <div className="flex items-center space-x-2">
-                <Switch
-                  checked={showProcessed}
-                  onCheckedChange={setShowProcessed}
-                />
-                <Label>显示已处理的文件</Label>
-              </div>
-              
-              <div className="flex items-center space-x-2">
-                <Switch
-                  checked={showUpdated}
-                  onCheckedChange={setShowUpdated}
-                />
-                <Label>显示处理后更新的文件</Label>
+              <div className="space-y-2">
+                <Label>文件显示模式</Label>
+                <Select value={displayMode} onValueChange={(value: FileDisplayMode) => setDisplayMode(value)}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="选择显示模式" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">全部显示</SelectItem>
+                    <SelectItem value="unprocessed">显示未处理</SelectItem>
+                    <SelectItem value="unprocessed_and_updated">显示未处理及需更新</SelectItem>
+                  </SelectContent>
+                </Select>
               </div>
             </div>
           </div>
