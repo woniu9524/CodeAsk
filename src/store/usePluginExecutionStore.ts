@@ -61,6 +61,38 @@ export const usePluginExecutionStore = create<PluginExecutionState>((set, get) =
     const { dataFilePath, executions } = get();
     if (!dataFilePath) return;
 
+    const existingExecution = executions[pluginId];
+    
+    // 如果已存在该插件的执行记录，合并文件列表
+    let mergedFiles: PluginExecutionFile[] = [];
+    if (existingExecution) {
+      // 保留现有的规则设置
+      execution.rules = {
+        ...existingExecution.rules,
+        ...execution.rules
+      };
+      
+      // 创建一个文件名到文件的映射，用于快速查找
+      const existingFileMap = new Map(
+        existingExecution.files.map(file => [file.filename, file])
+      );
+      
+      // 合并新文件列表
+      mergedFiles = [...existingExecution.files];
+      execution.files.forEach(newFile => {
+        const index = mergedFiles.findIndex(f => f.filename === newFile.filename);
+        if (index !== -1) {
+          // 如果文件已存在，更新它
+          mergedFiles[index] = newFile;
+        } else {
+          // 如果是新文件，添加到列表末尾
+          mergedFiles.push(newFile);
+        }
+      });
+      
+      execution.files = mergedFiles;
+    }
+
     const newExecutions = {
       ...executions,
       [pluginId]: execution
