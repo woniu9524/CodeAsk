@@ -23,7 +23,7 @@ interface ElectronWindow {
 
 interface FolderAPI {
   readFolder: (folderPath: string) => Promise<FileNode[]>;
-  selectFolder: () => Promise<string | null>;
+  selectFolder: () => Promise<string>;
 }
 
 interface FileAPI {
