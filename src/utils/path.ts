@@ -36,9 +36,34 @@ export function join(...paths: string[]): string {
   return paths.filter(Boolean).join('/').replace(/\/+/g, '/');
 }
 
+/**
+ * 计算相对路径
+ * @param from 起始路径（通常是项目根目录）
+ * @param to 目标路径
+ * @returns 相对路径
+ */
+export function relative(from: string, to: string): string {
+  // 标准化路径分隔符
+  const fromParts = from.replace(/\\/g, '/').split('/');
+  const toParts = to.replace(/\\/g, '/').split('/');
+
+  // 找到第一个不同的部分
+  let i = 0;
+  while (i < fromParts.length && i < toParts.length && fromParts[i] === toParts[i]) {
+    i++;
+  }
+
+  // 构建相对路径
+  const upCount = fromParts.length - i;
+  const relativeParts = [...Array(upCount).fill('..'), ...toParts.slice(i)];
+  
+  return relativeParts.join('/');
+}
+
 export default {
   basename,
   dirname,
   extname,
-  join
+  join,
+  relative
 }; 

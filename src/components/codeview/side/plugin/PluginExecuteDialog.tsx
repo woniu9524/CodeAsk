@@ -14,6 +14,7 @@ import { getFileHash, readTextFile } from "@/helpers/file_helpers";
 import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import type { FileNode } from '@/components/codeview/side/FileTree';
+import { relative } from "@/utils/path";
 
 interface PluginExecuteDialogProps {
   children?: React.ReactNode;
@@ -128,7 +129,8 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
     const processNode = async (node: FileNodeWithSelection) => {
       if (node.type === 'file') {
         try {
-          newHashes[node.id] = await getFileHash(node.id);
+          const fileRelativePath = currentFolderPath ? relative(currentFolderPath, node.id) : node.id;
+          newHashes[fileRelativePath] = await getFileHash(node.id);
         } catch (error) {
           console.error(`获取文件哈希值失败: ${node.id}`, error);
         }
@@ -181,9 +183,10 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       const execution = getPluginExecution(pluginId);
       if (!execution) return true;
 
-      const processedFile = execution.files.find(f => f.filename === node.id);
+      const fileRelativePath = currentFolderPath ? relative(currentFolderPath, node.id) : node.id;
+      const processedFile = execution.files.find(f => f.filename === fileRelativePath);
       const isProcessed = !!processedFile;
-      const currentHash = fileHashes[node.id];
+      const currentHash = fileHashes[fileRelativePath];
       const needsUpdate = isProcessed && currentHash && processedFile.fileHash !== currentHash;
 
       // 根据显示模式过滤
@@ -305,6 +308,9 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
             const content = await readTextFile(filename);
             const fileHash = await getFileHash(filename);
 
+            // 获取相对路径
+            const relativePath = currentFolderPath ? relative(currentFolderPath, filename) : filename;
+
             // 构建消息
             const messages = [
               new SystemMessage(plugin.systemPrompt),
@@ -318,15 +324,16 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
               : JSON.stringify(response.content);
 
             return {
-              filename,
+              filename: relativePath,
               fileHash,
               result,
               status: "success" as const
             };
           } catch (error) {
             console.error(`处理文件失败: ${filename}`, error);
+            const relativePath = currentFolderPath ? relative(currentFolderPath, filename) : filename;
             return {
-              filename,
+              filename: relativePath,
               fileHash: await getFileHash(filename),
               result: error instanceof Error ? error.message : '未知错误',
               status: "error" as const
@@ -387,7 +394,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="all">全部显示</SelectItem>
-                    <SelectItem value="unprocessed">显示未处理</SelectItem>
+                    <SelectItem value="unprocessed">隐藏未处理</SelectItem>
                     <SelectItem value="unprocessed_and_updated">显示未处理及需更新</SelectItem>
                   </SelectContent>
                 </Select>
