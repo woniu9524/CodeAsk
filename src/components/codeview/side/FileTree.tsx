@@ -103,7 +103,7 @@ function FileTreeItem({ data, level = 0, onFileClick }: FileTreeItemProps) {
 
 export default function FileTree({ data, onFileClick }: FileTreeProps) {
   return (
-    <div className="select-none overflow-auto">
+    <div className="select-none overflow-auto max-h-[calc(100vh-6rem)]">
       <FileTreeItem data={data} onFileClick={onFileClick} />
     </div>
   );
