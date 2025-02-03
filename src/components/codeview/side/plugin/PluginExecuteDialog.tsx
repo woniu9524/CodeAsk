@@ -226,18 +226,14 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
     ): FileNodeWithSelection[] => {
       return tree.map(node => {
         if (node.id === targetPath) {
-          return {
-            ...node,
-            selected,
-            children: node.children?.map(child => ({
-              ...child,
+          const updateChildrenRecursively = (node: FileNodeWithSelection): FileNodeWithSelection => {
+            return {
+              ...node,
               selected,
-              children: child.children?.map(grandChild => ({
-                ...grandChild,
-                selected
-              }))
-            }))
+              children: node.children?.map(updateChildrenRecursively)
+            };
           };
+          return updateChildrenRecursively(node);
         }
         
         if (node.children) {
@@ -276,7 +272,6 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       setIsProcessing(true);
       const selectedFiles = getSelectedFiles(selectableTree);
       const extensions = fileExtensions.split(',').map(ext => ext.trim()).filter(Boolean);
-      
       // 获取插件配置
       const plugin = plugins.find(p => p.id === pluginId);
       if (!plugin) {
