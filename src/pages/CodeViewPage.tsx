@@ -5,9 +5,12 @@ import TabsBar, { Tab, TabType } from "@/components/codeview/TabsBar";
 import { useFileStore } from "@/store/useFileStore";
 import { usePluginStore } from "@/store/usePluginStore";
 import { usePluginExecutionStore } from "@/store/usePluginExecutionStore";
+import { useSplitStore } from "@/store/useSplitStore";
 import path from "@/utils/path";
 import { readTextFile } from "@/helpers/file_helpers";
 import CodeMirror from '@uiw/react-codemirror';
+import Split from 'react-split';
+import './split.css';  // 添加分隔条样式
 
 import { oneDark } from '@codemirror/theme-one-dark';
 import ReactMarkdown from 'react-markdown';
@@ -123,6 +126,7 @@ export default function CodeViewPage() {
   } = useFileStore();
   const { plugins } = usePluginStore();
   const { getPluginExecution, initializeDataFile } = usePluginExecutionStore();
+  const { isSplit, rightPaneFileId, splitSizes, setSplitSizes } = useSplitStore();
 
   // 初始化当前文件夹路径
   useEffect(() => {
@@ -197,8 +201,8 @@ export default function CodeViewPage() {
   };
 
   // 渲染标签页内容
-  const renderTabContent = () => {
-    if (!activeFile) {
+  const renderTabContent = (fileId: string | null) => {
+    if (!fileId) {
       return (
         <div className="flex h-full items-center justify-center text-muted-foreground">
           {t('codeView.noOpenedFile')}
@@ -206,11 +210,11 @@ export default function CodeViewPage() {
       );
     }
 
-    const activeTab = tabs.find(tab => tab.id === activeFile);
+    const activeTab = tabs.find(tab => tab.id === fileId);
     if (!activeTab) return null;
 
     if (activeTab.type === 'code') {
-      return <CodePreview filePath={activeFile} />;
+      return <CodePreview filePath={fileId} />;
     }
 
     if (activeTab.type === 'plugin_markdown') {
@@ -243,8 +247,32 @@ export default function CodeViewPage() {
           onTabClick={setActiveFile}
           onTabClose={closeFile}
         />
-        <div className="flex-1 bg-background overflow-auto">
-          {renderTabContent()}
+        <div className="flex-1 bg-background overflow-hidden">
+          {isSplit ? (
+            <Split
+              sizes={splitSizes}
+              minSize={200}
+              expandToMin={false}
+              gutterSize={10}
+              gutterStyle={() => ({
+                backgroundColor: 'var(--border)',
+                cursor: 'col-resize'
+              })}
+              className="split-horizontal"
+              onDragEnd={(sizes: number[]) => setSplitSizes(sizes)}
+            >
+              <div className="h-full overflow-auto">
+                {renderTabContent(activeFile)}
+              </div>
+              <div className="h-full overflow-auto">
+                {renderTabContent(rightPaneFileId)}
+              </div>
+            </Split>
+          ) : (
+            <div className="h-full overflow-auto">
+              {renderTabContent(activeFile)}
+            </div>
+          )}
         </div>
       </div>
     </div>

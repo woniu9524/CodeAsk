@@ -1,7 +1,8 @@
 import React from 'react';
-import { X } from 'lucide-react';
+import { X, Split } from 'lucide-react';
 import { cn } from '@/utils/tailwind';
 import { getFileIcon } from './side/FileTree';
+import { useSplitStore } from '@/store/useSplitStore';
 
 export type TabType = 'code' | 'plugin_markdown';
 
@@ -21,9 +22,21 @@ type TabsBarProps = {
 };
 
 export default function TabsBar({ tabs, onTabClick, onTabClose }: TabsBarProps) {
+  const { isSplit, setSplit, setRightPaneFile } = useSplitStore();
+
   if (tabs.length === 0) {
     return null;
   }
+
+  const handleSplitClick = (tab: Tab) => {
+    if (isSplit) {
+      setSplit(false);
+      setRightPaneFile(null);
+    } else {
+      setSplit(true);
+      setRightPaneFile(tab.id);
+    }
+  };
 
   return (
     <div className="flex h-9 items-center border-b bg-background px-2">
@@ -45,15 +58,27 @@ export default function TabsBar({ tabs, onTabClick, onTabClose }: TabsBarProps) 
               tab.title
             }
           </span>
-          <button
-            className="ml-2 rounded-sm opacity-0 hover:bg-accent group-hover:opacity-100"
-            onClick={(e) => {
-              e.stopPropagation();
-              onTabClose(tab.id);
-            }}
-          >
-            <X className="h-4 w-4" />
-          </button>
+          <div className="ml-2 flex items-center opacity-0 group-hover:opacity-100">
+            <button
+              className="rounded-sm hover:bg-accent mr-1"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleSplitClick(tab);
+              }}
+              title={isSplit ? "取消分屏" : "分屏显示"}
+            >
+              <Split className="h-4 w-4" />
+            </button>
+            <button
+              className="rounded-sm hover:bg-accent"
+              onClick={(e) => {
+                e.stopPropagation();
+                onTabClose(tab.id);
+              }}
+            >
+              <X className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       ))}
     </div>

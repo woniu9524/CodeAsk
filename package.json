@@ -69,12 +69,19 @@
     "vite": "^6.0.11"
   },
   "dependencies": {
+    "@codemirror/lang-cpp": "^6.0.2",
     "@codemirror/lang-css": "^6.3.1",
     "@codemirror/lang-html": "^6.4.9",
+    "@codemirror/lang-java": "^6.0.1",
     "@codemirror/lang-javascript": "^6.2.2",
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/lang-markdown": "^6.3.2",
+    "@codemirror/lang-php": "^6.0.1",
     "@codemirror/lang-python": "^6.1.7",
+    "@codemirror/lang-rust": "^6.0.1",
+    "@codemirror/lang-sql": "^6.5.4",
+    "@codemirror/lang-xml": "^6.0.2",
+    "@codemirror/lang-yaml": "^6.0.0",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@icons-pack/react-simple-icons": "^11.2.0",
     "@langchain/core": "^0.3.36",
@@ -105,17 +112,11 @@
     "react-hook-form": "^7.54.2",
     "react-i18next": "^15.4.0",
     "react-markdown": "^9.0.3",
+    "react-split": "^2.0.14",
     "remark-gfm": "^4.0.0",
     "tailwind-merge": "^3.0.1",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.24.1",
-    "zustand": "^5.0.3",
-    "@codemirror/lang-cpp": "^6.0.2",
-    "@codemirror/lang-java": "^6.0.1",
-    "@codemirror/lang-php": "^6.0.1",
-    "@codemirror/lang-rust": "^6.0.1",
-    "@codemirror/lang-sql": "^6.5.4",
-    "@codemirror/lang-xml": "^6.0.2",
-    "@codemirror/lang-yaml": "^6.0.0"
+    "zustand": "^5.0.3"
   }
 }
