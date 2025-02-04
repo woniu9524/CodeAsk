@@ -1,0 +1,64 @@
+.split-horizontal {
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+
+.gutter {
+  background-color: #3b82f6;  /* 默认使用蓝色 */
+  position: relative;
+  transition: all 0.2s;
+  opacity: 0.3;
+}
+
+/* 增加悬停区域 */
+.gutter::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -3px;
+  right: -3px;
+  bottom: 0;
+  z-index: 10;
+}
+
+/* 分隔条本体 */
+.gutter.gutter-horizontal {
+  cursor: col-resize;
+  width: 2px !important;
+  background-color: #3b82f6;
+  margin: 0 4px;
+}
+
+/* 分隔条拖动把手 */
+.gutter.gutter-horizontal::after {
+  content: "⋮";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 40px;
+  background-color: #3b82f6;
+  border-radius: 6px;
+  opacity: 0.8;
+  font-size: 16px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 11;
+  box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
+}
+
+/* 悬停效果 */
+.gutter:hover {
+  background-color: #2563eb;  /* 悬停时使用深蓝色 */
+  opacity: 0.8;
+}
+
+.gutter:hover::after {
+  background-color: #2563eb;
+  opacity: 1;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.8);
+} 

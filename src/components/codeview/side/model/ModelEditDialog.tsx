@@ -8,25 +8,38 @@ import { useForm } from "react-hook-form";
 
 type ModelFormData = Omit<ModelConfig, 'id' | 'enabled'>;
 
-interface ModelConfigDialogProps {
+interface ModelEditDialogProps {
   children: React.ReactNode;
+  model: ModelConfig;
 }
 
-export function ModelConfigDialog({ children }: ModelConfigDialogProps) {
-  const { register, handleSubmit, reset } = useForm<ModelFormData>();
-  const { addModel } = useModelStore();
+export function ModelEditDialog({ children, model }: ModelEditDialogProps) {
+  const [open, setOpen] = React.useState(false);
+  const { register, handleSubmit } = useForm<ModelFormData>({
+    defaultValues: {
+      name: model.name,
+      apiKey: model.apiKey,
+      baseUrl: model.baseUrl,
+      temperature: model.temperature,
+      maxContextTokens: model.maxContextTokens,
+      maxOutputTokens: model.maxOutputTokens,
+      concurrency: model.concurrency ?? 1,
+    },
+  });
+  
+  const { updateModel } = useModelStore();
 
   const onSubmit = (data: ModelFormData) => {
-    addModel({ ...data, enabled: true });
-    reset();
+    updateModel(model.id, data);
+    setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>添加模型</DialogTitle>
+          <DialogTitle>编辑模型</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
@@ -83,7 +96,6 @@ export function ModelConfigDialog({ children }: ModelConfigDialogProps) {
               id="concurrency"
               type="number"
               min="1"
-              defaultValue={1}
               {...register("concurrency", {
                 required: true,
                 valueAsNumber: true,

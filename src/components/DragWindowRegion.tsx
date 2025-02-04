@@ -7,6 +7,7 @@ import React, { type ReactNode } from "react";
 import ToggleTheme from "./ToggleTheme";
 import LangToggle from "./LangToggle";
 import { useFileStore } from "@/store/useFileStore";
+import { useRecentFoldersStore } from "@/store/useRecentFoldersStore";
 import { useNavigate } from "@tanstack/react-router";
 import {
   DropdownMenu,
@@ -14,10 +15,14 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
 } from "./ui/dropdown-menu";
 import { useTranslation } from "react-i18next";
 import { Link } from "@tanstack/react-router";
 import { selectFolder } from "@/helpers/folder_helpers";
+import path from "@/utils/path";
 
 interface DragWindowRegionProps {
   title?: ReactNode;
@@ -26,6 +31,7 @@ interface DragWindowRegionProps {
 export default function DragWindowRegion({ title }: DragWindowRegionProps) {
   const { t } = useTranslation();
   const setCurrentFolder = useFileStore(state => state.setCurrentFolder);
+  const { recentFolders, addRecentFolder } = useRecentFoldersStore();
   const navigate = useNavigate();
 
   const handleOpenFolder = async () => {
@@ -33,10 +39,21 @@ export default function DragWindowRegion({ title }: DragWindowRegionProps) {
       const folderPath = await selectFolder();
       if (folderPath) {
         await setCurrentFolder(folderPath);
+        addRecentFolder(folderPath);
         await navigate({ to: "/code-view" });
       }
     } catch (error) {
       console.error('Failed to open folder:', error);
+    }
+  };
+
+  const handleOpenRecentFolder = async (folderPath: string) => {
+    try {
+      await setCurrentFolder(folderPath);
+      addRecentFolder(folderPath);
+      await navigate({ to: "/code-view" });
+    } catch (error) {
+      console.error('Failed to open recent folder:', error);
     }
   };
 
@@ -51,18 +68,29 @@ export default function DragWindowRegion({ title }: DragWindowRegionProps) {
             <DropdownMenuContent>
               <DropdownMenuItem>{t('menu.file.openFile')}</DropdownMenuItem>
               <DropdownMenuItem onClick={handleOpenFolder}>{t('menu.file.openFolder')}</DropdownMenuItem>
-              <DropdownMenuItem>{t('menu.file.openRecent')}</DropdownMenuItem>
+              <DropdownMenuSub>
+                <DropdownMenuSubTrigger>{t('menu.file.openRecent')}</DropdownMenuSubTrigger>
+                <DropdownMenuSubContent>
+                  {recentFolders.length > 0 ? (
+                    recentFolders.map((folderPath) => (
+                      <DropdownMenuItem
+                        key={folderPath}
+                        onClick={() => handleOpenRecentFolder(folderPath)}
+                      >
+                        {path.basename(folderPath)}
+                      </DropdownMenuItem>
+                    ))
+                  ) : (
+                    <DropdownMenuItem disabled>
+                      {t('menu.file.noRecentFolders')}
+                    </DropdownMenuItem>
+                  )}
+                </DropdownMenuSubContent>
+              </DropdownMenuSub>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={closeWindow}>{t('menu.file.exit')}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-
-          <Link
-            to="/setting"
-            className="px-2 py-1 text-sm hover:bg-accent rounded-sm"
-          >
-            {t('menu.settings.title')}
-          </Link>
 
           <DropdownMenu>
             <DropdownMenuTrigger className="px-2 py-1 text-sm hover:bg-accent rounded-sm">

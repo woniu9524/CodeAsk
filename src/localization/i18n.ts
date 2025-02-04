@@ -15,6 +15,7 @@ i18n.use(initReactI18next).init({
             openFile: "Open File",
             openFolder: "Open Folder",
             openRecent: "Open Recent",
+            noRecentFolders: "No Recent Folders",
             exit: "Exit"
           },
           settings: {
@@ -39,6 +40,7 @@ i18n.use(initReactI18next).init({
             openFile: "打开文件",
             openFolder: "打开文件夹",
             openRecent: "打开最近",
+            noRecentFolders: "没有最近的文件夹",
             exit: "退出"
           },
           settings: {
