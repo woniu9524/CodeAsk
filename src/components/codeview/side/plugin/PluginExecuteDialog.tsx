@@ -51,8 +51,7 @@ function FileTree({
   parentSelected?: boolean;
 }) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const effectiveSelected = parentSelected || node.selected;
-
+  
   if (node._hidden) {
     return null;
   }
@@ -82,7 +81,7 @@ function FileTree({
           )}
           {!isDirectory && <span className="w-4" />}
           <Checkbox
-            checked={effectiveSelected}
+            checked={node.selected}
             onCheckedChange={(checked) => onSelect(node, !!checked)}
             onClick={(e) => e.stopPropagation()}
           />
@@ -101,7 +100,7 @@ function FileTree({
               key={child.id}
               node={child}
               onSelect={onSelect}
-              parentSelected={effectiveSelected}
+              parentSelected={node.selected}
             />
           ))}
         </div>
@@ -227,8 +226,9 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       targetPath: string,
       selected: boolean
     ): FileNodeWithSelection[] => {
-      return tree.map(node => {
-        if (node.id === targetPath) {
+      return tree.map(currentNode => {
+        if (currentNode.id === targetPath) {
+          // 更新当前节点及其所有子节点
           const updateChildrenRecursively = (node: FileNodeWithSelection): FileNodeWithSelection => {
             return {
               ...node,
@@ -236,22 +236,21 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
               children: node.children?.map(updateChildrenRecursively)
             };
           };
-          return updateChildrenRecursively(node);
+          return updateChildrenRecursively(currentNode);
         }
-        
-        if (node.children) {
+
+        if (currentNode.children) {
+          const updatedChildren = updateNodeSelection(currentNode.children, targetPath, selected);
+          // 更新父节点状态：只有当所有子节点都被选中时，父节点才被选中
+          const allChildrenSelected = updatedChildren.every(child => child.selected);
           return {
-            ...node,
-            children: updateNodeSelection(node.children, targetPath, selected),
-            selected: node.selected || (
-              node.children.every(child => 
-                child.id === targetPath ? selected : child.selected
-              )
-            )
+            ...currentNode,
+            children: updatedChildren,
+            selected: allChildrenSelected
           };
         }
-        
-        return node;
+
+        return currentNode;
       });
     };
 

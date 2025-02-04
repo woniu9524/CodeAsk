@@ -20,7 +20,6 @@ import {
   DropdownMenuSubContent,
 } from "./ui/dropdown-menu";
 import { useTranslation } from "react-i18next";
-import { Link } from "@tanstack/react-router";
 import { selectFolder } from "@/helpers/folder_helpers";
 import path from "@/utils/path";
 
@@ -66,7 +65,7 @@ export default function DragWindowRegion({ title }: DragWindowRegionProps) {
               {t('menu.file.title')}
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>{t('menu.file.openFile')}</DropdownMenuItem>
+              {/*<DropdownMenuItem>{t('menu.file.openFile')}</DropdownMenuItem>*/}
               <DropdownMenuItem onClick={handleOpenFolder}>{t('menu.file.openFolder')}</DropdownMenuItem>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>{t('menu.file.openRecent')}</DropdownMenuSubTrigger>
