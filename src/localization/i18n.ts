@@ -7,7 +7,6 @@ i18n.use(initReactI18next).init({
     en: {
       translation: {
         appName: "electron-shadcn",
-        titleHomePage: "Home Page",
         titleSecondPage: "Second Page",
         menu: {
           file: {
@@ -32,7 +31,6 @@ i18n.use(initReactI18next).init({
     zh: {
       translation: {
         appName: "electron-shadcn",
-        titleHomePage: "首页",
         titleSecondPage: "第二页",
         menu: {
           file: {

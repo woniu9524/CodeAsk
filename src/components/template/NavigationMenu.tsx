@@ -16,16 +16,9 @@ export default function NavigationMenu() {
     <NavigationMenuBase className="px-2 font-mono text-muted-foreground">
       <NavigationMenuList>
         <NavigationMenuItem>
-          <Link to="/">
+          <Link to="/code-view">
             <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              {t("titleHomePage")}
-            </NavigationMenuLink>
-          </Link>
-        </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link to="/second-page">
-            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-              {t("titleSecondPage")}
+              Code View
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>

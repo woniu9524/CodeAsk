@@ -1,6 +1,5 @@
 import { createRoute } from "@tanstack/react-router";
 import { RootRoute } from "./__root";
-import HomePage from "../pages/HomePage";
 import CodeViewPage from "@/pages/CodeViewPage";
 
 // TODO: Steps to add a new route:
