@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { usePluginStore, Plugin } from "@/store/usePluginStore";
 import { useModelStore } from "@/store/useModelStore";
 import { useForm, Controller } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 type PluginFormData = Omit<Plugin, 'id' | 'enabled'>;
 
@@ -29,6 +30,7 @@ export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
   
   const { updatePlugin } = usePluginStore();
   const { models } = useModelStore();
+  const { t } = useTranslation();
 
   const onSubmit = (data: PluginFormData) => {
     updatePlugin(plugin.id, data);
@@ -40,16 +42,16 @@ export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>编辑插件</DialogTitle>
+          <DialogTitle>{t('codeview.plugin.edit')}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">插件名称</Label>
+            <Label htmlFor="name">{t('codeview.plugin.name')}</Label>
             <Input id="name" {...register("name", { required: true })} />
           </div>
           
           <div className="space-y-2">
-            <Label htmlFor="modelId">使用模型</Label>
+            <Label htmlFor="modelId">{t('codeview.plugin.model')}</Label>
             <Controller
               name="modelId"
               control={control}
@@ -57,7 +59,7 @@ export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger>
-                    <SelectValue placeholder="选择模型" />
+                    <SelectValue placeholder={t('codeview.plugin.selectModel')} />
                   </SelectTrigger>
                   <SelectContent>
                     {models.filter(m => m.enabled).map((model) => (
@@ -72,7 +74,7 @@ export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="systemPrompt">系统提示词</Label>
+            <Label htmlFor="systemPrompt">{t('codeview.plugin.systemPrompt')}</Label>
             <Textarea
               id="systemPrompt"
               rows={4}
@@ -81,7 +83,7 @@ export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="userPrompt">用户提示词</Label>
+            <Label htmlFor="userPrompt">{t('codeview.plugin.userPrompt')}</Label>
             <Textarea
               id="userPrompt"
               rows={4}
@@ -89,7 +91,7 @@ export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
             />
           </div>
 
-          <Button type="submit" className="w-full">保存</Button>
+          <Button type="submit" className="w-full">{t('codeview.plugin.save')}</Button>
         </form>
       </DialogContent>
     </Dialog>

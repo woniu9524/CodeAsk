@@ -5,16 +5,18 @@ import { Switch } from "@/components/ui/switch";
 import { PlusCircle, Pencil, Trash2 } from "lucide-react";
 import { ModelConfigDialog } from "./ModelConfigDialog";
 import { ModelEditDialog } from "./ModelEditDialog";
+import { useTranslation } from "react-i18next";
 
 export default function ModelList() {
   const { models, toggleModel, deleteModel } = useModelStore();
+  const { t } = useTranslation();
 
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between px-2 py-1">
-        <h2 className="text-sm font-semibold">模型列表</h2>
+        <h2 className="text-sm font-semibold">{t('codeview.model.title')}</h2>
         <ModelConfigDialog>
-          <Button variant="ghost" size="icon" className="h-7 w-7">
+          <Button variant="ghost" size="icon" className="h-7 w-7" title={t('codeview.model.add')}>
             <PlusCircle className="h-4 w-4" />
           </Button>
         </ModelConfigDialog>
@@ -32,7 +34,7 @@ export default function ModelList() {
               </div>
               <div className="flex items-center gap-0.5 ml-2">
                 <ModelEditDialog model={model}>
-                  <Button variant="ghost" size="icon" className="h-7 w-7 opacity-0 group-hover:opacity-100">
+                  <Button variant="ghost" size="icon" className="h-7 w-7 opacity-0 group-hover:opacity-100" title={t('codeview.model.edit')}>
                     <Pencil className="h-4 w-4" />
                   </Button>
                 </ModelEditDialog>

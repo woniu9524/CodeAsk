@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useModelStore, ModelConfig } from "@/store/useModelStore";
 import { useForm } from "react-hook-form";
+import { useTranslation } from "react-i18next";
 
 type ModelFormData = Omit<ModelConfig, 'id' | 'enabled'>;
 
@@ -28,6 +29,7 @@ export function ModelEditDialog({ children, model }: ModelEditDialogProps) {
   });
   
   const { updateModel } = useModelStore();
+  const { t } = useTranslation();
 
   const onSubmit = (data: ModelFormData) => {
     updateModel(model.id, data);
@@ -39,23 +41,23 @@ export function ModelEditDialog({ children, model }: ModelEditDialogProps) {
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>编辑模型</DialogTitle>
+          <DialogTitle>{t('codeview.model.edit')}</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="name">模型名称</Label>
+            <Label htmlFor="name">{t('codeview.model.name')}</Label>
             <Input id="name" {...register("name", { required: true })} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="apiKey">API Key</Label>
+            <Label htmlFor="apiKey">{t('codeview.model.apiKey')}</Label>
             <Input id="apiKey" type="password" {...register("apiKey", { required: true })} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="baseUrl">Base URL</Label>
+            <Label htmlFor="baseUrl">{t('codeview.model.baseUrl')}</Label>
             <Input id="baseUrl" {...register("baseUrl", { required: true })} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="temperature">温度</Label>
+            <Label htmlFor="temperature">{t('codeview.model.temperature')}</Label>
             <Input
               id="temperature"
               type="number"
@@ -69,7 +71,7 @@ export function ModelEditDialog({ children, model }: ModelEditDialogProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="maxContextTokens">最大上下文Token数</Label>
+            <Label htmlFor="maxContextTokens">{t('codeview.model.maxContextTokens')}</Label>
             <Input
               id="maxContextTokens"
               type="number"
@@ -80,7 +82,7 @@ export function ModelEditDialog({ children, model }: ModelEditDialogProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="maxOutputTokens">最大输出Token数</Label>
+            <Label htmlFor="maxOutputTokens">{t('codeview.model.maxOutputTokens')}</Label>
             <Input
               id="maxOutputTokens"
               type="number"
@@ -91,7 +93,7 @@ export function ModelEditDialog({ children, model }: ModelEditDialogProps) {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="concurrency">并发数</Label>
+            <Label htmlFor="concurrency">{t('codeview.model.concurrency')}</Label>
             <Input
               id="concurrency"
               type="number"
@@ -103,7 +105,7 @@ export function ModelEditDialog({ children, model }: ModelEditDialogProps) {
               })}
             />
           </div>
-          <Button type="submit" className="w-full">保存</Button>
+          <Button type="submit" className="w-full">{t('codeview.model.save')}</Button>
         </form>
       </DialogContent>
     </Dialog>

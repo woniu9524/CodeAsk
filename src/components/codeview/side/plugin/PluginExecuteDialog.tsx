@@ -16,6 +16,7 @@ import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import type { FileNode } from '@/components/codeview/side/FileTree';
 import { relative, join } from "@/utils/path";
 import type { PluginExecutionFile } from "@/store/usePluginExecutionStore";
+import { useTranslation } from "react-i18next";
 
 interface PluginExecuteDialogProps {
   children?: React.ReactNode;
@@ -116,6 +117,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
   const { initializeDataFile, getPluginExecution, savePluginExecution } = usePluginExecutionStore();
   const { plugins } = usePluginStore();
   const { models } = useModelStore();
+  const { t } = useTranslation();
   
   const [selectableTree, setSelectableTree] = useState<FileNodeWithSelection[]>([]);
   const [fileExtensions, setFileExtensions] = useState("");
@@ -276,13 +278,13 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       // 获取插件配置
       const plugin = plugins.find(p => p.id === pluginId);
       if (!plugin) {
-        throw new Error('插件未找到');
+        throw new Error(t('codeview.plugin.execute.pluginNotFound'));
       }
 
       // 获取模型配置
       const model = models.find(m => m.id === plugin.modelId);
       if (!model) {
-        throw new Error('模型未找到');
+        throw new Error(t('codeview.plugin.execute.modelNotFound'));
       }
 
       // 初始化 ChatOpenAI
@@ -379,32 +381,32 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       </DialogTrigger>
       <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
-          <DialogTitle>执行插件: {pluginName}</DialogTitle>
+          <DialogTitle>{t('codeview.plugin.execute.title')+pluginName}</DialogTitle>
         </DialogHeader>
         
         <div className="space-y-6">
           <div className="space-y-2">
-            <Label>过滤规则</Label>
+            <Label>{t('codeview.plugin.execute.filterRules')}</Label>
             <div className="space-y-4">
               <div>
-                <Label>文件扩展名 (用逗号分隔)</Label>
+                <Label>{t('codeview.plugin.execute.fileExtensions')}</Label>
                 <Input
                   value={fileExtensions}
                   onChange={(e) => setFileExtensions(e.target.value)}
-                  placeholder="例如: .ts,.tsx,.js"
+                  placeholder={t('codeview.plugin.execute.fileExtensionsPlaceholder')}
                 />
               </div>
               
               <div className="space-y-2">
-                <Label>文件显示模式</Label>
+                <Label>{t('codeview.plugin.execute.displayMode')}</Label>
                 <Select value={displayMode} onValueChange={(value: FileDisplayMode) => setDisplayMode(value)}>
                   <SelectTrigger>
-                    <SelectValue placeholder="选择显示模式" />
+                    <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">全部显示</SelectItem>
-                    <SelectItem value="unprocessed">隐藏未处理</SelectItem>
-                    <SelectItem value="unprocessed_and_updated">显示未处理及需更新</SelectItem>
+                    <SelectItem value="all">{t('codeview.plugin.execute.displayModeAll')}</SelectItem>
+                    <SelectItem value="unprocessed">{t('codeview.plugin.execute.displayModeUnprocessed')}</SelectItem>
+                    <SelectItem value="unprocessed_and_updated">{t('codeview.plugin.execute.displayModeUnprocessedAndUpdated')}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -412,7 +414,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
           </div>
 
           <div className="space-y-2">
-            <Label>文件选择</Label>
+            <Label>{t('codeview.plugin.execute.fileSelection')}</Label>
             <div className="max-h-[300px] overflow-auto border rounded-md p-4">
               {filterTree(selectableTree).map((node) => (
                 <FileTree
@@ -425,7 +427,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
           </div>
 
           <Button onClick={handleExecute} className="w-full" disabled={isProcessing}>
-            {isProcessing ? "处理中..." : "执行"}
+            {isProcessing ? t('codeview.plugin.execute.processing') : t('codeview.plugin.execute.execute')}
           </Button>
         </div>
       </DialogContent>

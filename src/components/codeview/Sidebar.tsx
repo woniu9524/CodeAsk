@@ -5,6 +5,7 @@ import FileTree, { FileNode } from './side/FileTree';
 import { useFileStore } from '@/store/useFileStore';
 import PluginList from './side/plugin/PluginList';
 import ModelList from './side/model/ModelList';
+import { useTranslation } from 'react-i18next';
 
 type SidebarProps = {
   className?: string;
@@ -16,6 +17,7 @@ type TabType = 'explorer' | 'search' | 'plugin' | 'model';
 export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<TabType>('explorer');
   const { fileTree, openFile } = useFileStore();
+  const { t } = useTranslation();
 
   const handleFileClick = (file: FileNode) => {
     if (file.type === 'file') {
@@ -32,6 +34,7 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
           size="icon"
           className="mb-1"
           onClick={() => setActiveTab('explorer')}
+          title={t('codeview.sidebar.explorer')}
         >
           <FolderTree className="h-5 w-5" />
         </Button>
@@ -40,6 +43,7 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
           size="icon"
           className="mb-1"
           onClick={() => setActiveTab('plugin')}
+          title={t('codeview.sidebar.plugin')}
         >
           <Puzzle className="h-5 w-5" />
         </Button>
@@ -48,6 +52,7 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
           size="icon"
           className="mb-1"
           onClick={() => setActiveTab('model')}
+          title={t('codeview.sidebar.model')}
         >
           <Settings className="h-5 w-5" />
         </Button>
@@ -55,6 +60,7 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
           variant={activeTab === 'search' ? 'secondary' : 'ghost'}
           size="icon"
           onClick={() => setActiveTab('search')}
+          title={t('codeview.sidebar.search')}
         >
           <Search className="h-5 w-5" />
         </Button>
@@ -64,13 +70,13 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
       <div className="w-60 border-r bg-background p-2">
         {activeTab === 'explorer' && (
           <div>
-            <h2 className="mb-2 px-2 text-sm font-semibold">资源管理器</h2>
+            <h2 className="mb-2 px-2 text-sm font-semibold">{t('codeview.sidebar.explorer')}</h2>
             <FileTree data={fileTree} onFileClick={handleFileClick} />
           </div>
         )}
         {activeTab === 'search' && (
           <div>
-            <h2 className="mb-2 px-2 text-sm font-semibold">搜索</h2>
+            <h2 className="mb-2 px-2 text-sm font-semibold">{t('codeview.sidebar.search')}</h2>
             {/* TODO: 添加搜索组件 */}
           </div>
         )}

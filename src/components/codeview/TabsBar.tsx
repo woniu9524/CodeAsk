@@ -3,6 +3,7 @@ import { X, Split } from 'lucide-react';
 import { cn } from '@/utils/tailwind';
 import { getFileIcon } from './side/FileTree';
 import { useSplitStore } from '@/store/useSplitStore';
+import { useTranslation } from 'react-i18next';
 
 export type TabType = 'code' | 'plugin_markdown';
 
@@ -23,6 +24,7 @@ type TabsBarProps = {
 
 export default function TabsBar({ tabs, onTabClick, onTabClose }: TabsBarProps) {
   const { isSplit, setSplit, setRightPaneFile } = useSplitStore();
+  const { t } = useTranslation();
 
   if (tabs.length === 0) {
     return null;
@@ -65,7 +67,7 @@ export default function TabsBar({ tabs, onTabClick, onTabClose }: TabsBarProps) 
                 e.stopPropagation();
                 handleSplitClick(tab);
               }}
-              title={isSplit ? "取消分屏" : "分屏显示"}
+              title={isSplit ? t('codeview.tabs.cancelSplit') : t('codeview.tabs.splitScreen')}
             >
               <Split className="h-4 w-4" />
             </button>
