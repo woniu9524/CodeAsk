@@ -6,7 +6,7 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {
       translation: {
-        appName: "electron-shadcn",
+        appName: "CodeAsk",
         titleSecondPage: "Second Page",
         menu: {
           file: {
@@ -30,7 +30,7 @@ i18n.use(initReactI18next).init({
     },
     zh: {
       translation: {
-        appName: "electron-shadcn",
+        appName: "CodeAsk",
         titleSecondPage: "第二页",
         menu: {
           file: {
@@ -48,6 +48,30 @@ i18n.use(initReactI18next).init({
             title: "帮助",
             documentation: "文档",
             about: "关于"
+          }
+        }
+      },
+    },
+    ja: {
+      translation: {
+        appName: "CodeAsk",
+        titleSecondPage: "セカンドページ",
+        menu: {
+          file: {
+            title: "ファイル",
+            openFile: "ファイルを開く",
+            openFolder: "フォルダを開く",
+            openRecent: "最近使用したファイル",
+            noRecentFolders: "最近使用したフォルダはありません",
+            exit: "終了"
+          },
+          settings: {
+            title: "設定",
+          },
+          help: {
+            title: "ヘルプ",
+            documentation: "ドキュメント",
+            about: "バージョン情報"
           }
         }
       },
