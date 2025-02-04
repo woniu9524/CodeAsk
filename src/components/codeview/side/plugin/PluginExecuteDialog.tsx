@@ -413,7 +413,28 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
           </div>
 
           <div className="space-y-2">
-            <Label>{t('codeview.plugin.execute.fileSelection')}</Label>
+            <div className="flex items-center justify-between">
+              <Label>{t('codeview.plugin.execute.fileSelection')}</Label>
+              <div className="flex items-center gap-2">
+                <Checkbox
+                  id="select-all"
+                  checked={selectableTree.length > 0 && selectableTree.every(node => node.selected)}
+                  onCheckedChange={(checked) => {
+                    const updateAllNodes = (nodes: FileNodeWithSelection[]): FileNodeWithSelection[] => {
+                      return nodes.map(node => ({
+                        ...node,
+                        selected: !!checked,
+                        children: node.children ? updateAllNodes(node.children) : undefined
+                      }));
+                    };
+                    setSelectableTree(prevTree => updateAllNodes(prevTree));
+                  }}
+                />
+                <Label htmlFor="select-all" className="text-sm cursor-pointer">
+                  {t('codeview.plugin.execute.selectAll')}
+                </Label>
+              </div>
+            </div>
             <div className="max-h-[300px] overflow-auto border rounded-md p-4">
               {filterTree(selectableTree).map((node) => (
                 <FileTree
