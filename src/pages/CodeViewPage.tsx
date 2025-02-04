@@ -76,7 +76,6 @@ function CodePreview({ filePath }: { filePath: string }) {
 // Markdown预览组件
 function MarkdownPreview({ content }: { content: string }) {
   useEffect(() => {
-    // 在组件挂载和内容更新后重新应用代码高亮
     Prism.highlightAll();
   }, [content]);
 
@@ -85,11 +84,11 @@ function MarkdownPreview({ content }: { content: string }) {
       const match = /language-(\w+)/.exec(className || '');
       const isInline = !match;
       return isInline ? (
-        <code className={className} {...props}>
+        <code className="bg-muted px-1 py-0.5 rounded text-sm" {...props}>
           {children}
         </code>
       ) : (
-        <pre className={className}>
+        <pre className="!bg-muted p-4 rounded-lg my-4">
           <code
             className={className}
             {...props}
@@ -98,17 +97,41 @@ function MarkdownPreview({ content }: { content: string }) {
           </code>
         </pre>
       );
-    }
+    },
+    h1: ({ children }) => <h1 className="text-3xl font-bold mt-8 mb-4">{children}</h1>,
+    h2: ({ children }) => <h2 className="text-2xl font-bold mt-6 mb-3">{children}</h2>,
+    h3: ({ children }) => <h3 className="text-xl font-bold mt-4 mb-2">{children}</h3>,
+    p: ({ children }) => <p className="my-4 leading-7">{children}</p>,
+    ul: ({ children }) => <ul className="list-disc list-inside my-4 space-y-2">{children}</ul>,
+    ol: ({ children }) => <ol className="list-decimal list-inside my-4 space-y-2">{children}</ol>,
+    li: ({ children }) => <li className="ml-4">{children}</li>,
+    blockquote: ({ children }) => (
+      <blockquote className="border-l-4 border-primary pl-4 my-4 italic">{children}</blockquote>
+    ),
+    a: ({ children, href }) => (
+      <a href={href} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+        {children}
+      </a>
+    ),
+    table: ({ children }) => (
+      <div className="my-4 overflow-x-auto">
+        <table className="min-w-full divide-y divide-border">{children}</table>
+      </div>
+    ),
+    th: ({ children }) => <th className="px-4 py-2 bg-muted font-semibold">{children}</th>,
+    td: ({ children }) => <td className="px-4 py-2 border-t border-border">{children}</td>,
   };
 
   return (
-    <div className="h-full p-4 overflow-auto bg-background prose prose-invert max-w-none">
-      <ReactMarkdown 
-        remarkPlugins={[remarkGfm]}
-        components={components}
-      >
-        {content}
-      </ReactMarkdown>
+    <div className="h-full p-6 overflow-auto bg-background">
+      <div className="max-w-4xl mx-auto prose prose-invert prose-headings:font-bold prose-a:text-primary prose-pre:bg-muted prose-pre:border prose-pre:border-border">
+        <ReactMarkdown 
+          remarkPlugins={[remarkGfm]}
+          components={components}
+        >
+          {content}
+        </ReactMarkdown>
+      </div>
     </div>
   );
 }
