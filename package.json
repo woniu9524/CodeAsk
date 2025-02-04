@@ -106,6 +106,7 @@
     "electron-squirrel-startup": "^1.0.1",
     "i18next": "^24.2.2",
     "lucide-react": "^0.474.0",
+    "mermaid": "^11.4.1",
     "prismjs": "^1.29.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

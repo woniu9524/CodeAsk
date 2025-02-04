@@ -20,6 +20,7 @@ import { getLanguageExtension } from "@/utils/language";
 import 'prismjs/themes/prism-tomorrow.css';
 import Prism from 'prismjs';
 import type { Components } from 'react-markdown';
+import mermaid from 'mermaid';
 
 // 代码预览组件
 function CodePreview({ filePath }: { filePath: string }) {
@@ -75,14 +76,50 @@ function CodePreview({ filePath }: { filePath: string }) {
 
 // Markdown预览组件
 function MarkdownPreview({ content }: { content: string }) {
+  const [theme, setTheme] = React.useState<'dark' | 'light' | 'system'>('dark');
+
   useEffect(() => {
+    const loadTheme = async () => {
+      try {
+        const { local } = await getCurrentTheme();
+        setTheme(local || 'dark');
+      } catch (error) {
+        console.error("加载主题失败:", error);
+      }
+    };
+    loadTheme();
+
     Prism.highlightAll();
-  }, [content]);
+    // 初始化 mermaid，使用当前主题
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: theme === 'dark' ? 'dark' : 'default',
+      securityLevel: 'loose',
+    });
+  }, [theme]);
 
   const components: Components = {
     code({ className, children, ...props }) {
       const match = /language-(\w+)/.exec(className || '');
+      const language = match ? match[1] : '';
       const isInline = !match;
+
+      // 处理 Mermaid 图表
+      if (language === 'mermaid') {
+        const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
+        React.useEffect(() => {
+          mermaid.contentLoaded();
+        }, []);
+        
+        return (
+          <div className="my-4">
+            <div className="mermaid" id={id}>
+              {String(children)}
+            </div>
+          </div>
+        );
+      }
+
       return isInline ? (
         <code className="bg-muted px-1 py-0.5 rounded text-sm" {...props}>
           {children}
