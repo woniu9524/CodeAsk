@@ -10,3 +10,8 @@ export async function closeWindow() {
   // @ts-ignore
   await window.electronWindow.close();
 }
+
+export async function openExternalUrl(url: string) {
+  // @ts-ignore
+  await window.electronWindow.openExternal(url);
+}

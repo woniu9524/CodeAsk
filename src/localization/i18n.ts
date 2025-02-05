@@ -76,7 +76,8 @@ i18n.use(initReactI18next).init({
               execute: "Execute",
               modelNotFound: "Model not found",
               pluginNotFound: "Plugin not found",
-              unknownError: "Unknown error"
+              unknownError: "Unknown error",
+              completed: "Completed"
             }
           }
         }
@@ -154,7 +155,8 @@ i18n.use(initReactI18next).init({
               execute: "执行",
               modelNotFound: "模型未找到",
               pluginNotFound: "插件未找到",
-              unknownError: "未知错误"
+              unknownError: "未知错误",
+              completed: "已完成"
             }
           }
         }
@@ -232,7 +234,8 @@ i18n.use(initReactI18next).init({
               execute: "実行",
               modelNotFound: "モデルが見つかりません",
               pluginNotFound: "プラグインが見つかりません",
-              unknownError: "不明なエラー"
+              unknownError: "不明なエラー",
+              completed: "完了"
             }
           }
         }

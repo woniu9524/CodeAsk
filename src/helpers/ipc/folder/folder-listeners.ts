@@ -30,6 +30,11 @@ function readDirectory(dir: string, ig?: ReturnType<typeof ignore>, rootDir?: st
         ? path.join(relativeDirPath, item.name).replace(/\\/g, '/')
         : item.name;
 
+      // 忽略 .git 目录
+      if (item.name === '.git') {
+        return null;
+      }
+
       // 如果有 .gitignore 规则，检查文件是否应该被忽略
       if (ig && ig.ignores(relativePath)) {
         return null;

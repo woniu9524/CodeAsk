@@ -2,8 +2,9 @@ import {
   closeWindow,
   maximizeWindow,
   minimizeWindow,
+  openExternalUrl,
 } from "@/helpers/window_helpers";
-import React, { type ReactNode } from "react";
+import React from "react";
 import ToggleTheme from "./ToggleTheme";
 import LangToggle from "./LangToggle";
 import { useFileStore } from "@/store/useFileStore";
@@ -23,11 +24,7 @@ import { useTranslation } from "react-i18next";
 import { selectFolder } from "@/helpers/folder_helpers";
 import path from "@/utils/path";
 
-interface DragWindowRegionProps {
-  title?: ReactNode;
-}
-
-export default function DragWindowRegion({ title }: DragWindowRegionProps) {
+export default function DragWindowRegion() {
   const { t } = useTranslation();
   const setCurrentFolder = useFileStore(state => state.setCurrentFolder);
   const { recentFolders, addRecentFolder } = useRecentFoldersStore();
@@ -53,6 +50,14 @@ export default function DragWindowRegion({ title }: DragWindowRegionProps) {
       await navigate({ to: "/code-view" });
     } catch (error) {
       console.error('Failed to open recent folder:', error);
+    }
+  };
+
+  const handleOpenGitHub = async () => {
+    try {
+      await openExternalUrl('https://github.com/woniu9524/CodeAsk');
+    } catch (error) {
+      console.error('Failed to open GitHub:', error);
     }
   };
 
@@ -96,8 +101,8 @@ export default function DragWindowRegion({ title }: DragWindowRegionProps) {
               {t('menu.help.title')}
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>{t('menu.help.documentation')}</DropdownMenuItem>
-              <DropdownMenuItem>{t('menu.help.about')}</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleOpenGitHub}>{t('menu.help.documentation')}</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleOpenGitHub}>{t('menu.help.about')}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

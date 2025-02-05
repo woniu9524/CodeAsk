@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { FolderTree, Search, Puzzle, Settings } from "lucide-react";
+import { FolderOpenDot, Search, Puzzle, Bot } from "lucide-react";
 import FileTree, { FileNode } from './side/FileTree';
 import { useFileStore } from '@/store/useFileStore';
 import PluginList from './side/plugin/PluginList';
@@ -36,7 +36,7 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
           onClick={() => setActiveTab('explorer')}
           title={t('codeview.sidebar.explorer')}
         >
-          <FolderTree className="h-5 w-5" />
+          <FolderOpenDot className="h-5 w-5" />
         </Button>
         <Button
           variant={activeTab === 'plugin' ? 'secondary' : 'ghost'}
@@ -54,7 +54,7 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
           onClick={() => setActiveTab('model')}
           title={t('codeview.sidebar.model')}
         >
-          <Settings className="h-5 w-5" />
+          <Bot className="h-5 w-5" />
         </Button>
         <Button
           variant={activeTab === 'search' ? 'secondary' : 'ghost'}

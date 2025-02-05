@@ -7,9 +7,9 @@
 
 <div align="center">
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Node](https://img.shields.io/badge/node-%3E%3D14-brightgreen.svg)](https://nodejs.org)
-[![React](https://img.shields.io/badge/react-%5E18.0.0-blue.svg)](https://reactjs.org/)
+[![License](https://img.shields.io/badge/license-GNU-blue.svg)](LICENSE)
+[![Node](https://img.shields.io/badge/node-%3E%3D16-brightgreen.svg)](https://nodejs.org)
+[![React](https://img.shields.io/badge/react-%5E19.0.0-blue.svg)](https://reactjs.org/)
 [![Electron](https://img.shields.io/badge/electron-latest-blueviolet.svg)](https://www.electronjs.org/)
 
 </div>

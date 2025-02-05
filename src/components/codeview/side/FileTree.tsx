@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ChevronRight, ChevronDown } from 'lucide-react';
-import { FileIcon, FolderIcon } from 'lucide-react';
+import { FolderIcon } from 'lucide-react';
+import SvgIcon from '@/components/SvgIcon';
 
 export type FileNode = {
   id: string;
@@ -19,30 +20,170 @@ type FileTreeItemProps = FileTreeProps & {
 };
 
 export function getFileIcon(fileName: string) {
-  // 使用原生 JavaScript 获取文件扩展名
-  const ext = fileName.slice(((fileName.lastIndexOf(".") - 1) >>> 0) + 2).toLowerCase();
+  // 获取文件名和扩展名
+  const name = fileName.toLowerCase();
+  const ext = name.slice(((name.lastIndexOf(".") - 1) >>> 0) + 2);
   
-  // 根据文件扩展名返回不同的图标颜色
-  switch (ext) {
-    case 'ts':
-    case 'tsx':
-      return <FileIcon className="h-4 w-4 text-blue-500" />;
-    case 'js':
-    case 'jsx':
-      return <FileIcon className="h-4 w-4 text-yellow-500" />;
-    case 'json':
-      return <FileIcon className="h-4 w-4 text-green-500" />;
-    case 'md':
-      return <FileIcon className="h-4 w-4 text-purple-500" />;
-    case 'css':
-    case 'scss':
-    case 'less':
-      return <FileIcon className="h-4 w-4 text-pink-500" />;
-    case 'html':
-      return <FileIcon className="h-4 w-4 text-orange-500" />;
-    default:
-      return <FileIcon className="h-4 w-4 text-gray-500" />;
+  // 特殊文件名映射
+  const specialFiles: { [key: string]: string } = {
+    'dockerfile': 'docker',
+    '.dockerignore': 'docker',
+    '.gitignore': 'git',
+    '.env': 'env',
+    'package.json': 'nodejs',
+    'package-lock.json': 'nodejs',
+    'yarn.lock': 'yarn',
+    'pnpm-lock.yaml': 'pnpm',
+    'readme.md': 'markdown',
+    'license': 'certificate',
+    'license.txt': 'certificate',
+    'license.md': 'certificate',
+    'tsconfig.json': 'typescript',
+    'tslint.json': 'typescript',
+    'eslintrc': 'eslint',
+    '.eslintrc.js': 'eslint',
+    '.eslintrc.json': 'eslint',
+    '.prettierrc': 'prettier',
+    'vite.config.ts': 'vite',
+    'vite.config.js': 'vite',
+    'next.config.js': 'nextjs',
+    'nuxt.config.js': 'nuxt',
+    'angular.json': 'angular',
+    'vue.config.js': 'vue',
+    'astro.config.mjs': 'astro',
+    'biome.json': 'biome',
+    '.babelrc': 'babel',
+    'babel.config.js': 'babel',
+    'azure-pipelines.yml': 'azure-pipelines',
+    'appveyor.yml': 'appveyor',
+    '.browserslistrc': 'browserlist',
+    'capacitor.config.json': 'capacitor',
+    'changelog.md': 'changelog',
+    'authors.md': 'authors',
+    'contributing.md': 'contributing',
+    'code-of-conduct.md': 'conduct',
+    'citation.cff': 'citation',
+    'circleci.yml': 'circleci',
+    '.circleci/config.yml': 'circleci',
+    'codeowners': 'codeowners',
+    'commitlint.config.js': 'commitlint',
+    'contentlayer.config.js': 'contentlayer'
+  };
+
+  // 检查是否是特殊文件
+  if (specialFiles[name]) {
+    return <SvgIcon name={specialFiles[name]} size={16} className="mr-1" />;
   }
+
+  // 扩展名映射
+  const extMap: { [key: string]: string } = {
+    // Web 技术
+    'html': 'html',
+    'css': 'css',
+    'scss': 'sass',
+    'sass': 'sass',
+    'less': 'less',
+    'js': 'javascript',
+    'jsx': 'react',
+    'ts': 'typescript',
+    'tsx': 'react',
+    'vue': 'vue',
+    'svelte': 'svelte',
+    'astro': 'astro',
+
+    // 编程语言
+    'py': 'python',
+    'rb': 'ruby',
+    'php': 'php',
+    'java': 'java',
+    'kt': 'kotlin',
+    'go': 'go',
+    'rs': 'rust',
+    'c': 'c',
+    'cpp': 'cpp',
+    'cs': 'csharp',
+    'swift': 'swift',
+    'dart': 'dart',
+    'abap': 'abap',
+    'abc': 'abc',
+    'ada': 'ada',
+    'applescript': 'applescript',
+    'as': 'actionscript',
+    'asm': 'assembly',
+    'ahk': 'autohotkey',
+    'au3': 'autoit',
+    'bal': 'ballerina',
+    'bf': 'brainfuck',
+    'clj': 'clojure',
+    'cob': 'cobol',
+    'coffee': 'coffee',
+    'cfm': 'coldfusion',
+
+    // 数据和配置文件
+    'json': 'json',
+    'yaml': 'yaml',
+    'yml': 'yaml',
+    'toml': 'toml',
+    'xml': 'xml',
+    'csv': 'csv',
+    'sql': 'database',
+    'graphql': 'apollo',
+    'prisma': 'prisma',
+    'bicep': 'bicep',
+
+    // 构建和工具配置
+    'bzl': 'bazel',
+    'cmake': 'cmake',
+    'cabal': 'cabal',
+    'caddy': 'caddy',
+
+    // 文档
+    'md': 'markdown',
+    'mdx': 'markdown',
+    'txt': 'text',
+    'pdf': 'pdf',
+    'doc': 'word',
+    'docx': 'word',
+    'xls': 'excel',
+    'xlsx': 'excel',
+    'adoc': 'asciidoc',
+
+    // 多媒体
+    'png': 'image',
+    'jpg': 'image',
+    'jpeg': 'image',
+    'gif': 'image',
+    'svg': 'svg',
+    'mp3': 'audio',
+    'wav': 'audio',
+    'mp4': 'video',
+    'mov': 'video',
+    '3ds': '3d',
+    'obj': '3d',
+    'fbx': '3d',
+
+    // 嵌入式和硬件
+    'ino': 'arduino',
+    'vhd': 'assembly',
+    'v': 'assembly',
+
+    // 其他
+    'sh': 'console',
+    'bash': 'console',
+    'bat': 'console',
+    'cmd': 'console',
+    'zip': 'zip',
+    'rar': 'zip',
+    '7z': 'zip',
+    'tar': 'zip',
+    'gz': 'zip',
+    'bun': 'bun',
+    'bruno': 'bruno',
+    'dll': 'dll'
+  };
+
+  const iconName = extMap[ext] || 'file';
+  return <SvgIcon name={iconName} size={16} className="mr-1" />;
 }
 
 function FileTreeItem({ data, level = 0, onFileClick }: FileTreeItemProps) {

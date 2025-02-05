@@ -1,9 +1,16 @@
-import React from "react";
-import { toggleTheme } from "@/helpers/theme_helpers";
+import React, { useEffect } from "react";
+import { toggleTheme, syncThemeWithLocal } from "@/helpers/theme_helpers";
 import "./ThemeToggle.css";
 
 export default function ToggleTheme() {
   const [isDark, setIsDark] = React.useState(document.documentElement.classList.contains("dark"));
+
+  useEffect(() => {
+    // 在组件加载时同步主题状态
+    syncThemeWithLocal().then(() => {
+      setIsDark(document.documentElement.classList.contains("dark"));
+    });
+  }, []);
 
   const handleToggle = () => {
     toggleTheme();

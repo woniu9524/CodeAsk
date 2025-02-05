@@ -193,4 +193,22 @@
   button {
     @apply cursor-pointer;
   }
+
+  /* 自定义滚动条样式 */
+  ::-webkit-scrollbar {
+    @apply w-2;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-muted-foreground/20 hover:bg-muted-foreground/30 transition-colors;
+  }
+
+  /* 在暗色模式下的滚动条样式 */
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground/30 hover:bg-muted-foreground/40;
+  }
 }

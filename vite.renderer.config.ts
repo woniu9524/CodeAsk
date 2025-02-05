@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 import type { ConfigEnv, UserConfig } from "vite";
 import { defineConfig } from "vite";
 import { pluginExposeRenderer } from "./vite.base.config";
+import svgr from 'vite-plugin-svgr';
 
 // https://vitejs.dev/config
 export default defineConfig((env) => {
@@ -24,6 +25,7 @@ export default defineConfig((env) => {
           plugins: [["babel-plugin-react-compiler"]],
         },
       }),
+      svgr(),
     ],
     resolve: {
       preserveSymlinks: true,

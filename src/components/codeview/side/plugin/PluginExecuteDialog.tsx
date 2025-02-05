@@ -17,6 +17,7 @@ import type { FileNode } from '@/components/codeview/side/FileTree';
 import { relative, join } from "@/utils/path";
 import type { PluginExecutionFile } from "@/store/usePluginExecutionStore";
 import { useTranslation } from "react-i18next";
+import { Progress } from "@/components/ui/progress";
 
 interface PluginExecuteDialogProps {
   children?: React.ReactNode;
@@ -41,17 +42,16 @@ function convertToSelectableTree(node: FileNode): FileNodeWithSelection {
   };
 }
 
-function FileTree({ 
+function FileTree({
   node,
-  onSelect,
-  parentSelected = false
-}: { 
+  onSelect
+                  }: {
   node: FileNodeWithSelection;
   onSelect: (node: FileNodeWithSelection, selected: boolean) => void;
   parentSelected?: boolean;
 }) {
   const [isExpanded, setIsExpanded] = useState(true);
-  
+
   if (node._hidden) {
     return null;
   }
@@ -65,7 +65,7 @@ function FileTree({
 
   return (
     <div className="pl-2">
-      <div 
+      <div
         className="flex items-center gap-2 py-1 hover:bg-gray-100 rounded cursor-pointer"
         onClick={isDirectory ? handleToggle : undefined}
       >
@@ -117,13 +117,14 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
   const { plugins } = usePluginStore();
   const { models } = useModelStore();
   const { t } = useTranslation();
-  
+
   const [selectableTree, setSelectableTree] = useState<FileNodeWithSelection[]>([]);
   const [fileExtensions, setFileExtensions] = useState("");
   const [displayMode, setDisplayMode] = useState<FileDisplayMode>("all");
   const [isOpen, setIsOpen] = useState(false);
   const [fileHashes, setFileHashes] = useState<Record<string, string>>({});
   const [isProcessing, setIsProcessing] = useState(false);
+  const [progress, setProgress] = useState(0);
 
   // 获取所有文件的哈希值
   const updateFileHashes = async (nodes: FileNodeWithSelection[]) => {
@@ -151,7 +152,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
   useEffect(() => {
     if (isOpen && currentFolderPath) {
       initializeDataFile(currentFolderPath);
-      
+
       const newTree = fileTree.map(convertToSelectableTree);
       setSelectableTree(newTree);
       updateFileHashes(newTree);
@@ -175,7 +176,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
     if (node.type === 'file') {
       // 检查文件扩展名
       if (extensions.length > 0) {
-        const hasMatchingExtension = extensions.some(ext => 
+        const hasMatchingExtension = extensions.some(ext =>
           node.name.toLowerCase().endsWith(ext.toLowerCase())
         );
         if (!hasMatchingExtension) return false;
@@ -272,6 +273,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
   const handleExecute = async () => {
     try {
       setIsProcessing(true);
+      setProgress(0);
       const selectedFiles = getSelectedFiles(selectableTree);
       const extensions = fileExtensions.split(',').map(ext => ext.trim()).filter(Boolean);
       // 获取插件配置
@@ -315,9 +317,12 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
 
           // 调用模型分析
           const response = await chat.invoke(messages);
-          const result = typeof response.content === 'string' 
-            ? response.content 
+          let result = typeof response.content === 'string'
+            ? response.content
             : JSON.stringify(response.content);
+
+          // Remove any <think></think> segments
+          result = result.replace(/<think>[\s\S]*?<\/think>/g, '');
 
           return {
             filename: relativePath,
@@ -340,14 +345,18 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       // 并发处理文件
       const concurrency = model.concurrency ?? 1;
       const processedFiles: PluginExecutionFile[] = [];
-      
+
       // 使用 for 循环分批处理文件
       for (let i = 0; i < selectedFiles.length; i += concurrency) {
         const batch = selectedFiles.slice(i, i + concurrency);
         const batchResults = await Promise.all(batch.map(processFile));
         processedFiles.push(...batchResults);
+
+        // 更新进度
+        const currentProgress = Math.min(((i + concurrency) / selectedFiles.length) * 100, 100);
+        setProgress(currentProgress);
       }
-      
+
       const rules = {
         fileExtensions: extensions,
         showProcessed: displayMode === "all",
@@ -366,6 +375,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       console.error('执行失败:', error);
     } finally {
       setIsProcessing(false);
+      setProgress(0);
     }
   };
 
@@ -378,11 +388,11 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
           <DialogTitle>{t('codeview.plugin.execute.title')+pluginName}</DialogTitle>
         </DialogHeader>
-        
+
         <div className="space-y-6">
           <div className="space-y-2">
             <Label>{t('codeview.plugin.execute.filterRules')}</Label>
@@ -395,7 +405,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
                   placeholder={t('codeview.plugin.execute.fileExtensionsPlaceholder')}
                 />
               </div>
-              
+
               <div className="space-y-2">
                 <Label>{t('codeview.plugin.execute.displayMode')}</Label>
                 <Select value={displayMode} onValueChange={(value: FileDisplayMode) => setDisplayMode(value)}>
@@ -446,11 +456,21 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
             </div>
           </div>
 
-          <Button onClick={handleExecute} className="w-full" disabled={isProcessing}>
-            {isProcessing ? t('codeview.plugin.execute.processing') : t('codeview.plugin.execute.execute')}
-          </Button>
+          <div className="space-y-4">
+            {isProcessing && (
+              <div className="space-y-2">
+                <Progress value={progress} />
+                <div className="text-sm text-center text-gray-500">
+                  {Math.round(progress)}% {t('codeview.plugin.execute.completed')}
+                </div>
+              </div>
+            )}
+            <Button onClick={handleExecute} className="w-full" disabled={isProcessing}>
+              {isProcessing ? t('codeview.plugin.execute.processing') : t('codeview.plugin.execute.execute')}
+            </Button>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
   );
-} 
+}

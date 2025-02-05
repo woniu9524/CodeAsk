@@ -30,7 +30,7 @@ export function PluginConfigDialog({ children }: PluginConfigDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[600px]">
         <DialogHeader>
           <DialogTitle>{t('codeview.plugin.add')}</DialogTitle>
         </DialogHeader>
@@ -67,7 +67,7 @@ export function PluginConfigDialog({ children }: PluginConfigDialogProps) {
             <Label htmlFor="systemPrompt">{t('codeview.plugin.systemPrompt')}</Label>
             <Textarea
               id="systemPrompt"
-              rows={4}
+              rows={10}
               {...register("systemPrompt", { required: true })}
             />
           </div>
@@ -76,7 +76,7 @@ export function PluginConfigDialog({ children }: PluginConfigDialogProps) {
             <Label htmlFor="userPrompt">{t('codeview.plugin.userPrompt')}</Label>
             <Textarea
               id="userPrompt"
-              rows={4}
+              rows={6}
               {...register("userPrompt", { required: true })}
             />
           </div>

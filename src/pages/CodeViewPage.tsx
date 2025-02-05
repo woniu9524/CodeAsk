@@ -50,6 +50,8 @@ function CodePreview({ filePath }: { filePath: string }) {
       }
     };
     loadTheme();
+    const intervalId = setInterval(loadTheme, 1000);
+    return () => clearInterval(intervalId);
   }, []);
 
   const ext = path.extname(filePath).slice(1).toLowerCase();
@@ -73,6 +75,20 @@ function CodePreview({ filePath }: { filePath: string }) {
   );
 }
 
+// Insert new MermaidBlock component above CodePreview
+function MermaidBlock({ children }: { children: React.ReactNode }) {
+  const [id] = React.useState(() => `mermaid-${Math.random().toString(36).substr(2, 9)}`);
+  React.useEffect(() => {
+    mermaid.contentLoaded();
+  }, []);
+  return (
+    <div className="my-4">
+      <div className="mermaid" id={id}>
+        {String(children)}
+      </div>
+    </div>
+  );
+}
 
 // Markdown预览组件
 function MarkdownPreview({ content }: { content: string }) {
@@ -104,22 +120,10 @@ function MarkdownPreview({ content }: { content: string }) {
       const language = match ? match[1] : '';
       const isInline = !match;
 
-      // 处理 Mermaid 图表
       if (language === 'mermaid') {
-        const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
-        React.useEffect(() => {
-          mermaid.contentLoaded();
-        }, []);
-        
-        return (
-          <div className="my-4">
-            <div className="mermaid" id={id}>
-              {String(children)}
-            </div>
-          </div>
-        );
+        return <MermaidBlock>{children}</MermaidBlock>;
       }
-
+      
       return isInline ? (
         <code className="bg-muted px-1 py-0.5 rounded text-sm" {...props}>
           {children}
@@ -140,8 +144,16 @@ function MarkdownPreview({ content }: { content: string }) {
     h3: ({ children }) => <h3 className="text-xl font-bold mt-4 mb-2">{children}</h3>,
     p: ({ children }) => <p className="my-4 leading-7">{children}</p>,
     ul: ({ children }) => <ul className="list-disc list-inside my-4 space-y-2">{children}</ul>,
-    ol: ({ children }) => <ol className="list-decimal list-inside my-4 space-y-2">{children}</ol>,
-    li: ({ children }) => <li className="ml-4">{children}</li>,
+    ol: ({ children }) => (
+      <ol className="list-decimal my-4 space-y-2 ml-6">
+        {children}
+      </ol>
+    ),
+    li: ({ children }) => (
+      <li className="ml-2 pl-2">
+        {children}
+      </li>
+    ),
     blockquote: ({ children }) => (
       <blockquote className="border-l-4 border-primary pl-4 my-4 italic">{children}</blockquote>
     ),
@@ -186,7 +198,7 @@ export default function CodeViewPage() {
   } = useFileStore();
   const { plugins } = usePluginStore();
   const { getPluginExecution, initializeDataFile } = usePluginExecutionStore();
-  const { isSplit, rightPaneFileId, splitSizes, setSplitSizes } = useSplitStore();
+  const { isSplit, splitSizes, setSplitSizes } = useSplitStore();
 
   // 初始化当前文件夹路径
   useEffect(() => {
@@ -232,6 +244,19 @@ export default function CodeViewPage() {
     }
   }).filter(Boolean) as Tab[];
 
+  // 在现有 tabs 定义后、handleFileClick 定义之前插入以下代码
+  const codeTabId = tabs.find(tab => tab.type === 'code')?.id;
+  const [activePluginFileId, setActivePluginFileId] = React.useState<string | null>(null);
+  const handleTabClick = (tabId: string) => {
+    const clickedTab = tabs.find(tab => tab.id === tabId);
+    if (isSplit && clickedTab && clickedTab.type === 'plugin_markdown') {
+      setActivePluginFileId(tabId);
+    } else {
+      setActiveFile(tabId);
+    }
+  };
+  const activePluginTabId = isSplit ? (activePluginFileId || tabs.find(tab => tab.type === 'plugin_markdown')?.id) : activeFile;
+
   // 处理文件点击事件
   const handleFileClick = async (filePath: string) => {
     // 关闭之前的所有标签
@@ -239,6 +264,10 @@ export default function CodeViewPage() {
 
     // 打开代码预览标签
     openFile(filePath);
+    // Delay setting active file to ensure openFile finishes updating state
+    setTimeout(() => {
+      setActiveFile(filePath);
+    }, 0);
 
     // 遍历启用的插件，查找匹配的结果
     const enabledPlugins = plugins.filter(p => p.enabled);
@@ -304,7 +333,7 @@ export default function CodeViewPage() {
       <div className="flex flex-1 flex-col">
         <TabsBar
           tabs={tabs}
-          onTabClick={setActiveFile}
+          onTabClick={handleTabClick}
           onTabClose={closeFile}
         />
         <div className="flex-1 bg-background overflow-hidden">
@@ -322,10 +351,14 @@ export default function CodeViewPage() {
               onDragEnd={(sizes: number[]) => setSplitSizes(sizes)}
             >
               <div className="h-full overflow-auto">
-                {renderTabContent(activeFile)}
+                {codeTabId
+                  ? renderTabContent(codeTabId)
+                  : <div>No code file open</div>}
               </div>
               <div className="h-full overflow-auto">
-                {renderTabContent(rightPaneFileId)}
+                {activePluginTabId
+                  ? renderTabContent(activePluginTabId)
+                  : <div>No plugin result</div>}
               </div>
             </Split>
           ) : (

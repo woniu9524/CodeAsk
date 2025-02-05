@@ -1,8 +1,8 @@
 {
-  "name": "electron-shadcn",
-  "productName": "electron-shadcn Template",
+  "name": "code-ask",
+  "productName": "CodeAsk",
   "version": "1.0.0",
-  "description": "Electron Forge with shadcn-ui (Vite + Typescript)",
+  "description": "a tool for code read",
   "main": ".vite/build/main.js",
   "private": true,
   "scripts": {
@@ -66,7 +66,8 @@
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.21.0",
-    "vite": "^6.0.11"
+    "vite": "^6.0.11",
+    "vite-plugin-svgr": "^4.3.0"
   },
   "dependencies": {
     "@codemirror/lang-cpp": "^6.0.2",
@@ -91,6 +92,7 @@
     "@radix-ui/react-dropdown-menu": "^2.1.5",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-navigation-menu": "^1.2.4",
+    "@radix-ui/react-progress": "^1.1.1",
     "@radix-ui/react-select": "^2.1.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-switch": "^1.1.2",

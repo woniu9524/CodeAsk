@@ -79,6 +79,19 @@ export function ModelConfigDialog({ children }: ModelConfigDialogProps) {
               })}
             />
           </div>
+          <div className="space-y-2">
+            <Label htmlFor="concurrency">{t('codeview.model.concurrency')}</Label>
+            <Input
+              id="concurrency"
+              type="number"
+              min="1"
+              {...register("concurrency", {
+                required: true,
+                valueAsNumber: true,
+                min: 1,
+              })}
+            />
+          </div>
           <Button type="submit" className="w-full">{t('codeview.model.save')}</Button>
         </form>
       </DialogContent>

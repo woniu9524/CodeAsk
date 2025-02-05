@@ -9,7 +9,7 @@ import { FuseV1Options, FuseVersion } from "@electron/fuses";
 
 const config: ForgeConfig = {
   packagerConfig: {
-    executableName: "electron-shadcn",
+    executableName: "CodeAsk",
     asar: true,
   },
   rebuildConfig: {},
