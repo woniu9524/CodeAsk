@@ -112,53 +112,57 @@ export default function CodeViewPage() {
   };
 
   return (
-    <div className="flex h-full">
-      <Sidebar onFileClick={handleFileClick} />
-
-      <div className="flex flex-1 flex-col">
-        <TabsBar
-          tabs={tabs}
-          onTabClick={handleTabClick}
-          onTabClose={closeFile}
-        />
-        <div className="flex-1 bg-background overflow-hidden">
-          {isSplit ? (
-            <ResizablePanelGroup
-              direction="horizontal"
-              onLayout={(sizes) => setSplitSizes(sizes)}
-              className="h-full"
-            >
-              <ResizablePanel defaultSize={splitSizes[0]} minSize={20}>
-                <div className="h-full overflow-auto">
-                  <TabContent
-                    fileId={codeTabId}
-                    tabs={tabs}
-                    currentFolderPath={currentFolderPath}
-                  />
-                </div>
-              </ResizablePanel>
-              <ResizableHandle withHandle />
-              <ResizablePanel defaultSize={splitSizes[1]} minSize={20}>
-                <div className="h-full overflow-auto">
-                  <TabContent
-                    fileId={activePluginTabId}
-                    tabs={tabs}
-                    currentFolderPath={currentFolderPath}
-                  />
-                </div>
-              </ResizablePanel>
-            </ResizablePanelGroup>
-          ) : (
-            <div className="h-full overflow-auto">
-              <TabContent
-                fileId={activeFile}
-                tabs={tabs}
-                currentFolderPath={currentFolderPath}
-              />
-            </div>
-          )}
+    <ResizablePanelGroup direction="horizontal" className="h-full">
+      <ResizablePanel defaultSize={20} minSize={15} maxSize={40}>
+        <Sidebar onFileClick={handleFileClick} />
+      </ResizablePanel>
+      <ResizableHandle withHandle />
+      <ResizablePanel defaultSize={80}>
+        <div className="flex h-full flex-col">
+          <TabsBar
+            tabs={tabs}
+            onTabClick={handleTabClick}
+            onTabClose={closeFile}
+          />
+          <div className="flex-1 min-h-0 bg-background">
+            {isSplit ? (
+              <ResizablePanelGroup
+                direction="horizontal"
+                onLayout={(sizes) => setSplitSizes(sizes)}
+                className="h-full"
+              >
+                <ResizablePanel defaultSize={splitSizes[0]} minSize={20}>
+                  <div className="h-full">
+                    <TabContent
+                      fileId={codeTabId}
+                      tabs={tabs}
+                      currentFolderPath={currentFolderPath}
+                    />
+                  </div>
+                </ResizablePanel>
+                <ResizableHandle withHandle />
+                <ResizablePanel defaultSize={splitSizes[1]} minSize={20}>
+                  <div className="h-full">
+                    <TabContent
+                      fileId={activePluginTabId}
+                      tabs={tabs}
+                      currentFolderPath={currentFolderPath}
+                    />
+                  </div>
+                </ResizablePanel>
+              </ResizablePanelGroup>
+            ) : (
+              <div className="h-full">
+                <TabContent
+                  fileId={activeFile}
+                  tabs={tabs}
+                  currentFolderPath={currentFolderPath}
+                />
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </div>
+      </ResizablePanel>
+    </ResizablePanelGroup>
   );
 }

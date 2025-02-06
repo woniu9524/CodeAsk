@@ -14,9 +14,17 @@ type SidebarProps = {
 
 type TabType = 'explorer' | 'search' | 'plugin' | 'model';
 
+const hideScrollbarStyle = {
+  '::-webkit-scrollbar': {
+    display: 'none'
+  },
+  'msOverflowStyle': 'none',
+  'scrollbarWidth': 'none'
+} as const;
+
 export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<TabType>('explorer');
-  const { fileTree, openFile } = useFileStore();
+  const { fileTree } = useFileStore();
   const { t } = useTranslation();
 
   const handleFileClick = (file: FileNode) => {
@@ -28,7 +36,7 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
   return (
     <div className={`flex h-full ${className}`}>
       {/* 侧边按钮栏 */}
-      <div className="flex w-12 flex-col items-center border-r bg-background pt-2">
+      <div className="flex w-12 flex-shrink-0 flex-col items-center border-r bg-background pt-2">
         <Button
           variant={activeTab === 'explorer' ? 'secondary' : 'ghost'}
           size="icon"
@@ -67,17 +75,17 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
       </div>
 
       {/* 内容区域 */}
-      <div className="w-60 border-r bg-background p-2">
+      <div className="flex-1 border-r bg-background p-2 overflow-auto" style={hideScrollbarStyle}>
         {activeTab === 'explorer' && (
           <div>
             <h2 className="mb-2 px-2 text-sm font-semibold">{t('codeview.sidebar.explorer')}</h2>
-            <FileTree data={fileTree} onFileClick={handleFileClick} />
+              <FileTree data={fileTree} onFileClick={handleFileClick} />
           </div>
         )}
         {activeTab === 'search' && (
           <div>
             <h2 className="mb-2 px-2 text-sm font-semibold">{t('codeview.sidebar.search')}</h2>
-            {/* TODO: 添加搜索组件 */}
+              {/* TODO: 添加搜索组件 */}
           </div>
         )}
         {activeTab === 'plugin' && <PluginList />}

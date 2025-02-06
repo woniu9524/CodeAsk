@@ -5,11 +5,15 @@ import { usePluginExecutionStore } from "@/store/usePluginExecutionStore";
 import path from "@/utils/path";
 import { CodePreview } from './CodePreview';
 import { MarkdownPreview } from './MarkdownPreview';
-import { Tab } from '../TabsBar';
 
-interface TabContentProps {
+type TabContentProps = {
   fileId: string | null;
-  tabs: Tab[];
+  tabs: Array<{
+    id: string;
+    type: 'code' | 'plugin_markdown';
+    originalPath?: string;
+    pluginName?: string;
+  }>;
   currentFolderPath: string | null;
 }
 
@@ -29,26 +33,30 @@ export function TabContent({ fileId, tabs, currentFolderPath }: TabContentProps)
   const activeTab = tabs.find(tab => tab.id === fileId);
   if (!activeTab) return null;
 
-  if (activeTab.type === 'code') {
-    return <CodePreview filePath={fileId} />;
-  }
-
   if (activeTab.type === 'plugin_markdown') {
     const plugin = plugins.find(p => p.name === activeTab.pluginName);
-    if (!plugin) return "插件未找到";
+    if (!plugin) return <div>插件未找到</div>;
 
     const execution = getPluginExecution(plugin.id);
-    if (!execution) return "未找到执行结果";
+    if (!execution) return <div>未找到执行结果</div>;
 
     const relativePath = currentFolderPath && activeTab.originalPath ?
       path.relative(currentFolderPath, activeTab.originalPath) :
       activeTab.originalPath || '';
 
     const matchedFile = execution.files.find(f => f.filename === relativePath);
-    if (!matchedFile) return "未找到文件分析结果";
+    if (!matchedFile) return <div>未找到文件分析结果</div>;
 
-    return <MarkdownPreview content={matchedFile.result || "无结果"} />;
+    return (
+      <div className="h-full overflow-auto">
+        <MarkdownPreview content={matchedFile.result || "无结果"} />
+      </div>
+    );
   }
 
-  return null;
+  return (
+    <div className="h-full overflow-auto">
+      <CodePreview filePath={fileId} />
+    </div>
+  );
 } 

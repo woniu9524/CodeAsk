@@ -44,20 +44,22 @@ export function CodePreview({ filePath }: CodePreviewProps) {
   const ext = path.extname(filePath).slice(1).toLowerCase();
   
   return (
-    <CodeMirror
-      value={content}
-      height="100%"
-      theme={theme === 'dark' ? oneDark : undefined}
-      extensions={[getLanguageExtension(ext)]}
-      editable={false}
-      basicSetup={{
-        lineNumbers: true,
-        foldGutter: true,
-        highlightActiveLine: true,
-        dropCursor: false,
-        allowMultipleSelections: false,
-        indentOnInput: false,
-      }}
-    />
+    <div className="h-full overflow-auto">
+      <CodeMirror
+        value={content}
+        height="100%"
+        theme={theme === 'dark' ? oneDark : undefined}
+        extensions={[getLanguageExtension(ext)]}
+        editable={false}
+        basicSetup={{
+          lineNumbers: true,
+          foldGutter: true,
+          highlightActiveLine: true,
+          dropCursor: false,
+          allowMultipleSelections: false,
+          indentOnInput: false,
+        }}
+      />
+    </div>
   );
 } 
