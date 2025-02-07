@@ -81,7 +81,7 @@ i18n.use(initReactI18next).init({
               selectedFiles: "selected files",
               processing: "Processing...",
               execute: "Execute",
-              modelNotFound: "Model not found",
+              modelNotFound: "Model not found. Please edit the plugin to select a model first",
               pluginNotFound: "Plugin not found",
               unknownError: "Unknown error",
               completed: "Completed"
@@ -179,7 +179,7 @@ i18n.use(initReactI18next).init({
               selectedFiles: "个已选择文件",
               processing: "处理中...",
               execute: "执行",
-              modelNotFound: "模型未找到",
+              modelNotFound: "未找到模型，请先编辑插件选择模型",
               pluginNotFound: "插件未找到",
               unknownError: "未知错误",
               completed: "已完成"
@@ -277,7 +277,7 @@ i18n.use(initReactI18next).init({
               selectedFiles: "個のファイルを選択",
               processing: "処理中...",
               execute: "実行",
-              modelNotFound: "モデルが見つかりません",
+              modelNotFound: "モデルが見つかりません。先にプラグインを編集してモデルを選択してください",
               pluginNotFound: "プラグインが見つかりません",
               unknownError: "不明なエラー",
               completed: "完了"

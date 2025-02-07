@@ -18,6 +18,7 @@ import { relative, join } from "@/utils/path";
 import type { PluginExecutionFile } from "@/store/usePluginExecutionStore";
 import { useTranslation } from "react-i18next";
 import { Progress } from "@/components/ui/progress";
+import { toast } from "sonner";
 
 interface PluginExecuteDialogProps {
   children?: React.ReactNode;
@@ -291,13 +292,15 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       // 获取插件配置
       const plugin = plugins.find(p => p.id === pluginId);
       if (!plugin) {
-        throw new Error(t('codeview.plugin.execute.pluginNotFound'));
+        toast.error(t('codeview.plugin.execute.pluginNotFound'));
+        return;
       }
 
       // 获取模型配置
       const model = models.find(m => m.id === plugin.modelId);
       if (!model) {
-        throw new Error(t('codeview.plugin.execute.modelNotFound'));
+        toast.error(t('codeview.plugin.execute.modelNotFound'));
+        return;
       }
 
       // 初始化 ChatOpenAI
@@ -386,6 +389,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       setIsOpen(false);
     } catch (error) {
       console.error('执行失败:', error);
+      toast.error(error instanceof Error ? error.message : t('codeview.plugin.execute.unknownError'));
     } finally {
       setIsProcessing(false);
       setProgress(0);
