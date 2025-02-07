@@ -30,7 +30,7 @@ export function PluginConfigDialog({ children }: PluginConfigDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
           <DialogTitle>{t('codeview.plugin.add')}</DialogTitle>
         </DialogHeader>

@@ -86,20 +86,20 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
           <div>
             <div className="flex items-center justify-between mb-2 px-2">
               <h2 className="text-sm font-semibold">{t('codeview.sidebar.explorer')}</h2>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-6 w-6"
-                onClick={() => locateActiveFile((file) => {
-                  if (fileTree) {
-                    const treeRef = document.querySelector('[data-tree-ref]');
-                    treeRef?.dispatchEvent(new CustomEvent('locate-file', { detail: file }));
-                  }
-                })}
-                title={t('codeview.sidebar.locate')}
-              >
-                <Locate className="h-4 w-4" />
-              </Button>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-6 w-6"
+                  onClick={() => locateActiveFile((file) => {
+                    if (fileTree) {
+                      const treeRef = document.querySelector('[data-tree-ref]');
+                      treeRef?.dispatchEvent(new CustomEvent('locate-file', { detail: file }));
+                    }
+                  })}
+                  title={t('codeview.sidebar.locate')}
+                >
+                  <Locate className="h-4 w-4" />
+                </Button>
             </div>
             <FileTree 
               data={fileTree} 

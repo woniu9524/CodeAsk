@@ -38,9 +38,18 @@ export default function CodeViewPage() {
     }
   }, [currentFolderPath]);
 
-  // 将文件路径转换为标签数据
+  const [activePluginFileId, setActivePluginFileId] = React.useState<string | null>(null);
+  
+  // 先找到代码类型的标签ID
+  const codeTabId = openedFiles.find(filePath => filePath && !filePath.startsWith("plugin_result:")) || null;
+
+  // 然后再生成tabs数组
   const tabs: Tab[] = openedFiles.filter(Boolean).map(filePath => {
     if (!filePath) return null;
+
+    const isActive = isSplit 
+      ? (filePath === activeFile && filePath === codeTabId) || filePath === activePluginFileId
+      : filePath === openedFiles[openedFiles.length - 1];
 
     if (filePath.startsWith("plugin_result:")) {
       const parts = filePath.split("plugin_result:", 2);
@@ -51,7 +60,7 @@ export default function CodeViewPage() {
         id: filePath,
         title: path.basename(originalPath || '') || '未知文件',
         type: 'plugin_markdown' as TabType,
-        isActive: filePath === activeFile,
+        isActive,
         originalPath,
         pluginName
       };
@@ -60,13 +69,10 @@ export default function CodeViewPage() {
         id: filePath,
         title: path.basename(filePath || '') || '未知文件',
         type: 'code' as TabType,
-        isActive: filePath === activeFile
+        isActive
       };
     }
   }).filter(Boolean) as Tab[];
-
-  const codeTabId = tabs.find(tab => tab.type === 'code')?.id || null;
-  const [activePluginFileId, setActivePluginFileId] = React.useState<string | null>(null);
 
   const handleTabClick = (tabId: string) => {
     const clickedTab = tabs.find(tab => tab.id === tabId);
@@ -83,6 +89,9 @@ export default function CodeViewPage() {
   const handleFileClick = async (filePath: string) => {
     // 关闭之前的所有标签
     openedFiles.forEach(file => closeFile(file));
+
+    // 重置激活的插件文件ID
+    setActivePluginFileId(null);
 
     // 打开代码预览标签
     openFile(filePath);
@@ -106,6 +115,13 @@ export default function CodeViewPage() {
           // 为插件结果创建新标签
           const resultTabId = `plugin_result:${plugin.name}:${filePath}`;
           openFile(resultTabId);
+          // 如果是分屏模式，自动激活第一个插件结果标签
+          if (isSplit) {
+            setTimeout(() => {
+              setActivePluginFileId(resultTabId);
+            }, 0);
+            break; // 只激活第一个匹配的插件标签
+          }
         }
       }
     }
@@ -131,16 +147,16 @@ export default function CodeViewPage() {
                 onLayout={(sizes) => setSplitSizes(sizes)}
                 className="h-full"
               >
-                <ResizablePanel defaultSize={splitSizes[0]} minSize={20}>
-                  <div className="h-full">
-                    <TabContent
-                      fileId={codeTabId}
-                      tabs={tabs}
-                      currentFolderPath={currentFolderPath}
-                    />
-                  </div>
-                </ResizablePanel>
-                <ResizableHandle withHandle />
+                    <ResizablePanel defaultSize={splitSizes[0]} minSize={20}>
+                      <div className="h-full">
+                        <TabContent
+                          fileId={codeTabId}
+                          tabs={tabs}
+                          currentFolderPath={currentFolderPath}
+                        />
+                      </div>
+                    </ResizablePanel>
+                    <ResizableHandle withHandle />
                 <ResizablePanel defaultSize={splitSizes[1]} minSize={20}>
                   <div className="h-full">
                     <TabContent
@@ -153,11 +169,11 @@ export default function CodeViewPage() {
               </ResizablePanelGroup>
             ) : (
               <div className="h-full">
-                <TabContent
-                  fileId={activeFile}
-                  tabs={tabs}
-                  currentFolderPath={currentFolderPath}
-                />
+                  <TabContent
+                    fileId={tabs[tabs.length - 1]?.id || activeFile}
+                    tabs={tabs}
+                    currentFolderPath={currentFolderPath}
+                  />
               </div>
             )}
           </div>

@@ -25,7 +25,7 @@ export function TabContent({ fileId, tabs, currentFolderPath }: TabContentProps)
   if (!fileId) {
     return (
       <div className="flex h-full items-center justify-center text-muted-foreground">
-        {t('codeView.noOpenedFile')}
+        {t('codeview.noOpenedFile')}
       </div>
     );
   }
@@ -59,4 +59,4 @@ export function TabContent({ fileId, tabs, currentFolderPath }: TabContentProps)
       <CodePreview filePath={fileId} />
     </div>
   );
-} 
+}

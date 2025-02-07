@@ -31,12 +31,14 @@ i18n.use(initReactI18next).init({
             explorer: "Explorer",
             search: "Search",
             plugin: "Plugin",
-            model: "Model"
+            model: "Model",
+            locate: "Locate"
           },
           tabs: {
             splitScreen: "Split Screen",
             cancelSplit: "Cancel Split"
           },
+          noOpenedFile: "No opened file",
           model: {
             title: "Model List",
             add: "Add Model",
@@ -72,6 +74,7 @@ i18n.use(initReactI18next).init({
               displayModeUnprocessedAndUpdated: "Show Unprocessed and Updated",
               fileSelection: "File Selection",
               selectAll: "Select All",
+              selectedFiles: "selected files",
               processing: "Processing...",
               execute: "Execute",
               modelNotFound: "Model not found",
@@ -110,12 +113,14 @@ i18n.use(initReactI18next).init({
             explorer: "资源管理器",
             search: "搜索",
             plugin: "插件",
-            model: "模型"
+            model: "模型",
+            locate: "定位文件"
           },
           tabs: {
             splitScreen: "分屏显示",
             cancelSplit: "取消分屏"
           },
+          noOpenedFile: "没有打开的文件",
           model: {
             title: "模型列表",
             add: "添加模型",
@@ -151,6 +156,7 @@ i18n.use(initReactI18next).init({
               displayModeUnprocessedAndUpdated: "显示未处理及需更新",
               fileSelection: "文件选择",
               selectAll: "全选",
+              selectedFiles: "个已选择文件",
               processing: "处理中...",
               execute: "执行",
               modelNotFound: "模型未找到",
@@ -189,12 +195,14 @@ i18n.use(initReactI18next).init({
             explorer: "エクスプローラー",
             search: "検索",
             plugin: "プラグイン",
-            model: "モデル"
+            model: "モデル",
+            locate: "ファイルを探す"
           },
           tabs: {
             splitScreen: "分割画面表示",
             cancelSplit: "分割解除"
           },
+          noOpenedFile: "開いているファイルがありません",
           model: {
             title: "モデル一覧",
             add: "モデルを追加",
@@ -230,6 +238,7 @@ i18n.use(initReactI18next).init({
               displayModeUnprocessedAndUpdated: "未処理と更新が必要なファイルを表示",
               fileSelection: "ファイル選択",
               selectAll: "すべて選択",
+              selectedFiles: "個のファイルを選択",
               processing: "処理中...",
               execute: "実行",
               modelNotFound: "モデルが見つかりません",

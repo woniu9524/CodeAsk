@@ -50,7 +50,7 @@ function FileTree({
   onSelect: (node: FileNodeWithSelection, selected: boolean) => void;
   parentSelected?: boolean;
 }) {
-  const [isExpanded, setIsExpanded] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   if (node._hidden) {
     return null;
@@ -270,6 +270,18 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
     return files;
   };
 
+  const getSelectedFileCount = (nodes: FileNodeWithSelection[]): number => {
+    let count = 0;
+    const traverse = (node: FileNodeWithSelection) => {
+      if (node.type === 'file' && node.selected) {
+        count++;
+      }
+      node.children?.forEach(traverse);
+    };
+    nodes.forEach(traverse);
+    return count;
+  };
+
   const handleExecute = async () => {
     try {
       setIsProcessing(true);
@@ -424,7 +436,12 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
 
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label>{t('codeview.plugin.execute.fileSelection')}</Label>
+              <div className="flex items-center gap-2">
+                <Label>{t('codeview.plugin.execute.fileSelection')}</Label>
+                <span className="text-sm text-gray-500">
+                  ({getSelectedFileCount(selectableTree)} {t('codeview.plugin.execute.selectedFiles')})
+                </span>
+              </div>
               <div className="flex items-center gap-2">
                 <Checkbox
                   id="select-all"

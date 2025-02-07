@@ -40,7 +40,7 @@ export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
           <DialogTitle>{t('codeview.plugin.edit')}</DialogTitle>
         </DialogHeader>
@@ -77,7 +77,7 @@ export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
             <Label htmlFor="systemPrompt">{t('codeview.plugin.systemPrompt')}</Label>
             <Textarea
               id="systemPrompt"
-              rows={4}
+              rows={10}
               {...register("systemPrompt", { required: true })}
             />
           </div>
@@ -86,7 +86,7 @@ export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
             <Label htmlFor="userPrompt">{t('codeview.plugin.userPrompt')}</Label>
             <Textarea
               id="userPrompt"
-              rows={4}
+              rows={6}
               {...register("userPrompt", { required: true })}
             />
           </div>
