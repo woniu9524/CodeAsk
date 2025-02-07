@@ -98,6 +98,17 @@ i18n.use(initReactI18next).init({
             preview: "Preview",
             sharePrompt: "Have a better prompt idea? Share it now!",
             addSuccess: "Added to plugin list successfully! Go check it out!"
+          },
+          search: {
+            placeholder: "Search in files and plugin results...",
+            searchIn: "Search in",
+            code: "Code Files",
+            plugin: "Plugin Results",
+            extensions: "File Types",
+            selectAll: "Select All",
+            noResults: "No results found",
+            searching: "Searching...",
+            results: "{{count}} results found"
           }
         }
       },
@@ -196,6 +207,17 @@ i18n.use(initReactI18next).init({
             preview: "预览",
             sharePrompt: "有更好的提示词创意？快来分享吧！",
             addSuccess: "已添加到插件列表中！快去看看吧！"
+          },
+          search: {
+            placeholder: "搜索文件和插件结果...",
+            searchIn: "搜索范围",
+            code: "代码文件",
+            plugin: "插件结果",
+            extensions: "文件类型",
+            selectAll: "全选",
+            noResults: "未找到结果",
+            searching: "搜索中...",
+            results: "找到 {{count}} 个结果"
           }
         }
       },
@@ -294,6 +316,17 @@ i18n.use(initReactI18next).init({
             preview: "プレビュー",
             sharePrompt: "より良いプロンプトのアイデアがありますか？共有してください！",
             addSuccess: "プラグインリストに追加されました！確認してみましょう！"
+          },
+          search: {
+            placeholder: "ファイルとプラグイン結果を検索...",
+            searchIn: "検索対象",
+            code: "コードファイル",
+            plugin: "プラグイン結果",
+            extensions: "ファイルタイプ",
+            selectAll: "すべて選択",
+            noResults: "結果が見つかりません",
+            searching: "検索中...",
+            results: "{{count}}件の結果が見つかりました"
           }
         }
       },

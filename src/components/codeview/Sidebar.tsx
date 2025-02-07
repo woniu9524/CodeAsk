@@ -7,6 +7,8 @@ import PluginList from './side/plugin/PluginList';
 import ModelList from './side/model/ModelList';
 import { useTranslation } from 'react-i18next';
 import { PromptTemplatesDialog } from './side/prompt/PromptTemplatesDialog';
+import SearchPanel from './side/search/SearchPanel';
+import path from '@/utils/path';
 
 type SidebarProps = {
   className?: string;
@@ -25,7 +27,7 @@ const hideScrollbarStyle = {
 
 export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<TabType>('explorer');
-  const { fileTree, activeFile } = useFileStore();
+  const { fileTree, activeFile, currentFolderPath } = useFileStore();
   const { t } = useTranslation();
 
   const handleFileClick = (file: FileNode) => {
@@ -122,7 +124,16 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
         {activeTab === 'search' && (
           <div>
             <h2 className="mb-2 px-2 text-sm font-semibold">{t('codeview.sidebar.search')}</h2>
-              {/* TODO: 添加搜索组件 */}
+            <SearchPanel onResultClick={(result) => {
+              if (result.type === 'code') {
+                onFileClick?.(result.path);
+              } else if (result.type === 'plugin' && result.pluginName) {
+                const absolutePath = currentFolderPath ? path.join(currentFolderPath, result.path) : result.path;
+                const pluginResultId = `plugin_result:${result.pluginName}:${absolutePath}`;
+                onFileClick?.(pluginResultId);
+                onFileClick?.(absolutePath);
+              }
+            }} />
           </div>
         )}
         {activeTab === 'plugin' && <PluginList />}
