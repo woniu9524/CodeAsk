@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { FolderOpenDot, Search, Puzzle, Bot } from "lucide-react";
+import { FolderOpenDot, Search, Puzzle, Bot, Locate } from "lucide-react";
 import FileTree, { FileNode } from './side/FileTree';
 import { useFileStore } from '@/store/useFileStore';
 import PluginList from './side/plugin/PluginList';
@@ -24,12 +24,18 @@ const hideScrollbarStyle = {
 
 export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
   const [activeTab, setActiveTab] = useState<TabType>('explorer');
-  const { fileTree } = useFileStore();
+  const { fileTree, activeFile } = useFileStore();
   const { t } = useTranslation();
 
   const handleFileClick = (file: FileNode) => {
     if (file.type === 'file') {
       onFileClick?.(file.id);
+    }
+  };
+
+  const locateActiveFile = (expandCallback: (file: string) => void) => {
+    if (activeFile) {
+      expandCallback(activeFile);
     }
   };
 
@@ -78,8 +84,28 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
       <div className="flex-1 border-r bg-background p-2 overflow-auto" style={hideScrollbarStyle}>
         {activeTab === 'explorer' && (
           <div>
-            <h2 className="mb-2 px-2 text-sm font-semibold">{t('codeview.sidebar.explorer')}</h2>
-            <FileTree data={fileTree} onFileClick={handleFileClick} />
+            <div className="flex items-center justify-between mb-2 px-2">
+              <h2 className="text-sm font-semibold">{t('codeview.sidebar.explorer')}</h2>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-6 w-6"
+                onClick={() => locateActiveFile((file) => {
+                  if (fileTree) {
+                    const treeRef = document.querySelector('[data-tree-ref]');
+                    treeRef?.dispatchEvent(new CustomEvent('locate-file', { detail: file }));
+                  }
+                })}
+                title={t('codeview.sidebar.locate')}
+              >
+                <Locate className="h-4 w-4" />
+              </Button>
+            </div>
+            <FileTree 
+              data={fileTree} 
+              onFileClick={handleFileClick} 
+              activeFile={activeFile}
+            />
           </div>
         )}
         {activeTab === 'search' && (

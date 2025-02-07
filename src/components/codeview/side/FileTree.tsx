@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 import { FolderIcon } from 'lucide-react';
 import SvgIcon from '@/components/SvgIcon';
@@ -13,6 +13,7 @@ export type FileNode = {
 type FileTreeProps = {
   data: FileNode[];
   onFileClick?: (file: FileNode) => void;
+  activeFile?: string | null;
 };
 
 type FileTreeItemProps = FileTreeProps & {
@@ -186,11 +187,19 @@ export function getFileIcon(fileName: string) {
   return <SvgIcon name={iconName} size={16} className="mr-1" />;
 }
 
-function FileTreeItem({ data, level = 0, onFileClick }: FileTreeItemProps) {
-  const [expandedNodes, setExpandedNodes] = useState<Record<string, boolean>>({});
-
+function FileTreeItem({ 
+  data, 
+  level = 0, 
+  onFileClick,
+  expandedNodes,
+  setExpandedNodes,
+  activeFile 
+}: FileTreeItemProps & { 
+  expandedNodes: Record<string, boolean>,
+  setExpandedNodes: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
+}) {
   const toggleNode = (nodeId: string) => {
-    setExpandedNodes(prev => ({
+    setExpandedNodes((prev: Record<string, boolean>) => ({
       ...prev,
       [nodeId]: !prev[nodeId]
     }));
@@ -202,7 +211,9 @@ function FileTreeItem({ data, level = 0, onFileClick }: FileTreeItemProps) {
         <div key={node.id}>
           <div
             style={{ paddingLeft: `${level * 16 + 4}px` }}
-            className="flex items-center cursor-pointer py-1 px-2 text-sm hover:bg-accent/50 group"
+            className={`flex items-center cursor-pointer py-1 px-2 text-sm hover:bg-accent/50 group ${
+              node.id === activeFile ? "bg-accent/70 text-accent-foreground" : ""
+            }`}
             onClick={() => {
               if (node.type === 'directory') {
                 toggleNode(node.id);
@@ -234,6 +245,9 @@ function FileTreeItem({ data, level = 0, onFileClick }: FileTreeItemProps) {
                 data={node.children}
                 level={level + 1}
                 onFileClick={onFileClick}
+                expandedNodes={expandedNodes}
+                setExpandedNodes={setExpandedNodes}
+                activeFile={activeFile}
               />
           )}
         </div>
@@ -242,10 +256,57 @@ function FileTreeItem({ data, level = 0, onFileClick }: FileTreeItemProps) {
   );
 }
 
-export default function FileTree({ data, onFileClick }: FileTreeProps) {
+export default function FileTree({ data, onFileClick, activeFile }: FileTreeProps) {
+  const [expandedNodes, setExpandedNodes] = useState<Record<string, boolean>>({});
+  const treeRef = useRef<HTMLDivElement>(null);
+
+  const locateFile = (targetFile: string) => {
+    // Reset expanded nodes
+    const newExpandedNodes: Record<string, boolean> = {};
+    
+    // Find and expand all parent directories of target file
+    const expandParents = (nodes: FileNode[]): boolean => {
+      for (const node of nodes) {
+        if (node.id === targetFile) {
+          return true;
+        }
+        if (node.children && expandParents(node.children)) {
+          newExpandedNodes[node.id] = true;
+          return true;
+        }
+      }
+      return false;
+    };
+
+    expandParents(data);
+    setExpandedNodes(newExpandedNodes);
+  };
+
+  useEffect(() => {
+    const element = treeRef.current;
+    if (!element) return;
+
+    const handleLocate = (e: CustomEvent<string>) => {
+      locateFile(e.detail);
+    };
+
+    element.addEventListener('locate-file', handleLocate as EventListener);
+    return () => {
+      element.removeEventListener('locate-file', handleLocate as EventListener);
+    };
+  }, [data]);
+
   return (
-    <div className="select-none overflow-auto max-h-[calc(100vh-6rem)]">
-      <FileTreeItem data={data} onFileClick={onFileClick} />
+    <div className="select-none" ref={treeRef} data-tree-ref>
+      <div className="overflow-auto max-h-[calc(100vh-8rem)]">
+        <FileTreeItem 
+          data={data} 
+          onFileClick={onFileClick} 
+          expandedNodes={expandedNodes}
+          setExpandedNodes={setExpandedNodes}
+          activeFile={activeFile}
+        />
+      </div>
     </div>
   );
 } 
