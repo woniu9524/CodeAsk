@@ -369,15 +369,16 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
         setProgress(currentProgress);
       }
 
-      const rules = {
-        fileExtensions: extensions,
-        showProcessed: displayMode === "all",
-        showUpdated: displayMode === "unprocessed_and_updated"
-      };
-
       const execution = {
         pluginName,
-        rules,
+        modelId: plugin.modelId,
+        systemPrompt: plugin.systemPrompt,
+        userPrompt: plugin.userPrompt,
+        rules: {
+          fileExtensions: extensions,
+          showProcessed: displayMode === "all",
+          showUpdated: displayMode === "unprocessed_and_updated"
+        },
         files: processedFiles
       };
 

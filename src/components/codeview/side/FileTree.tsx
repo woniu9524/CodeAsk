@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 import { FolderIcon } from 'lucide-react';
 import SvgIcon from '@/components/SvgIcon';
+import { usePluginStore } from "@/store/usePluginStore";
+import { useFileStore } from "@/store/useFileStore";
 
 export type FileNode = {
   id: string;
@@ -257,6 +259,8 @@ function FileTreeItem({
 }
 
 export default function FileTree({ data, onFileClick, activeFile }: FileTreeProps) {
+  const { currentFolderPath } = useFileStore();
+  const { loadProjectPlugins } = usePluginStore();
   const [expandedNodes, setExpandedNodes] = useState<Record<string, boolean>>({});
   const treeRef = useRef<HTMLDivElement>(null);
 
@@ -295,6 +299,13 @@ export default function FileTree({ data, onFileClick, activeFile }: FileTreeProp
       element.removeEventListener('locate-file', handleLocate as EventListener);
     };
   }, [data]);
+
+  // 当文件夹路径改变时加载项目插件
+  useEffect(() => {
+    if (currentFolderPath) {
+      loadProjectPlugins(currentFolderPath);
+    }
+  }, [currentFolderPath, loadProjectPlugins]);
 
   return (
     <div className="select-none" ref={treeRef} data-tree-ref>

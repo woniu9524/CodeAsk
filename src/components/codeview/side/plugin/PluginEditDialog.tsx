@@ -19,7 +19,7 @@ interface PluginEditDialogProps {
 
 export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
   const [open, setOpen] = React.useState(false);
-  const { register, handleSubmit, reset, control } = useForm<PluginFormData>({
+  const { register, handleSubmit, control } = useForm<PluginFormData>({
     defaultValues: {
       name: plugin.name,
       modelId: plugin.modelId,
@@ -33,7 +33,10 @@ export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
   const { t } = useTranslation();
 
   const onSubmit = (data: PluginFormData) => {
-    updatePlugin(plugin.id, data);
+    updatePlugin(plugin.id, {
+      ...data,
+      isProjectPlugin: false
+    });
     setOpen(false);
   };
 
@@ -91,7 +94,33 @@ export function PluginEditDialog({ children, plugin }: PluginEditDialogProps) {
             />
           </div>
 
-          <Button type="submit" className="w-full">{t('codeview.plugin.save')}</Button>
+          <div className="flex gap-2">
+            {plugin.isProjectPlugin && (
+              <Button 
+                type="submit" 
+                variant="secondary"
+                className="flex-1"
+                onClick={() => {
+                  const formData = {
+                    name: plugin.name,
+                    modelId: plugin.modelId,
+                    systemPrompt: plugin.systemPrompt,
+                    userPrompt: plugin.userPrompt,
+                  };
+                  updatePlugin(plugin.id, {
+                    ...formData,
+                    isProjectPlugin: false
+                  });
+                  setOpen(false);
+                }}
+              >
+                {t('codeview.plugin.convertToMine')}
+              </Button>
+            )}
+            <Button type="submit" className="flex-1">
+              {t('codeview.plugin.save')}
+            </Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

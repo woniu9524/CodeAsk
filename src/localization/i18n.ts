@@ -63,6 +63,9 @@ i18n.use(initReactI18next).init({
             systemPrompt: "System Prompt",
             userPrompt: "User Prompt",
             save: "Save",
+            convertToMine: "Convert to My Plugin",
+            projectPlugin: "Project Plugin",
+            myPlugin: "My Plugin",
             execute: {
               title: "Execute Plugin:",
               filterRules: "Filter Rules",
@@ -145,6 +148,9 @@ i18n.use(initReactI18next).init({
             systemPrompt: "系统提示词",
             userPrompt: "用户提示词",
             save: "保存",
+            convertToMine: "转换为我的插件",
+            projectPlugin: "项目插件",
+            myPlugin: "我的插件",
             execute: {
               title: "执行插件：",
               filterRules: "过滤规则",
@@ -227,6 +233,9 @@ i18n.use(initReactI18next).init({
             systemPrompt: "システムプロンプト",
             userPrompt: "ユーザープロンプト",
             save: "保存",
+            convertToMine: "マイプラグインに変換",
+            projectPlugin: "プロジェクトプラグイン",
+            myPlugin: "マイプラグイン",
             execute: {
               title: "プラグインを実行：",
               filterRules: "フィルタールール",

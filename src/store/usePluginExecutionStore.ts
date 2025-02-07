@@ -17,6 +17,9 @@ interface PluginExecutionRules {
 
 interface PluginExecution {
   pluginName: string;
+  modelId: string;
+  systemPrompt: string;
+  userPrompt: string;
   rules: PluginExecutionRules;
   files: PluginExecutionFile[];
 }
@@ -71,11 +74,6 @@ export const usePluginExecutionStore = create<PluginExecutionState>((set, get) =
         ...existingExecution.rules,
         ...execution.rules
       };
-      
-      // 创建一个文件名到文件的映射，用于快速查找
-      const existingFileMap = new Map(
-        existingExecution.files.map(file => [file.filename, file])
-      );
       
       // 合并新文件列表
       mergedFiles = [...existingExecution.files];
