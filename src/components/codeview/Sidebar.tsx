@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { FolderOpenDot, Search, Puzzle, Bot, Locate } from "lucide-react";
+import { FolderOpenDot, Search, Puzzle, Bot, Locate, Sparkles } from "lucide-react";
 import FileTree, { FileNode } from './side/FileTree';
 import { useFileStore } from '@/store/useFileStore';
 import PluginList from './side/plugin/PluginList';
 import ModelList from './side/model/ModelList';
 import { useTranslation } from 'react-i18next';
+import { PromptTemplatesDialog } from './side/prompt/PromptTemplatesDialog';
 
 type SidebarProps = {
   className?: string;
@@ -78,6 +79,16 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
         >
           <Search className="h-5 w-5" />
         </Button>
+        <PromptTemplatesDialog>
+          <Button
+            variant="ghost"
+            size="icon"
+            className="mb-1"
+            title={t('codeview.sidebar.promptTemplates')}
+          >
+            <Sparkles className="h-5 w-5" />
+          </Button>
+        </PromptTemplatesDialog>
       </div>
 
       {/* 内容区域 */}
@@ -101,9 +112,9 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
                   <Locate className="h-4 w-4" />
                 </Button>
             </div>
-            <FileTree 
-              data={fileTree} 
-              onFileClick={handleFileClick} 
+            <FileTree
+              data={fileTree}
+              onFileClick={handleFileClick}
               activeFile={activeFile}
             />
           </div>

@@ -32,7 +32,8 @@ i18n.use(initReactI18next).init({
             search: "Search",
             plugin: "Plugin",
             model: "Model",
-            locate: "Locate"
+            locate: "Locate",
+            promptTemplates: "Prompt Templates"
           },
           tabs: {
             splitScreen: "Split Screen",
@@ -85,6 +86,18 @@ i18n.use(initReactI18next).init({
               unknownError: "Unknown error",
               completed: "Completed"
             }
+          },
+          promptTemplates: {
+            title: "Prompt Templates",
+            chinese: "Chinese",
+            english: "English",
+            japanese: "Japanese",
+            systemPrompt: "System Prompt",
+            userPrompt: "User Prompt",
+            use: "Use Template",
+            preview: "Preview",
+            sharePrompt: "Have a better prompt idea? Share it now!",
+            addSuccess: "Added to plugin list successfully! Go check it out!"
           }
         }
       },
@@ -117,7 +130,8 @@ i18n.use(initReactI18next).init({
             search: "搜索",
             plugin: "插件",
             model: "模型",
-            locate: "定位文件"
+            locate: "定位文件",
+            promptTemplates: "提示词模板"
           },
           tabs: {
             splitScreen: "分屏显示",
@@ -170,6 +184,18 @@ i18n.use(initReactI18next).init({
               unknownError: "未知错误",
               completed: "已完成"
             }
+          },
+          promptTemplates: {
+            title: "提示词模板",
+            chinese: "中文",
+            english: "英文",
+            japanese: "日文",
+            systemPrompt: "系统提示词",
+            userPrompt: "用户提示词",
+            use: "使用模板",
+            preview: "预览",
+            sharePrompt: "有更好的提示词创意？快来分享吧！",
+            addSuccess: "已添加到插件列表中！快去看看吧！"
           }
         }
       },
@@ -202,7 +228,8 @@ i18n.use(initReactI18next).init({
             search: "検索",
             plugin: "プラグイン",
             model: "モデル",
-            locate: "ファイルを探す"
+            locate: "ファイルを探す",
+            promptTemplates: "プロンプトテンプレート"
           },
           tabs: {
             splitScreen: "分割画面表示",
@@ -255,6 +282,18 @@ i18n.use(initReactI18next).init({
               unknownError: "不明なエラー",
               completed: "完了"
             }
+          },
+          promptTemplates: {
+            title: "プロンプトテンプレート",
+            chinese: "中国語",
+            english: "英語",
+            japanese: "日本語",
+            systemPrompt: "システムプロンプト",
+            userPrompt: "ユーザープロンプト",
+            use: "テンプレートを使用",
+            preview: "プレビュー",
+            sharePrompt: "より良いプロンプトのアイデアがありますか？共有してください！",
+            addSuccess: "プラグインリストに追加されました！確認してみましょう！"
           }
         }
       },
