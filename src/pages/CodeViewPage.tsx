@@ -38,6 +38,16 @@ export default function CodeViewPage() {
     }
   }, [currentFolderPath]);
 
+  // 设置最后一个标签为激活状态
+  useEffect(() => {
+    if (openedFiles.length > 0 && !isSplit) {
+      const lastFile = openedFiles[openedFiles.length - 1];
+      if (lastFile) {
+        setActiveFile(lastFile);
+      }
+    }
+  }, [openedFiles.length]);
+
   const [activePluginFileId, setActivePluginFileId] = React.useState<string | null>(null);
   
   // 先找到代码类型的标签ID
@@ -49,7 +59,7 @@ export default function CodeViewPage() {
 
     const isActive = isSplit 
       ? (filePath === activeFile && filePath === codeTabId) || filePath === activePluginFileId
-      : filePath === openedFiles[openedFiles.length - 1];
+      : filePath === activeFile;
 
     if (filePath.startsWith("plugin_result:")) {
       const parts = filePath.split("plugin_result:", 2);
@@ -94,11 +104,8 @@ export default function CodeViewPage() {
     setActivePluginFileId(null);
 
     // 打开代码预览标签
-    openFile(filePath);
-    // Delay setting active file to ensure openFile finishes updating state
-    setTimeout(() => {
-      setActiveFile(filePath);
-    }, 0);
+    await openFile(filePath);
+    setActiveFile(filePath);
 
     // 遍历启用的插件，查找匹配的结果
     const enabledPlugins = plugins.filter(p => p.enabled);
@@ -114,12 +121,10 @@ export default function CodeViewPage() {
         if (matchedFile) {
           // 为插件结果创建新标签
           const resultTabId = `plugin_result:${plugin.name}:${filePath}`;
-          openFile(resultTabId);
+          await openFile(resultTabId);
           // 如果是分屏模式，自动激活第一个插件结果标签
           if (isSplit) {
-            setTimeout(() => {
-              setActivePluginFileId(resultTabId);
-            }, 0);
+            setActivePluginFileId(resultTabId);
             break; // 只激活第一个匹配的插件标签
           }
         }
@@ -170,7 +175,7 @@ export default function CodeViewPage() {
             ) : (
               <div className="h-full">
                   <TabContent
-                    fileId={tabs[tabs.length - 1]?.id || activeFile}
+                    fileId={activeFile}
                     tabs={tabs}
                     currentFolderPath={currentFolderPath}
                   />

@@ -93,7 +93,6 @@ export const usePluginStore = create<PluginState>((set, get) => {
               enabled: true,
               isProjectPlugin: true
             };
-            console.log('加载项目插件:', projectPlugin);
             // 使用 addProjectPlugin 方法添加项目插件
             get().addProjectPlugin(projectPlugin);
           });
