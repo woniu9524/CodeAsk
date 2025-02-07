@@ -79,7 +79,7 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
         {activeTab === 'explorer' && (
           <div>
             <h2 className="mb-2 px-2 text-sm font-semibold">{t('codeview.sidebar.explorer')}</h2>
-              <FileTree data={fileTree} onFileClick={handleFileClick} />
+            <FileTree data={fileTree} onFileClick={handleFileClick} />
           </div>
         )}
         {activeTab === 'search' && (
