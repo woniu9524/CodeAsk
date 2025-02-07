@@ -1,5 +1,4 @@
 import { create } from 'zustand'
-import { persist } from 'zustand/middleware'
 
 export interface Plugin {
   id: string
@@ -18,36 +17,54 @@ interface PluginState {
   togglePlugin: (id: string) => void
 }
 
-export const usePluginStore = create<PluginState>()(
-  persist(
-    (set) => ({
-      plugins: [],
-      addPlugin: (plugin) =>
-        set((state) => ({
-          plugins: [
-            ...state.plugins,
-            { ...plugin, id: crypto.randomUUID(), enabled: true }
-          ],
-        })),
-      updatePlugin: (id, plugin) =>
-        set((state) => ({
-          plugins: state.plugins.map((p) =>
-            p.id === id ? { ...p, ...plugin } : p
-          ),
-        })),
-      deletePlugin: (id) =>
-        set((state) => ({
-          plugins: state.plugins.filter((p) => p.id !== id),
-        })),
-      togglePlugin: (id) =>
-        set((state) => ({
-          plugins: state.plugins.map((p) =>
-            p.id === id ? { ...p, enabled: !p.enabled } : p
-          ),
-        })),
-    }),
-    {
-      name: 'plugin-storage',
+export const usePluginStore = create<PluginState>((set) => {
+  // 初始化时从存储加载数据
+  window.storeAPI.get('plugins', 'plugins').then((plugins) => {
+    set({ plugins: plugins || [] });
+  });
+
+  return {
+    plugins: [],
+    
+    addPlugin: async (plugin) => {
+      const newPlugin = { 
+        ...plugin, 
+        id: crypto.randomUUID(), 
+        enabled: true 
+      };
+      set((state) => {
+        const newPlugins = [...state.plugins, newPlugin];
+        window.storeAPI.set('plugins', 'plugins', newPlugins);
+        return { plugins: newPlugins };
+      });
+    },
+
+    updatePlugin: async (id, plugin) => {
+      set((state) => {
+        const newPlugins = state.plugins.map((p) =>
+          p.id === id ? { ...p, ...plugin } : p
+        );
+        window.storeAPI.set('plugins', 'plugins', newPlugins);
+        return { plugins: newPlugins };
+      });
+    },
+
+    deletePlugin: async (id) => {
+      set((state) => {
+        const newPlugins = state.plugins.filter((p) => p.id !== id);
+        window.storeAPI.set('plugins', 'plugins', newPlugins);
+        return { plugins: newPlugins };
+      });
+    },
+
+    togglePlugin: async (id) => {
+      set((state) => {
+        const newPlugins = state.plugins.map((p) =>
+          p.id === id ? { ...p, enabled: !p.enabled } : p
+        );
+        window.storeAPI.set('plugins', 'plugins', newPlugins);
+        return { plugins: newPlugins };
+      });
     }
-  )
-) 
+  };
+}); 

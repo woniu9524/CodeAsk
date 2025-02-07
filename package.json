@@ -106,6 +106,7 @@
     "babel-plugin-react-compiler": "^19.0.0-beta-e552027-20250112",
     "class-variance-authority": "^0.7.1",
     "electron-squirrel-startup": "^1.0.1",
+    "electron-store": "^10.0.1",
     "i18next": "^24.2.2",
     "lucide-react": "^0.474.0",
     "mermaid": "^11.4.1",

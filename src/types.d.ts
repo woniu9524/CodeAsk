@@ -36,4 +36,9 @@ declare interface Window {
   electronWindow: ElectronWindow;
   folderAPI: FolderAPI;
   fileAPI: FileAPI;
+  storeAPI: {
+    get: (storeName: string, key: string) => Promise<any>;
+    set: (storeName: string, key: string, value: any) => Promise<void>;
+    delete: (storeName: string, key: string) => Promise<void>;
+  };
 }
