@@ -18,9 +18,6 @@ type SidebarProps = {
 type TabType = 'explorer' | 'search' | 'plugin' | 'model';
 
 const hideScrollbarStyle = {
-  '::-webkit-scrollbar': {
-    display: 'none'
-  },
   'msOverflowStyle': 'none',
   'scrollbarWidth': 'none'
 } as const;
@@ -39,7 +36,7 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
   const locateActiveFile = (expandCallback: (file: string) => void) => {
     if (activeFile) {
       // Extract actual file path if it's a plugin result
-      const actualPath = activeFile.startsWith('plugin_result:') 
+      const actualPath = activeFile.startsWith('plugin_result:')
         ? activeFile.split(':').slice(2).join(':') // Get everything after plugin name
         : activeFile;
       expandCallback(actualPath);

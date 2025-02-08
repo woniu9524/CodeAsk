@@ -25,13 +25,23 @@ export default function SvgIcon({
   const [loadError, setLoadError] = React.useState(false);
 
   React.useEffect(() => {
+    // Reset error state
     setLoadError(false);
-    import(`@/assets/icons/${name}.svg`)
+    setSvgUrl('');
+
+    // Only attempt to load if name is provided
+    if (!name) {
+      setLoadError(true);
+      return;
+    }
+
+    // Dynamic import with error handling
+    import(`../assets/icons/${name}.svg`)
       .then((module) => {
         setSvgUrl(module.default);
       })
       .catch((error) => {
-        console.error(`Failed to load icon: ${name}`, error);
+        console.warn(`Icon not found: ${name}, using default file icon`);
         setLoadError(true);
       });
   }, [name]);
@@ -40,11 +50,12 @@ export default function SvgIcon({
   const rotateStyle = rotate ? { transform: `rotate(${rotate}deg)` } : {};
   const combinedStyle = { ...style, ...spinStyle, ...rotateStyle };
 
-  if (loadError) {
+  // Show FileIcon as fallback
+  if (loadError || !svgUrl) {
     return <FileIcon className={className} style={combinedStyle} width={size} height={size} onClick={onClick} />;
   }
 
-  return svgUrl ? (
+  return (
     <img
       src={svgUrl}
       className={className}
@@ -54,7 +65,5 @@ export default function SvgIcon({
       onClick={onClick}
       alt={`${name} icon`}
     />
-  ) : (
-    <FileIcon className={className} style={combinedStyle} width={size} height={size} onClick={onClick} />
   );
 }
