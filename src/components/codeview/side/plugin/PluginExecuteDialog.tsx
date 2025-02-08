@@ -478,19 +478,10 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       // 并发处理文件
       const concurrency = model.concurrency ?? 1;
       const processedFiles: PluginExecutionFile[] = [];
+      let completedFiles = 0;
 
-      // 使用 for 循环分批处理文件
-      for (let i = 0; i < selectedFiles.length; i += concurrency) {
-        const batch = selectedFiles.slice(i, i + concurrency);
-        const batchResults = await Promise.all(batch.map(processFile));
-        processedFiles.push(...batchResults);
-
-        // 更新进度
-        const currentProgress = Math.min(((i + concurrency) / selectedFiles.length) * 100, 100);
-        setProgress(currentProgress);
-      }
-
-      const execution = {
+      // 创建基础的execution对象
+      const baseExecution = {
         pluginName,
         modelId: plugin.modelId,
         systemPrompt: plugin.systemPrompt,
@@ -500,10 +491,31 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
           showProcessed: displayMode === "all",
           showUpdated: displayMode === "unprocessed_and_updated"
         },
-        files: processedFiles
+        files: [] as PluginExecutionFile[]
       };
 
-      await savePluginExecution(pluginId, execution);
+      // 使用 for 循环分批处理文件
+      for (let i = 0; i < selectedFiles.length; i += concurrency) {
+        const batch = selectedFiles.slice(i, i + concurrency);
+        const batchPromises = batch.map(async (file) => {
+          const result = await processFile(file);
+          completedFiles++;
+          // 更新进度 - 每完成一个文件就更新一次
+          setProgress((completedFiles / selectedFiles.length) * 100);
+          
+          // 每处理完一个文件就保存一次数据
+          processedFiles.push(result);
+          const currentExecution = {
+            ...baseExecution,
+            files: [...processedFiles]
+          };
+          await savePluginExecution(pluginId, currentExecution);
+          
+          return result;
+        });
+        await Promise.all(batchPromises);
+      }
+
       setIsOpen(false);
     } catch (error) {
       console.error('执行失败:', error);
