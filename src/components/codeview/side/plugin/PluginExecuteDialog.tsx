@@ -5,7 +5,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ChevronRight, ChevronDown, Folder, File } from "lucide-react";
+import { ChevronRight, ChevronDown, Folder, File, Filter } from "lucide-react";
 import { useFileStore } from "@/store/useFileStore";
 import { usePluginExecutionStore } from "@/store/usePluginExecutionStore";
 import { usePluginStore } from "@/store/usePluginStore";
@@ -14,11 +14,12 @@ import { getFileHash, readTextFile } from "@/helpers/file_helpers";
 import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import type { FileNode } from '@/components/codeview/side/FileTree';
-import { relative, join } from "@/utils/path";
+import { relative, join, extname } from "@/utils/path";
 import type { PluginExecutionFile } from "@/store/usePluginExecutionStore";
 import { useTranslation } from "react-i18next";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface PluginExecuteDialogProps {
   children?: React.ReactNode;
@@ -112,6 +113,122 @@ function FileTree({
 
 type FileDisplayMode = "all" | "unprocessed" | "unprocessed_and_updated";
 
+interface ExtensionStat {
+  extension: string;
+  count: number;
+  selected: boolean;
+}
+
+function FileExtensionsDialog({
+  open,
+  onOpenChange,
+  onConfirm,
+  initialExtensions
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  onConfirm: (extensions: string[]) => void;
+  initialExtensions: string[];
+}) {
+  const { t } = useTranslation();
+  const { fileTree } = useFileStore();
+  const [extensionStats, setExtensionStats] = useState<ExtensionStat[]>([]);
+
+  // Calculate extension statistics
+  useEffect(() => {
+    const stats: Record<string, number> = {};
+    
+    const traverseFileTree = (nodes: FileNode[]) => {
+      nodes.forEach(node => {
+        if (node.type === 'file') {
+          const ext = extname(node.id).toLowerCase() || 'no-extension';
+          stats[ext] = (stats[ext] || 0) + 1;
+        }
+        if (node.children) {
+          traverseFileTree(node.children);
+        }
+      });
+    };
+    
+    if (fileTree) {
+      traverseFileTree(fileTree);
+    }
+    
+    const sortedStats = Object.entries(stats)
+      .map(([extension, count]) => ({
+        extension,
+        count,
+        selected: initialExtensions.includes(extension)
+      }))
+      .sort((a, b) => b.count - a.count);
+    
+    setExtensionStats(sortedStats);
+  }, [fileTree, initialExtensions]);
+
+  const handleSelectAll = (checked: boolean) => {
+    setExtensionStats(prev => prev.map(stat => ({
+      ...stat,
+      selected: checked
+    })));
+  };
+
+  const handleConfirm = () => {
+    const selectedExtensions = extensionStats
+      .filter(stat => stat.selected)
+      .map(stat => stat.extension);
+    onConfirm(selectedExtensions);
+    onOpenChange(false);
+  };
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-[500px]">
+        <DialogHeader>
+          <DialogTitle>{t('codeview.plugin.execute.selectExtensions')}</DialogTitle>
+        </DialogHeader>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <Label>{t('codeview.plugin.execute.fileExtensions')}</Label>
+            <div className="flex items-center gap-2">
+              <Checkbox
+                id="select-all"
+                checked={extensionStats.length > 0 && extensionStats.every(stat => stat.selected)}
+                onCheckedChange={handleSelectAll}
+              />
+              <Label htmlFor="select-all" className="text-sm cursor-pointer">
+                {t('codeview.plugin.execute.selectAll')}
+              </Label>
+            </div>
+          </div>
+          <ScrollArea className="h-[300px] border rounded-md p-4">
+            <div className="space-y-2">
+              {extensionStats.map((stat) => (
+                <div key={stat.extension} className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Checkbox
+                      checked={stat.selected}
+                      onCheckedChange={(checked) => {
+                        setExtensionStats(prev => prev.map(s => 
+                          s.extension === stat.extension ? { ...s, selected: !!checked } : s
+                        ));
+                      }}
+                    />
+                    <span className="text-sm">{stat.extension || t('codeview.plugin.execute.noExtension')}</span>
+                  </div>
+                  <span className="text-sm text-gray-500">{stat.count}</span>
+                </div>
+              ))}
+            </div>
+          </ScrollArea>
+          <Button onClick={handleConfirm} className="w-full">
+            {t('codeview.plugin.execute.confirm')}
+          </Button>
+        </div>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginExecuteDialogProps) {
   const { fileTree, currentFolderPath } = useFileStore();
   const { initializeDataFile, getPluginExecution, savePluginExecution } = usePluginExecutionStore();
@@ -126,6 +243,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
   const [fileHashes, setFileHashes] = useState<Record<string, string>>({});
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [extensionsDialogOpen, setExtensionsDialogOpen] = useState(false);
 
   // 获取所有文件的哈希值
   const updateFileHashes = async (nodes: FileNodeWithSelection[]) => {
@@ -416,11 +534,21 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
             <div className="space-y-4">
               <div>
                 <Label>{t('codeview.plugin.execute.fileExtensions')}</Label>
-                <Input
-                  value={fileExtensions}
-                  onChange={(e) => setFileExtensions(e.target.value)}
-                  placeholder={t('codeview.plugin.execute.fileExtensionsPlaceholder')}
-                />
+                <div className="flex gap-2">
+                  <Input
+                    value={fileExtensions}
+                    onChange={(e) => setFileExtensions(e.target.value)}
+                    placeholder={t('codeview.plugin.execute.fileExtensionsPlaceholder')}
+                    readOnly
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setExtensionsDialogOpen(true)}
+                  >
+                    <Filter className="h-4 w-4" />
+                  </Button>
+                </div>
               </div>
 
               <div className="space-y-2">
@@ -493,6 +621,13 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
           </div>
         </div>
       </DialogContent>
+
+      <FileExtensionsDialog
+        open={extensionsDialogOpen}
+        onOpenChange={setExtensionsDialogOpen}
+        onConfirm={(extensions) => setFileExtensions(extensions.join(','))}
+        initialExtensions={fileExtensions.split(',').map(ext => ext.trim()).filter(Boolean)}
+      />
     </Dialog>
   );
 }

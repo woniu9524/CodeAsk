@@ -84,7 +84,10 @@ i18n.use(initReactI18next).init({
               modelNotFound: "Model not found. Please edit the plugin to select a model first",
               pluginNotFound: "Plugin not found",
               unknownError: "Unknown error",
-              completed: "Completed"
+              completed: "Completed",
+              selectExtensions: "Select File Extensions",
+              noExtension: "No Extension",
+              confirm: "Confirm"
             }
           },
           promptTemplates: {
@@ -193,7 +196,10 @@ i18n.use(initReactI18next).init({
               modelNotFound: "未找到模型，请先编辑插件选择模型",
               pluginNotFound: "插件未找到",
               unknownError: "未知错误",
-              completed: "已完成"
+              completed: "已完成",
+              selectExtensions: "选择文件扩展名",
+              noExtension: "无扩展名",
+              confirm: "确认"
             }
           },
           promptTemplates: {
@@ -302,7 +308,10 @@ i18n.use(initReactI18next).init({
               modelNotFound: "モデルが見つかりません。先にプラグインを編集してモデルを選択してください",
               pluginNotFound: "プラグインが見つかりません",
               unknownError: "不明なエラー",
-              completed: "完了"
+              completed: "完了",
+              selectExtensions: "ファイル拡張子を選択",
+              noExtension: "拡張子なし",
+              confirm: "確認"
             }
           },
           promptTemplates: {
