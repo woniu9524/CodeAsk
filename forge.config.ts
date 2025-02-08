@@ -8,10 +8,16 @@ import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
 
 const config: ForgeConfig = {
-  packagerConfig: {
-    executableName: "CodeAsk",
-    asar: true,
-  },
+    packagerConfig: {
+      executableName: "CodeAsk",
+      asar: true,
+      icon: './images/logo',
+      win32metadata: {
+        CompanyName: "Your Company",
+        FileDescription: "CodeAsk - Your Code Assistant",
+        ProductName: "CodeAsk",
+      },
+    },
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({}),
