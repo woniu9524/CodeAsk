@@ -38,7 +38,11 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
 
   const locateActiveFile = (expandCallback: (file: string) => void) => {
     if (activeFile) {
-      expandCallback(activeFile);
+      // Extract actual file path if it's a plugin result
+      const actualPath = activeFile.startsWith('plugin_result:') 
+        ? activeFile.split(':').slice(2).join(':') // Get everything after plugin name
+        : activeFile;
+      expandCallback(actualPath);
     }
   };
 
