@@ -1,7 +1,7 @@
 # CodeAsk
 
 <div align="center">
-  <img src="images/logo.png" alt="CodeAsk Logo" width="200"/>
+  <img src="images/icons/logo.png" alt="CodeAsk Logo" width="200"/>
   <h3>CodeAsk - 代码分析工具</h3>
 </div>
 
