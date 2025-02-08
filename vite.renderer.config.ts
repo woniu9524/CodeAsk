@@ -17,6 +17,13 @@ export default defineConfig((env) => {
     base: "./",
     build: {
       outDir: `.vite/renderer/${name}`,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            'monaco-editor': ['monaco-editor']
+          }
+        }
+      }
     },
     plugins: [
       pluginExposeRenderer(name),
@@ -32,6 +39,14 @@ export default defineConfig((env) => {
       alias: {
         "@": path.resolve(__dirname, "./src"),
       },
+    },
+    optimizeDeps: {
+      exclude: ['@monaco-editor/react']
+    },
+    define: {
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.platform': JSON.stringify(process.platform),
+      'process.version': JSON.stringify(process.version),
     },
     clearScreen: false,
   } as UserConfig;
