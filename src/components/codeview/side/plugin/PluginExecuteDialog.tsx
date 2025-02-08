@@ -503,13 +503,16 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
           // 更新进度 - 每完成一个文件就更新一次
           setProgress((completedFiles / selectedFiles.length) * 100);
           
-          // 每处理完一个文件就保存一次数据
-          processedFiles.push(result);
-          const currentExecution = {
-            ...baseExecution,
-            files: [...processedFiles]
-          };
-          await savePluginExecution(pluginId, currentExecution);
+          // 只有处理成功的文件才保存
+          if (result.status === "success") {
+            // 每处理完一个文件就保存一次数据
+            processedFiles.push(result);
+            const currentExecution = {
+              ...baseExecution,
+              files: [...processedFiles]
+            };
+            await savePluginExecution(pluginId, currentExecution);
+          }
           
           return result;
         });

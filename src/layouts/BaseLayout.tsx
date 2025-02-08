@@ -8,11 +8,11 @@ export default function BaseLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="flex flex-col h-screen">
       <DragWindowRegion/>
       {/* <NavigationMenu /> */}
-      <main className="h-screen  pb-12 p-2 ">{children}</main>
+      <main className="flex-1 overflow-hidden">{children}</main>
       <Toaster position="top-center" richColors closeButton />
-    </>
+    </div>
   );
 }

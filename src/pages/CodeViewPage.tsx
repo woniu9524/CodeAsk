@@ -133,13 +133,13 @@ export default function CodeViewPage() {
   };
 
   return (
-    <ResizablePanelGroup direction="horizontal" className="h-full">
-      <ResizablePanel defaultSize={20} minSize={15} maxSize={40}>
+    <ResizablePanelGroup direction="horizontal" className="h-full min-h-0">
+      <ResizablePanel defaultSize={20} minSize={15} maxSize={40} className="min-h-0">
         <Sidebar onFileClick={handleFileClick} />
       </ResizablePanel>
       <ResizableHandle withHandle />
-      <ResizablePanel defaultSize={80}>
-        <div className="flex h-full flex-col">
+      <ResizablePanel defaultSize={80} className="min-h-0">
+        <div className="flex h-full flex-col min-h-0">
           <TabsBar
             tabs={tabs}
             onTabClick={handleTabClick}

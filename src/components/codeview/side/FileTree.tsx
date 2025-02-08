@@ -308,8 +308,8 @@ export default function FileTree({ data, onFileClick, activeFile }: FileTreeProp
   }, [currentFolderPath, loadProjectPlugins]);
 
   return (
-    <div className="select-none" ref={treeRef} data-tree-ref>
-      <div className="overflow-auto max-h-[calc(100vh-8rem)]">
+    <div className="select-none h-full flex flex-col min-h-0" ref={treeRef} data-tree-ref>
+      <div className="overflow-auto flex-1">
         <FileTreeItem 
           data={data} 
           onFileClick={onFileClick} 

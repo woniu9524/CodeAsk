@@ -44,9 +44,9 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
   };
 
   return (
-    <div className={`flex h-full ${className}`}>
+    <div className={`flex h-full min-h-0 ${className}`}>
       {/* 侧边按钮栏 */}
-      <div className="flex w-12 flex-shrink-0 flex-col items-center border-r bg-background pt-2">
+      <div className="flex w-12 flex-shrink-0 flex-col items-center border-r bg-background pt-2 min-h-0">
         <Button
           variant={activeTab === 'explorer' ? 'secondary' : 'ghost'}
           size="icon"
@@ -95,10 +95,10 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
       </div>
 
       {/* 内容区域 */}
-      <div className="flex-1 border-r bg-background p-2 overflow-auto" style={hideScrollbarStyle}>
+      <div className="flex-1 border-r bg-background p-2 overflow-auto min-h-0" style={hideScrollbarStyle}>
         {activeTab === 'explorer' && (
-          <div>
-            <div className="flex items-center justify-between mb-2 px-2">
+          <div className="h-full flex flex-col min-h-0">
+            <div className="flex items-center justify-between mb-2 px-2 flex-shrink-0">
               <h2 className="text-sm font-semibold">{t('codeview.sidebar.explorer')}</h2>
                 <Button
                   variant="ghost"
@@ -115,11 +115,13 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
                   <Locate className="h-4 w-4" />
                 </Button>
             </div>
-            <FileTree
-              data={fileTree}
-              onFileClick={handleFileClick}
-              activeFile={activeFile}
-            />
+            <div className="flex-1 min-h-0">
+              <FileTree
+                data={fileTree}
+                onFileClick={handleFileClick}
+                activeFile={activeFile}
+              />
+            </div>
           </div>
         )}
         {activeTab === 'search' && (
