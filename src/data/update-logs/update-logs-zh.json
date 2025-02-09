@@ -1,0 +1,18 @@
+{
+    "update_logs": [
+      {
+        "version": "1.0.0",
+        "release_date": "2025-02-09",
+        "changes": [
+          {
+            "type": "新增功能",
+            "description": "完成基本功能",
+            "color": "#4CAF50"
+            
+          }
+        ],
+        "download_link": "https://example.com/download"
+      }
+    ]
+  }
+  

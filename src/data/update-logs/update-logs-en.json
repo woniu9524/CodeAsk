@@ -1,0 +1,16 @@
+{
+    "update_logs": [
+      {
+        "version": "1.0.0",
+        "release_date": "2025-02-09",
+        "changes": [
+          {
+            "type": "New Feature",
+            "description": "Completed basic features",
+            "color": "#4CAF50"
+          }
+        ],
+        "download_link": "https://example.com/download"
+      }
+    ]
+} 

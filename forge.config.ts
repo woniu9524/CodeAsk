@@ -11,9 +11,8 @@ const config: ForgeConfig = {
     packagerConfig: {
       executableName: "CodeAsk",
       asar: true,
-      icon: './images/logo',
+      icon: './images/icons/logo',
       win32metadata: {
-        CompanyName: "Your Company",
         FileDescription: "CodeAsk - Your Code Assistant",
         ProductName: "CodeAsk",
       },
