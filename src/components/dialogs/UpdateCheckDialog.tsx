@@ -46,13 +46,13 @@ export default function UpdateCheckDialog({ open, onOpenChange, currentVersion, 
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl max-h-[60vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{t('dialog.updateCheck.title')}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <div className="flex justify-between items-center">
-            <div>
+            <div className="space-y-1">
               <p>{t('dialog.updateCheck.currentVersion')}: {currentVersion}</p>
               <p>{t('dialog.updateCheck.latestVersion')}: {latestVersion}</p>
             </div>
