@@ -23,7 +23,9 @@ i18n.use(initReactI18next).init({
           help: {
             title: "Help",
             documentation: "Documentation",
-            about: "About"
+            about: "About",
+            checkForUpdates: 'Check for Updates',
+            checkingUpdates: 'Checking for Updates...'
           }
         },
         codeview: {
@@ -113,7 +115,17 @@ i18n.use(initReactI18next).init({
             searching: "Searching...",
             results: "{{count}} results found"
           }
-        }
+        },
+        dialog: {
+          updateCheck: {
+            title: 'Update Check',
+            currentVersion: 'Current Version',
+            latestVersion: 'Latest Version',
+            upToDate: 'You are up to date!',
+            download: 'Download Update',
+            changelog: 'Changelog',
+          },
+        },
       },
     },
     zh: {
@@ -135,7 +147,9 @@ i18n.use(initReactI18next).init({
           help: {
             title: "帮助",
             documentation: "文档",
-            about: "关于"
+            about: "关于",
+            checkForUpdates: '检查更新',
+            checkingUpdates: '正在检查更新...'
           }
         },
         codeview: {
@@ -225,7 +239,17 @@ i18n.use(initReactI18next).init({
             searching: "搜索中...",
             results: "找到 {{count}} 个结果"
           }
-        }
+        },
+        dialog: {
+          updateCheck: {
+            title: '检查更新',
+            currentVersion: '当前版本',
+            latestVersion: '最新版本',
+            upToDate: '已是最新版本！',
+            download: '下载更新',
+            changelog: '更新日志',
+          },
+        },
       },
     },
     ja: {
@@ -247,7 +271,9 @@ i18n.use(initReactI18next).init({
           help: {
             title: "ヘルプ",
             documentation: "ドキュメント",
-            about: "バージョン情報"
+            about: "バージョン情報",
+            checkForUpdates: 'アップデートを確認',
+            checkingUpdates: 'アップデートを確認中...'
           }
         },
         codeview: {
@@ -337,7 +363,17 @@ i18n.use(initReactI18next).init({
             searching: "検索中...",
             results: "{{count}}件の結果が見つかりました"
           }
-        }
+        },
+        dialog: {
+          updateCheck: {
+            title: 'アップデートの確認',
+            currentVersion: '現在のバージョン',
+            latestVersion: '最新バージョン',
+            upToDate: '最新版です！',
+            download: 'アップデートをダウンロード',
+            changelog: '更新履歴',
+          },
+        },
       },
     },
   },

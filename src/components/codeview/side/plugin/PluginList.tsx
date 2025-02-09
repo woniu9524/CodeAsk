@@ -51,24 +51,26 @@ export default function PluginList() {
                 </div>
               </div>
               <div className="flex items-center gap-0.5 ml-2">
-                <PluginExecuteDialog pluginId={plugin.id} pluginName={plugin.name}>
-                  <Button variant="ghost" size="icon" className="h-7 w-7 opacity-0 group-hover:opacity-100">
-                    <PlayCircle className="h-4 w-4" />
+                <div className="hidden group-hover:flex gap-0.5">
+                  <PluginExecuteDialog pluginId={plugin.id} pluginName={plugin.name}>
+                    <Button variant="ghost" size="icon" className="h-7 w-7">
+                      <PlayCircle className="h-4 w-4" />
+                    </Button>
+                  </PluginExecuteDialog>
+                  <PluginEditDialog plugin={plugin}>
+                    <Button variant="ghost" size="icon" className="h-7 w-7" title={t('codeview.plugin.edit')}>
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                  </PluginEditDialog>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => deletePlugin(plugin.id)}
+                  >
+                    <Trash2 className="h-4 w-4 text-destructive" />
                   </Button>
-                </PluginExecuteDialog>
-                <PluginEditDialog plugin={plugin}>
-                  <Button variant="ghost" size="icon" className="h-7 w-7 opacity-0 group-hover:opacity-100" title={t('codeview.plugin.edit')}>
-                    <Pencil className="h-4 w-4" />
-                  </Button>
-                </PluginEditDialog>
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  className="h-7 w-7 opacity-0 group-hover:opacity-100"
-                  onClick={() => deletePlugin(plugin.id)}
-                >
-                  <Trash2 className="h-4 w-4 text-destructive" />
-                </Button>
+                </div>
                 <Switch
                   className="ml-0.5"
                   checked={plugin.enabled}

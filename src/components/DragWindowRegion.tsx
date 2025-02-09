@@ -4,7 +4,7 @@ import {
   minimizeWindow,
   openExternalUrl,
 } from "@/helpers/window_helpers";
-import React from "react";
+import React, { useState } from "react";
 import ToggleTheme from "./ToggleTheme";
 import LangToggle from "./LangToggle";
 import { useFileStore } from "@/store/useFileStore";
@@ -23,12 +23,17 @@ import {
 import { useTranslation } from "react-i18next";
 import { selectFolder } from "@/helpers/folder_helpers";
 import path from "@/utils/path";
+import UpdateCheckDialog from "./dialogs/UpdateCheckDialog";
+import { useUpdateCheck } from "@/hooks/useUpdateCheck";
+import pkg from "../../package.json";
 
 export default function DragWindowRegion() {
   const { t } = useTranslation();
   const setCurrentFolder = useFileStore(state => state.setCurrentFolder);
   const { recentFolders, addRecentFolder } = useRecentFoldersStore();
   const navigate = useNavigate();
+  const [showUpdateDialog, setShowUpdateDialog] = useState(false);
+  const { isChecking, updateLogs, checkForUpdates } = useUpdateCheck();
 
   const handleOpenFolder = async () => {
     try {
@@ -59,6 +64,11 @@ export default function DragWindowRegion() {
     } catch (error) {
       console.error('Failed to open GitHub:', error);
     }
+  };
+
+  const handleCheckForUpdates = async () => {
+    await checkForUpdates();
+    setShowUpdateDialog(true);
   };
 
   return (
@@ -101,6 +111,10 @@ export default function DragWindowRegion() {
               {t('menu.help.title')}
             </DropdownMenuTrigger>
             <DropdownMenuContent>
+              <DropdownMenuItem onClick={handleCheckForUpdates} disabled={isChecking}>
+                {isChecking ? t('menu.help.checkingUpdates') : t('menu.help.checkForUpdates')}
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleOpenGitHub}>{t('menu.help.documentation')}</DropdownMenuItem>
               <DropdownMenuItem onClick={handleOpenGitHub}>{t('menu.help.about')}</DropdownMenuItem>
             </DropdownMenuContent>
@@ -113,6 +127,13 @@ export default function DragWindowRegion() {
         </div>
       </div>
       <WindowButtons />
+      
+      <UpdateCheckDialog
+        open={showUpdateDialog}
+        onOpenChange={setShowUpdateDialog}
+        currentVersion={pkg.version}
+        updateLogs={updateLogs}
+      />
     </div>
   );
 }

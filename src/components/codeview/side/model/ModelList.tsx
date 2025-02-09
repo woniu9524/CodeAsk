@@ -33,19 +33,21 @@ export default function ModelList() {
                 <div className="font-medium text-sm truncate">{model.name}</div>
               </div>
               <div className="flex items-center gap-0.5 ml-2">
-                <ModelEditDialog model={model}>
-                  <Button variant="ghost" size="icon" className="h-7 w-7 opacity-0 group-hover:opacity-100" title={t('codeview.model.edit')}>
-                    <Pencil className="h-4 w-4" />
+                <div className="hidden group-hover:flex gap-0.5">
+                  <ModelEditDialog model={model}>
+                    <Button variant="ghost" size="icon" className="h-7 w-7" title={t('codeview.model.edit')}>
+                      <Pencil className="h-4 w-4" />
+                    </Button>
+                  </ModelEditDialog>
+                  <Button 
+                    variant="ghost" 
+                    size="icon"
+                    className="h-7 w-7"
+                    onClick={() => deleteModel(model.id)}
+                  >
+                    <Trash2 className="h-4 w-4 text-destructive" />
                   </Button>
-                </ModelEditDialog>
-                <Button 
-                  variant="ghost" 
-                  size="icon"
-                  className="h-7 w-7 opacity-0 group-hover:opacity-100"
-                  onClick={() => deleteModel(model.id)}
-                >
-                  <Trash2 className="h-4 w-4 text-destructive" />
-                </Button>
+                </div>
                 <Switch
                   className="ml-0.5"
                   checked={model.enabled}

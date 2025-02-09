@@ -14,12 +14,24 @@
       },
       {
         "version": "1.0.1",
-        "release_date": "2025-02-9",
+        "release_date": "2025-02-09",
         "changes": [
           {
             "type": "新機能",
             "description": "更新チェック",
             "color": "#4CAF50"
+          }
+        ],
+        "download_link": "https://example.com/download"
+      },
+      {
+        "version": "1.0.2",
+        "release_date": "2025-02-09",
+        "changes": [
+          {
+            "type": "最適化",
+            "description": "モデルリストとプロンプトリストの表示を改善",
+            "color": "#2196F3"
           }
         ],
         "download_link": "https://example.com/download"
