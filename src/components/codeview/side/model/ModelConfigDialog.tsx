@@ -14,7 +14,15 @@ interface ModelConfigDialogProps {
 }
 
 export function ModelConfigDialog({ children }: ModelConfigDialogProps) {
-  const { register, handleSubmit, reset } = useForm<ModelFormData>();
+  const { register, handleSubmit, reset } = useForm<ModelFormData>({
+    defaultValues: {
+      baseUrl: "http://localhost:11434/v1",
+      temperature: 0.6,
+      maxContextTokens: 60000,
+      maxOutputTokens: 8000,
+      concurrency: 1
+    }
+  });
   const { addModel } = useModelStore();
   const { t } = useTranslation();
 
@@ -33,11 +41,11 @@ export function ModelConfigDialog({ children }: ModelConfigDialogProps) {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">{t('codeview.model.name')}</Label>
-            <Input id="name" {...register("name", { required: true })} />
+            <Input id="name" placeholder={t('codeview.model.name')} {...register("name", { required: true })} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="apiKey">{t('codeview.model.apiKey')}</Label>
-            <Input id="apiKey" type="password" {...register("apiKey", { required: true })} />
+            <Input id="apiKey" type="password" placeholder={t('codeview.model.apiKey')} {...register("apiKey", { required: true })} />
           </div>
           <div className="space-y-2">
             <Label htmlFor="baseUrl">{t('codeview.model.baseUrl')}</Label>
