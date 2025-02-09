@@ -1,6 +1,18 @@
 {
     "update_logs": [
       {
+        "version": "1.0.1",
+        "release_date": "2025-02-09",
+        "changes": [
+          {
+            "type": "优化",
+            "description": "tabs在过长的时候出现滚动条，文件树选中高亮颜色调整，模型配置增加提示",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://github.com/woniu9524/CodeAsk/releases"
+      },
+      {
         "version": "1.0.0",
         "release_date": "2025-02-09",
         "changes": [

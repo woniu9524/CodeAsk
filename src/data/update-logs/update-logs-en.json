@@ -1,6 +1,18 @@
 {
     "update_logs": [
       {
+        "version": "1.0.1",
+        "release_date": "2025-02-09",
+        "changes": [
+          {
+            "type": "Optimization",
+            "description": "Added scrollbar for long tabs, adjusted file tree selection highlight color, and added model configuration tips",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://github.com/woniu9524/CodeAsk/releases"
+      },
+      {
         "version": "1.0.0",
         "release_date": "2025-02-09",
         "changes": [

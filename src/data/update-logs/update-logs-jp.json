@@ -1,6 +1,18 @@
 {
     "update_logs": [
       {
+        "version": "1.0.1",
+        "release_date": "2025-02-09",
+        "changes": [
+          {
+            "type": "最適化",
+            "description": "長いタブにスクロールバーを追加、ファイルツリーの選択ハイライトカラーを調整、モデル設定にヒントを追加",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://github.com/woniu9524/CodeAsk/releases"
+      },
+      {
         "version": "1.0.0",
         "release_date": "2025-02-09",
         "changes": [

@@ -1,7 +1,7 @@
 {
   "name": "code-ask",
   "productName": "CodeAsk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "a tool for code read",
   "main": ".vite/build/main.js",
   "private": true,
