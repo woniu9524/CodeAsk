@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -21,14 +21,16 @@ export function PluginConfigDialog({ children }: PluginConfigDialogProps) {
   const { addPlugin } = usePluginStore();
   const { models } = useModelStore();
   const { t } = useTranslation();
+  const [open, setOpen] = useState(false);
 
   const onSubmit = (data: PluginFormData) => {
     addPlugin(data);
     reset();
+    setOpen(false);
   };
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[800px]">
         <DialogHeader>
