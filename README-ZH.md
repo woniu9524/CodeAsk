@@ -2,11 +2,6 @@
   <img src="images/icons/logo.png" alt="CodeAsk Logo" width="200"/>
   <h3>CodeAsk - 代码分析工具</h3>
   <p>专治：前任跑路代码、开源天书、自产屎山、谜语人注释等疑难杂症</p>
-  <p>
-    <a href="README.md">中文</a> | 
-    <a href="README-EN.md">English</a> | 
-    <a href="README-JP.md">日本語</a>
-  </p>
 </div>
 
 <div align="center">

@@ -11,6 +11,17 @@
           }
         ],
         "download_link": "https://github.com/woniu9524/CodeAsk/releases/tag/v1.0.0-alpha"
+      },{
+        "version": "1.0.1",
+        "release_date": "2025-02-09",
+        "changes": [
+          {
+            "type": "优化",
+            "description": "tabs在过长的时候出现滚动条",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://example.com/download"
       }
     ]
   }

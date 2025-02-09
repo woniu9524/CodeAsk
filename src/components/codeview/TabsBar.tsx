@@ -41,20 +41,20 @@ export default function TabsBar({ tabs, onTabClick, onTabClose }: TabsBarProps) 
   };
 
   return (
-    <div className="flex h-9 items-center border-b bg-background px-2">
+    <div className="flex h-9 items-center border-b bg-background px-2 overflow-x-auto">
       {tabs.map((tab) => (
         <div
           key={tab.id}
           className={cn(
             "group relative flex h-8 items-center border-r px-4 text-sm",
-            "cursor-pointer hover:bg-accent/50",
+            "cursor-pointer hover:bg-accent/50 flex-shrink-0",
             tab.isActive && "bg-accent",
             tab.type === 'plugin_markdown' && "italic"
           )}
           onClick={() => onTabClick(tab.id)}
         >
           <span className="mr-2">{getFileIcon(tab.originalPath || tab.title)}</span>
-          <span className="truncate max-w-[120px]">
+          <span className="truncate max-w-[160px]">
             {tab.type === 'plugin_markdown' && tab.pluginName ? 
               `${tab.pluginName} - ${tab.title}` : 
               tab.title
