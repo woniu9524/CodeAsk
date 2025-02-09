@@ -8,11 +8,22 @@
             "type": "新增功能",
             "description": "完成基本功能",
             "color": "#4CAF50"
-            
+
+          }
+        ],
+        "download_link": "https://example.com/download"
+      },
+      {
+        "version": "1.0.1",
+        "release_date": "2025-02-9",
+        "changes": [
+          {
+            "type": "新增功能",
+            "description": "检测更新",
+            "color": "#4CAF50"
           }
         ],
         "download_link": "https://example.com/download"
       }
     ]
   }
-  
