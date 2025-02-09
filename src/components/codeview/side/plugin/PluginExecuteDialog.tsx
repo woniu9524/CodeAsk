@@ -68,7 +68,7 @@ function FileTree({
   return (
     <div className="pl-2">
       <div
-        className="flex items-center gap-2 py-1 hover:bg-gray-100 rounded cursor-pointer"
+        className="flex items-center gap-2 py-1 hover:bg-gray-100 dark:hover:bg-gray-700 rounded cursor-pointer"
         onClick={isDirectory ? handleToggle : undefined}
       >
         <div className="flex items-center gap-1">
@@ -137,7 +137,7 @@ function FileExtensionsDialog({
   // Calculate extension statistics
   useEffect(() => {
     const stats: Record<string, number> = {};
-    
+
     const traverseFileTree = (nodes: FileNode[]) => {
       nodes.forEach(node => {
         if (node.type === 'file') {
@@ -149,11 +149,11 @@ function FileExtensionsDialog({
         }
       });
     };
-    
+
     if (fileTree) {
       traverseFileTree(fileTree);
     }
-    
+
     const sortedStats = Object.entries(stats)
       .map(([extension, count]) => ({
         extension,
@@ -161,7 +161,7 @@ function FileExtensionsDialog({
         selected: initialExtensions.includes(extension)
       }))
       .sort((a, b) => b.count - a.count);
-    
+
     setExtensionStats(sortedStats);
   }, [fileTree, initialExtensions]);
 
@@ -208,7 +208,7 @@ function FileExtensionsDialog({
                     <Checkbox
                       checked={stat.selected}
                       onCheckedChange={(checked) => {
-                        setExtensionStats(prev => prev.map(s => 
+                        setExtensionStats(prev => prev.map(s =>
                           s.extension === stat.extension ? { ...s, selected: !!checked } : s
                         ));
                       }}
@@ -502,7 +502,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
           completedFiles++;
           // 更新进度 - 每完成一个文件就更新一次
           setProgress((completedFiles / selectedFiles.length) * 100);
-          
+
           // 只有处理成功的文件才保存
           if (result.status === "success") {
             // 每处理完一个文件就保存一次数据
@@ -513,7 +513,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
             };
             await savePluginExecution(pluginId, currentExecution);
           }
-          
+
           return result;
         });
         await Promise.all(batchPromises);

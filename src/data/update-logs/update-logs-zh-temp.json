@@ -17,7 +17,7 @@
         "changes": [
           {
             "type": "优化",
-            "description": "tabs在过长的时候出现滚动条",
+            "description": "tabs在过长的时候出现滚动条，文件树选中高亮颜色调整",
             "color": "#2196F3"
           }
         ],
