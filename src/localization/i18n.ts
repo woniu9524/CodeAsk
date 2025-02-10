@@ -25,7 +25,8 @@ i18n.use(initReactI18next).init({
             documentation: "Documentation",
             about: "About",
             checkForUpdates: 'Check for Updates',
-            checkingUpdates: 'Checking for Updates...'
+            checkingUpdates: 'Checking for Updates...',
+            newVersionAvailable: 'Update'
           }
         },
         codeview: {
@@ -149,7 +150,8 @@ i18n.use(initReactI18next).init({
             documentation: "文档",
             about: "关于",
             checkForUpdates: '检查更新',
-            checkingUpdates: '正在检查更新...'
+            checkingUpdates: '正在检查更新...',
+            newVersionAvailable: '更新'
           }
         },
         codeview: {
@@ -273,7 +275,8 @@ i18n.use(initReactI18next).init({
             documentation: "ドキュメント",
             about: "バージョン情報",
             checkForUpdates: 'アップデートを確認',
-            checkingUpdates: 'アップデートを確認中...'
+            checkingUpdates: 'アップデートを確認中...',
+            newVersionAvailable: '更新'
           }
         },
         codeview: {

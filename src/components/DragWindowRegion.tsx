@@ -4,7 +4,7 @@ import {
   minimizeWindow,
   openExternalUrl,
 } from "@/helpers/window_helpers";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ToggleTheme from "./ToggleTheme";
 import LangToggle from "./LangToggle";
 import { useFileStore } from "@/store/useFileStore";
@@ -34,6 +34,20 @@ export default function DragWindowRegion() {
   const navigate = useNavigate();
   const [showUpdateDialog, setShowUpdateDialog] = useState(false);
   const { isChecking, updateLogs, checkForUpdates } = useUpdateCheck();
+  const [hasNewVersion, setHasNewVersion] = useState(false);
+
+  useEffect(() => {
+    const checkUpdate = async () => {
+      await checkForUpdates();
+    };
+    checkUpdate();
+  }, []);
+
+  useEffect(() => {
+    if (updateLogs.length > 0 && updateLogs[0].version !== pkg.version) {
+      setHasNewVersion(true);
+    }
+  }, [updateLogs, pkg.version]);
 
   const handleOpenFolder = async () => {
     try {
@@ -119,6 +133,29 @@ export default function DragWindowRegion() {
               <DropdownMenuItem onClick={handleOpenGitHub}>{t('menu.help.about')}</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
+
+          {hasNewVersion && (
+            <button
+              onClick={handleCheckForUpdates}
+              className="flex items-center gap-1 px-1.5 py-0.5 text-xs hover:bg-accent rounded-sm transition-colors"
+            >
+              <svg
+                className="w-3 h-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                />
+              </svg>
+              {t('menu.help.newVersionAvailable')}
+            </button>
+          )}
         </div>
         <div className="draglayer flex-1 h-8"></div>
         <div className="flex items-center gap-2 px-2">

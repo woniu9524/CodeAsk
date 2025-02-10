@@ -1,11 +1,10 @@
-
 <div align="center">
   <img src="images/icons/logo.png" alt="CodeAsk Logo" width="200"/>
-  <h3>CodeAsk - Code Analysis Tool</h3>
-  <p>Specializes in: Legacy code left by former developers, cryptic open-source projects, self-made spaghetti code, and riddle-like comments.</p>
+  <h3>CodeAsk - 代码分析工具</h3>
+  <p>专治：前任跑路代码、开源天书、自产屎山、谜语人注释等疑难杂症</p>
   <p>
-    <a href="README.md">English</a> | 
-    <a href="README-ZH.md">中文</a> | 
+    <a href="README-EN.md">English</a> | 
+    <a href="README.md">中文</a> | 
     <a href="README-JP.md">日本語</a>
   </p>
 </div>
@@ -19,74 +18,94 @@
 
 </div>
 
-## 📖 Introduction
+## 📖 简介
 
-### Ever stared at legacy code and felt:
-- Your code breeds like rabbits (I SWEAR I DIDN'T TOUCH THAT FILE!)
-- Previous dev was a part-time psychic ("needs optimization" → Optimize WHAT exactly?)
-- New hires resign after 3 days ("I've seen code, but this... this is ART")
-- Comments saying "temporary fix" (that's been running longer than _Friends_ reruns)
-- The moment you understand the mess – congrats, you're now part of the problem
+### 你是不是经常面对祖传屎山感叹：
 
-### CodeAsk - How to Survive Legacy Spaghetti Code
-CodeAsk is a code analysis tool powered by LLM. It provides:
-- Intelligent code organization and analysis
-- Security vulnerability detection
-- Code quality assessment
-- Other interesting code insights
+- 代码会自己生孩子（我TM根本没动过！）
+- 前任是谜语人转世（"这里要优化" -> 你倒是说清楚优化哪里啊？）
+- 新人接手三天就提离职（"这代码我看不懂，但我大受震撼"）
+- 注释写着"暂时方案"（结果一用就是三年，比婚姻还持久）
+- 当你终于看懂屎山时——恭喜，你已成为屎山の一部分
 
-Ultimately, it translates spaghetti code into plain human language, helping you quickly familiarize yourself with the codebase and create the illusion that "I can understand this legacy code." It helps newcomers inherit the legacy mess faster (and then join you in overtime until the ICU).
+### CodeAsk - 如何活着离开祖传屎山
 
-## 🎥 Preview
+CodeAsk是一款基于大模型代码分析工具，它可以通过提示词提供：
+- 智能的代码梳理与分析 
+- 安全漏洞检测
+- 代码质量评估
+- 其他有趣的prompt
+
+最终达到把屎山代码翻译成人话，帮助你快速熟悉代码，产生「我能看懂祖传屎山」的幻觉，让新人快速继承祖传屎山（然后一起加班进入ICU）。
+
+## 🎥 预览
+
 <div align="center">
-  <img src="images/demo-zh.gif" alt="CodeAsk Demo" width="800"/>
+<table>
+<tr>
+<td align="center" width="50%">
+<img src="images/demo-zh.gif" alt="CodeAsk Demo" width="100%"/>
+</td>
+<td align="center" width="50%">
+<img src="images/prompts-zh.png" alt="CodeAsk Prompts" width="100%"/>
+</td>
+</tr>
+</table>
 </div>
 
-## 🚀 Quick Start
-1. Clone the project
+## 🚀 快速开始
+
+1. 克隆项目
 ```bash
-git clone https://github.com/woniu9524/CodeAsk.git
+git clone https://github.com/yourusername/codeask.git
 ```
-2. Install dependencies
+
+2. 安装依赖
 ```bash
 cd codeask
 npm install --legacy-peer-deps
 ```
-3. Start the application
+
+3. 启动应用
 ```bash
 npm run start
 ```
 
-## 💡 Usage Guide
-### 1. Project Configuration
-- Use `File > Open Folder` to select the target code directory.
-- Configure your LLM API key and parameters in the model settings.
+## 💡 使用指南
 
-### 2. Plugin Creation and Code Analysis
-1. Create a plugin
-2. Choose an appropriate analysis plugin
-3. Start the analysis task to complete the analysis
+### 1. 项目配置
+- 通过 `文件 > 打开文件夹` 选择目标代码目录
+- 在模型设置中配置您的 LLM API 密钥和参数
 
-### 3. Result Viewing
-- Supports split-screen comparison (original spaghetti code on the left, human-readable analysis on the right)
-- Markdown format report display
-- Mermaid chart support in markdown
+### 2. 插件创建与代码分析
+1. 创建插件
+2. 选择合适的分析插件
+3. 启动分析任务完成分析
 
-## 🔧 Tech Stack
-- **Core Framework**
-    - React 19
-    - Electron
-    - TypeScript
-- **State Management**
-    - Zustand
-- **UI Components**
-    - Shadcn/ui
-    - Monaco Editor
-    - ReactMarkdown
-- **Development Tools**
-    - Vite
-    - ESLint
-    - Prettier
+### 3. 结果查看
+- 支持分屏对比查看（左边原味屎山，右边人话解析）
+- Markdown 格式报告展示
+- markdown中支持mermaid图表展示
 
-## ⚠️ Pro Tip
-When encountering bugs, chant "It's not a bug, it's a feature" three times before creating an issue. Works 0% of the time but makes you feel better.
+## 🔧 技术栈
+
+- **核心框架**
+  - React 19
+  - Electron
+  - TypeScript
+
+- **状态管理**
+  - Zustand
+
+- **UI 组件**
+  - Shadcn/ui
+  - Monaco Editor
+  - ReactMarkdown
+
+- **开发工具**
+  - Vite
+  - ESLint
+  - Prettier
+
+## ⚠️ 特别说明
+如遇BUG，请默念「这不是BUG是特性」三次后提交issue。
