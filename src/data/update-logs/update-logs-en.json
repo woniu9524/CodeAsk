@@ -1,6 +1,23 @@
 {
     "update_logs": [
       {
+        "version": "1.0.2",
+        "release_date": "2025-02-10",
+        "changes": [
+          {
+            "type": "Bug Fix",
+            "description": "Fixed file tree filtering count inconsistency bug",
+            "color": "#FF9800"
+          },
+          {
+            "type": "Optimization",
+            "description": "Added prompt template icon to plugin list",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://github.com/woniu9524/CodeAsk/releases"
+      },
+      {
         "version": "1.0.1",
         "release_date": "2025-02-09",
         "changes": [

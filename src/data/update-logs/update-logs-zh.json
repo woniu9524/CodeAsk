@@ -1,6 +1,23 @@
 {
     "update_logs": [
       {
+        "version": "1.0.2",
+        "release_date": "2025-02-10",
+        "changes": [
+          {
+            "type": "修复",
+            "description": "修复文件树筛选数量不一致bug",
+            "color": "#FF9800"
+          },
+          {
+            "type": "优化",
+            "description": "插件列表增加提示词模板图标",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://github.com/woniu9524/CodeAsk/releases"
+      },
+      {
         "version": "1.0.1",
         "release_date": "2025-02-09",
         "changes": [

@@ -1,8 +1,8 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 46px;
-  height: 24px;
+  width: 28px;
+  height: 16px;
 }
 
 .switch input {
@@ -28,8 +28,8 @@
 .sun-moon {
   position: absolute;
   content: "";
-  height: 18px;
-  width: 18px;
+  height: 10px;
+  width: 10px;
   left: 3px;
   bottom: 3px;
   background-color: yellow;
@@ -46,9 +46,9 @@ input:focus + .slider {
 }
 
 input:checked + .slider .sun-moon {
-  -webkit-transform: translateX(22px);
-  -ms-transform: translateX(22px);
-  transform: translateX(22px);
+  -webkit-transform: translateX(12px);
+  -ms-transform: translateX(12px);
+  transform: translateX(12px);
   background-color: white;
   -webkit-animation: rotate-center 0.6s ease-in-out both;
   animation: rotate-center 0.6s ease-in-out both;
@@ -73,26 +73,26 @@ input:checked + .slider .sun-moon .moon-dot {
 }
 
 #moon-dot-1 {
-  left: 7px;
+  left: 5px;
   top: 2px;
   position: absolute;
-  width: 4px;
-  height: 4px;
+  width: 3px;
+  height: 3px;
   z-index: 4;
 }
 
 #moon-dot-2 {
   left: 2px;
-  top: 7px;
+  top: 5px;
   position: absolute;
-  width: 7px;
-  height: 7px;
+  width: 5px;
+  height: 5px;
   z-index: 4;
 }
 
 #moon-dot-3 {
-  left: 11px;
-  top: 12px;
+  left: 8px;
+  top: 8px;
   position: absolute;
   width: 2px;
   height: 2px;
@@ -100,11 +100,11 @@ input:checked + .slider .sun-moon .moon-dot {
 }
 
 #light-ray-1 {
-  left: -6px;
-  top: -6px;
+  left: -4px;
+  top: -4px;
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   z-index: -1;
   fill: white;
   opacity: 10%;
@@ -114,19 +114,19 @@ input:checked + .slider .sun-moon .moon-dot {
   left: -50%;
   top: -50%;
   position: absolute;
-  width: 38px;
-  height: 38px;
+  width: 24px;
+  height: 24px;
   z-index: -1;
   fill: white;
   opacity: 10%;
 }
 
 #light-ray-3 {
-  left: -12px;
-  top: -12px;
+  left: -8px;
+  top: -8px;
   position: absolute;
-  width: 42px;
-  height: 42px;
+  width: 28px;
+  height: 28px;
   z-index: -1;
   fill: white;
   opacity: 10%;
@@ -150,39 +150,39 @@ input:checked + .slider .sun-moon .moon-dot {
 }
 
 #cloud-1 {
-  left: 21px;
-  top: 10px;
-  width: 28px;
+  left: 16px;
+  top: 8px;
+  width: 20px;
 }
 
 #cloud-2 {
-  left: 31px;
-  top: 7px;
-  width: 14px;
+  left: 22px;
+  top: 5px;
+  width: 10px;
 }
 
 #cloud-3 {
-  left: 13px;
-  top: 17px;
-  width: 21px;
+  left: 10px;
+  top: 12px;
+  width: 15px;
 }
 
 #cloud-4 {
-  left: 25px;
-  top: 13px;
-  width: 28px;
+  left: 18px;
+  top: 10px;
+  width: 20px;
 }
 
 #cloud-5 {
-  left: 34px;
-  top: 10px;
-  width: 14px;
+  left: 24px;
+  top: 7px;
+  width: 10px;
 }
 
 #cloud-6 {
-  left: 15px;
-  top: 18px;
-  width: 21px;
+  left: 12px;
+  top: 13px;
+  width: 15px;
 }
 
 @keyframes cloud-move {
@@ -224,29 +224,29 @@ input:checked + .slider .stars {
 }
 
 #star-1 {
-  width: 14px;
+  width: 10px;
   top: 1px;
   left: 2px;
   animation-delay: 0.3s;
 }
 
 #star-2 {
-  width: 4px;
-  top: 11px;
+  width: 3px;
+  top: 8px;
   left: 2px;
 }
 
 #star-3 {
-  width: 8px;
-  top: 14px;
-  left: 7px;
+  width: 6px;
+  top: 10px;
+  left: 5px;
   animation-delay: 0.6s;
 }
 
 #star-4 {
-  width: 13px;
+  width: 9px;
   top: 0px;
-  left: 13px;
+  left: 9px;
   animation-delay: 1.3s;
 }
 

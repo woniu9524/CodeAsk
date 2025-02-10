@@ -35,7 +35,16 @@ LLMを使ったコード解析ツール。以下の機能で闇を光に変え�
 ## 🎥 デモ
 
 <div align="center">
-  <img src="images/demo-jp.gif" alt="CodeAsk デモ" width="800"/>
+<table>
+<tr>
+<td align="center" width="50%">
+<img src="images/demo-jp.gif" alt="CodeAsk デモ" width="100%"/>
+</td>
+<td align="center" width="50%">
+<img src="images/prompts-jp.png" alt="CodeAsk Prompts" width="100%"/>
+</td>
+</tr>
+</table>
 </div>
 
 ## 🚀 クイックスタート
@@ -94,3 +103,7 @@ npm run start
 
 ## ⚠️ 警告
 バグを見つけたら「これは仕様です」と3回唱えてからIssueを投稿してください。
+
+プロンプトテンプレートの大部分はDeepSeekによって生成され、多くは未検証です。これらは創造的な使用例のインスピレーションを提供することを目的としています。実際の使用時は、お使いのモデルやコードの状況に応じて適宜調整してください。
+
+面白いプロンプトがありましたら、ぜひissuesで共有してください。

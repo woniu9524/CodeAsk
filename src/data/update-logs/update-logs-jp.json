@@ -1,6 +1,23 @@
 {
     "update_logs": [
       {
+        "version": "1.0.2",
+        "release_date": "2025-02-10",
+        "changes": [
+          {
+            "type": "バグ修正",
+            "description": "ファイルツリーのフィルタリング数の不一致バグを修正",
+            "color": "#FF9800"
+          },
+          {
+            "type": "最適化",
+            "description": "プラグインリストにプロンプトテンプレートアイコンを追加",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://github.com/woniu9524/CodeAsk/releases"
+      },
+      {
         "version": "1.0.1",
         "release_date": "2025-02-09",
         "changes": [
