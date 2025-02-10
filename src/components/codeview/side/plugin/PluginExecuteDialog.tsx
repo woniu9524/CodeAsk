@@ -380,6 +380,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
   const getSelectedFiles = (nodes: FileNodeWithSelection[]): string[] => {
     const files: string[] = [];
     const traverse = (node: FileNodeWithSelection) => {
+      if (node._hidden) return;
       if (node.type === 'file' && node.selected) {
         files.push(node.id);
       }
@@ -392,6 +393,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
   const getSelectedFileCount = (nodes: FileNodeWithSelection[]): number => {
     let count = 0;
     const traverse = (node: FileNodeWithSelection) => {
+      if (node._hidden) return;
       if (node.type === 'file' && node.selected) {
         count++;
       }
@@ -401,11 +403,24 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
     return count;
   };
 
+  const getVisibleFiles = (nodes: FileNodeWithSelection[]): FileNodeWithSelection[] => {
+    const files: FileNodeWithSelection[] = [];
+    const traverse = (node: FileNodeWithSelection): void => {
+      if (node._hidden) return;
+      if (node.type === 'file') {
+        files.push(node);
+      }
+      node.children?.forEach(traverse);
+    };
+    nodes.forEach(traverse);
+    return files;
+  };
+
   const handleExecute = async () => {
     try {
       setIsProcessing(true);
       setProgress(0);
-      const selectedFiles = getSelectedFiles(selectableTree);
+      const selectedFiles = getSelectedFiles(filterTree(selectableTree));
       const extensions = fileExtensions.split(',').map(ext => ext.trim()).filter(Boolean);
       // 获取插件配置
       const plugin = plugins.find(p => p.id === pluginId);
@@ -587,20 +602,26 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
               <div className="flex items-center gap-2">
                 <Label>{t('codeview.plugin.execute.fileSelection')}</Label>
                 <span className="text-sm text-gray-500">
-                  ({getSelectedFileCount(selectableTree)} {t('codeview.plugin.execute.selectedFiles')})
+                  ({getSelectedFileCount(filterTree(selectableTree))} {t('codeview.plugin.execute.selectedFiles')})
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Checkbox
                   id="select-all"
-                  checked={selectableTree.length > 0 && selectableTree.every(node => node.selected)}
+                  checked={
+                    getVisibleFiles(filterTree(selectableTree)).length > 0 &&
+                    getVisibleFiles(filterTree(selectableTree)).every(file => file.selected)
+                  }
                   onCheckedChange={(checked) => {
                     const updateAllNodes = (nodes: FileNodeWithSelection[]): FileNodeWithSelection[] => {
-                      return nodes.map(node => ({
-                        ...node,
-                        selected: !!checked,
-                        children: node.children ? updateAllNodes(node.children) : undefined
-                      }));
+                      return nodes.map(node => {
+                        if (node._hidden) return node;
+                        return {
+                          ...node,
+                          selected: !!checked,
+                          children: node.children ? updateAllNodes(node.children) : undefined
+                        };
+                      });
                     };
                     setSelectableTree(prevTree => updateAllNodes(prevTree));
                   }}
