@@ -3,11 +3,12 @@ import { usePluginStore } from "@/store/usePluginStore";
 import { useModelStore } from "@/store/useModelStore";
 import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
-import { PlusCircle, PlayCircle, Pencil, Trash2, Box, User } from "lucide-react";
+import { PlusCircle, PlayCircle, Pencil, Trash2, Box, User, Sparkles } from "lucide-react";
 import { PluginConfigDialog } from "./PluginConfigDialog";
 import { PluginExecuteDialog } from "./PluginExecuteDialog";
 import { PluginEditDialog } from "./PluginEditDialog";
 import { useTranslation } from "react-i18next";
+import { PromptTemplatesDialog } from "../prompt/PromptTemplatesDialog";
 
 export default function PluginList() {
   const { plugins, togglePlugin, deletePlugin } = usePluginStore();
@@ -18,11 +19,18 @@ export default function PluginList() {
     <div className="space-y-2">
       <div className="flex items-center justify-between px-2 py-1">
         <h2 className="text-sm font-semibold">{t('codeview.plugin.title')}</h2>
-        <PluginConfigDialog>
-          <Button variant="ghost" size="icon" className="h-7 w-7" title={t('codeview.plugin.add')}>
-            <PlusCircle className="h-4 w-4" />
-          </Button>
-        </PluginConfigDialog>
+        <div className="flex items-center gap-1">
+          <PromptTemplatesDialog>
+            <Button variant="ghost" size="icon" className="h-7 w-7" title={t('codeview.sidebar.promptTemplates')}>
+              <Sparkles className="h-4 w-4" />
+            </Button>
+          </PromptTemplatesDialog>
+          <PluginConfigDialog>
+            <Button variant="ghost" size="icon" className="h-7 w-7" title={t('codeview.plugin.add')}>
+              <PlusCircle className="h-4 w-4" />
+            </Button>
+          </PluginConfigDialog>
+        </div>
       </div>
 
       <div className="space-y-1">
