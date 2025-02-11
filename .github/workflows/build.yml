@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [windows-latest, macos-latest, ubuntu-latest]
+        os: [macos-latest, ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
       - name: Install dependencies
         run: |
           npm install --legacy-peer-deps
-          npm install @rollup/rollup-${{ runner.os == 'macOS' && 'darwin' || runner.os == 'Linux' && 'linux' || 'win32' }}-${{ runner.arch }} --legacy-peer-deps --no-save || true
+          npm install @rollup/rollup-${{ runner.os == 'macOS' && 'darwin' || 'linux' }}-${{ runner.arch }} --legacy-peer-deps --no-save || true
 
       - name: Build and Make
         run: |
@@ -46,7 +46,6 @@ jobs:
         with:
           name: ${{ matrix.os }}-artifacts
           path: |
-            out/make/**/*.exe
             out/make/**/*.dmg
             out/make/**/*.deb
             out/make/**/*.rpm
@@ -65,7 +64,6 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           files: |
-            *-artifacts/**/*.exe
             *-artifacts/**/*.dmg
             *-artifacts/**/*.deb
             *-artifacts/**/*.rpm
