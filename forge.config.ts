@@ -1,5 +1,4 @@
 import type { ForgeConfig } from "@electron-forge/shared-types";
-import { MakerSquirrel } from "@electron-forge/maker-squirrel";
 import { MakerZIP } from "@electron-forge/maker-zip";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
@@ -9,30 +8,47 @@ import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
 
 const config: ForgeConfig = {
-    packagerConfig: {
-      executableName: "CodeAsk",
-      asar: true,
-      icon: './images/icons/logo',
-      win32metadata: {
-        FileDescription: "CodeAsk - Your Code Assistant",
-        ProductName: "CodeAsk",
-      },
-    },
+  packagerConfig: {
+    executableName: "code-ask",
+    name: "CodeAsk",
+    asar: true,
+    icon: './images/icons/logo',
+    win32metadata: {
+      FileDescription: "CodeAsk - Your Code Assistant",
+      ProductName: "CodeAsk",
+    }
+  },
   rebuildConfig: {},
   makers: [
-    new MakerSquirrel({}),
     new MakerZIP({}, ['darwin', 'linux']),
-    new MakerDMG({}),
-    new MakerDeb({}),
-    new MakerRpm({}),
+    new MakerDMG({
+      format: 'ULFO'
+    }),
+    new MakerDeb({
+      options: {
+        bin: "code-ask",
+        name: "code-ask",
+        productName: "CodeAsk",
+        genericName: "Code Assistant",
+        categories: ["Development"],
+        icon: './images/icons/logo.png'
+      }
+    }),
+    new MakerRpm({
+      options: {
+        bin: "code-ask",
+        name: "code-ask",
+        productName: "CodeAsk",
+        genericName: "Code Assistant",
+        categories: ["Development"],
+        icon: './images/icons/logo.png'
+      }
+    })
   ],
   plugins: [
     new VitePlugin({
-      // `build` can specify multiple entry builds, which can be Main process, Preload scripts, Worker process, etc.
-      // If you are familiar with Vite configuration, it will look really familiar.
       build: [
         {
-          // `entry` is just an alias for `build.lib.entry` in the corresponding file of `config`.
           entry: "src/main.ts",
           config: "vite.main.config.ts",
         },
@@ -46,8 +62,6 @@ const config: ForgeConfig = {
         config: 'vite.renderer.config.ts',
       }],
     }),
-    // Fuses are used to enable/disable various Electron functionality
-    // at package time, before code signing the application
     new FusesPlugin({
       version: FuseVersion.V1,
       [FuseV1Options.RunAsNode]: false,
