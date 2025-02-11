@@ -39,7 +39,7 @@ const config: ForgeConfig = {
       background: './images/dmg-background.png',
       contents: [
         { x: 448, y: 344, type: 'link', path: '/Applications' },
-        { x: 192, y: 344, type: 'file', path: '../../out/CodeAsk-darwin-x64/CodeAsk.app' }
+        { x: 192, y: 344, type: 'file', path: './CodeAsk.app' }
       ]
     }),
     new MakerDeb({
