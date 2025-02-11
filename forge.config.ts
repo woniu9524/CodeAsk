@@ -13,16 +13,33 @@ const config: ForgeConfig = {
     name: "CodeAsk",
     asar: true,
     icon: './images/icons/logo',
-    win32metadata: {
-      FileDescription: "CodeAsk - Your Code Assistant",
-      ProductName: "CodeAsk",
-    }
+    // macOS specific configuration
+    osxSign: {
+      identity: undefined, // Use this for development to skip signing
+      type: 'development',
+      entitlements: 'entitlements.plist',
+      'entitlements-inherit': 'entitlements.plist',
+    },
+    darwinDarkModeSupport: true,
+    protocols: [
+      {
+        name: 'CodeAsk URL',
+        schemes: ['codeask']
+      }
+    ]
   },
   rebuildConfig: {},
   makers: [
     new MakerZIP({}, ['darwin', 'linux']),
     new MakerDMG({
-      format: 'ULFO'
+      format: 'ULFO',
+      name: 'CodeAsk',
+      icon: './images/icons/logo.icns',
+      background: './images/dmg-background.png',
+      contents: [
+        { x: 448, y: 344, type: 'link', path: '/Applications' },
+        { x: 192, y: 344, type: 'file', path: '../../out/CodeAsk-darwin-x64/CodeAsk.app' }
+      ]
     }),
     new MakerDeb({
       options: {
