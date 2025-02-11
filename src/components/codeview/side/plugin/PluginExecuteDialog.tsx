@@ -569,7 +569,6 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
                     value={fileExtensions}
                     onChange={(e) => setFileExtensions(e.target.value)}
                     placeholder={t('codeview.plugin.execute.fileExtensionsPlaceholder')}
-                    readOnly
                   />
                   <Button
                     variant="outline"
