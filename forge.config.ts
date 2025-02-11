@@ -16,9 +16,10 @@ const config: ForgeConfig = {
     // macOS specific configuration
     osxSign: {
       identity: undefined, // Use this for development to skip signing
-      type: 'development',
-      entitlements: 'entitlements.plist',
-      'entitlements-inherit': 'entitlements.plist',
+      optionsForFile: () => ({
+        entitlements: 'entitlements.plist',
+        'entitlements-inherit': 'entitlements.plist',
+      })
     },
     darwinDarkModeSupport: true,
     protocols: [
