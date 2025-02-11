@@ -22,8 +22,20 @@ jobs:
           node-version: '20'
           cache: 'npm'
 
+      - name: Install Linux Dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y dpkg rpm fakeroot
+
+      - name: Clean install artifacts
+        run: |
+          rm -rf node_modules package-lock.json || true
+
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
+        run: |
+          npm install --legacy-peer-deps
+          npm install @rollup/rollup-${{ runner.os == 'macOS' && 'darwin' || runner.os == 'Linux' && 'linux' || 'win32' }}-${{ runner.arch }} --legacy-peer-deps --no-save || true
 
       - name: Build and Make
         run: |
