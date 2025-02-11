@@ -36,7 +36,6 @@ const config: ForgeConfig = {
       format: 'ULFO',
       name: 'CodeAsk',
       icon: './images/icons/logo.icns',
-      background: './images/dmg-background.png',
       contents: [
         { x: 448, y: 344, type: 'link', path: '/Applications' },
         { x: 192, y: 344, type: 'file', path: 'out/CodeAsk-darwin-arm64/CodeAsk.app' }
