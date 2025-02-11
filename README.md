@@ -43,14 +43,16 @@ CodeAsk是一款基于大模型代码分析工具，它可以通过提示词提�
 <div align="center">
 <table>
 <tr>
-<td align="center" width="50%">
+<td align="center" width="40%">
 <img src="images/demo-zh.gif" alt="CodeAsk Demo" width="100%"/>
 </td>
-<td align="center" width="50%">
+<td align="center" width="40%">
 <img src="images/prompts-zh.png" alt="CodeAsk Prompts" width="100%"/>
 </td>
 </tr>
 </table>
+
+📺 [观看演示视频](https://bilibili.com/video/BV1eQNzeuEEb/)
 </div>
 
 ## 🚀 快速开始
