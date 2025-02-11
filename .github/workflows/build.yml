@@ -23,11 +23,11 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Build and Make
         run: |
-          npm run make
+          npm run make --legacy-peer-deps
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
