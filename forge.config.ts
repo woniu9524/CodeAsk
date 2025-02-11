@@ -3,6 +3,7 @@ import { MakerSquirrel } from "@electron-forge/maker-squirrel";
 import { MakerZIP } from "@electron-forge/maker-zip";
 import { MakerDeb } from "@electron-forge/maker-deb";
 import { MakerRpm } from "@electron-forge/maker-rpm";
+import { MakerDMG } from "@electron-forge/maker-dmg";
 import { VitePlugin } from "@electron-forge/plugin-vite";
 import { FusesPlugin } from "@electron-forge/plugin-fuses";
 import { FuseV1Options, FuseVersion } from "@electron/fuses";
@@ -20,9 +21,10 @@ const config: ForgeConfig = {
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({}),
-    new MakerZIP({}, ["darwin"]),
-    new MakerRpm({}),
+    new MakerZIP({}, ['darwin', 'linux']),
+    new MakerDMG({}),
     new MakerDeb({}),
+    new MakerRpm({}),
   ],
   plugins: [
     new VitePlugin({
@@ -39,12 +41,10 @@ const config: ForgeConfig = {
           config: "vite.preload.config.ts",
         },
       ],
-      renderer: [
-        {
-          name: "main_window",
-          config: "vite.renderer.config.ts",
-        },
-      ],
+      renderer: [{
+        name: 'main_window',
+        config: 'vite.renderer.config.ts',
+      }],
     }),
     // Fuses are used to enable/disable various Electron functionality
     // at package time, before code signing the application
