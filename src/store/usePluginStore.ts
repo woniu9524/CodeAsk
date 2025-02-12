@@ -1,6 +1,7 @@
 import { create } from 'zustand'
-import { readTextFile } from '@/helpers/file_helpers';
+import { readTextFile, writeTextFile } from '@/helpers/file_helpers';
 import { join } from '@/utils/path';
+import { usePluginExecutionStore } from '@/store/usePluginExecutionStore';
 
 interface ProjectPluginData {
   pluginName: string;
@@ -120,6 +121,20 @@ export const usePluginStore = create<PluginState>((set, get) => {
         // 只保存非项目插件
         const pluginsToSave = newPlugins.filter(p => !p.isProjectPlugin);
         window.storeAPI.set('plugins', 'plugins', pluginsToSave);
+
+        // 删除 .codeaskdata 中的插件数据
+        const { dataFilePath, executions } = usePluginExecutionStore.getState();
+        if (dataFilePath) {
+          const newExecutions = { ...executions };
+          delete newExecutions[id];
+          writeTextFile(
+            dataFilePath,
+            JSON.stringify({ plugins: newExecutions }, null, 2)
+          ).catch(error => {
+            console.error('删除插件数据失败:', error);
+          });
+        }
+
         return { plugins: newPlugins };
       });
     },
