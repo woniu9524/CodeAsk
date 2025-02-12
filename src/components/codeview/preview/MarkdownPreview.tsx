@@ -119,22 +119,24 @@ export function MarkdownPreview({ content }: MarkdownPreviewProps) {
       </li>
     ),
     blockquote: ({ children }) => (
-      <blockquote className="border-l-4 border-primary pl-4 my-4 italic">{children}</blockquote>
+      <blockquote className="border-l-4 border-primary pl-4 my-4 italic bg-muted/20 py-2 rounded-r">
+        {children}
+      </blockquote>
     ),
     table: ({ children }) => (
-      <div className="my-6 w-full overflow-x-auto">
-        <table className="w-full border-collapse divide-y divide-border">
+      <div className="my-6 w-full overflow-x-auto rounded-lg shadow-sm">
+        <table className="w-full border-collapse">
           {children}
         </table>
       </div>
     ),
     th: ({ children }) => (
-      <th className="px-4 py-3 bg-muted font-semibold text-left border-b border-border">
+      <th className="px-6 py-3 bg-muted/50 font-semibold text-left text-sm border-b border-border/50 sticky top-0">
         {children}
       </th>
     ),
     td: ({ children }) => (
-      <td className="px-4 py-3 border-b border-border">
+      <td className="px-6 py-3.5 text-sm border-b border-border/30 even:bg-muted/10 hover:bg-muted/20 transition-colors">
         {children}
       </td>
     ),

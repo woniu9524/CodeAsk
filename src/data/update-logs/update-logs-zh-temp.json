@@ -45,11 +45,11 @@
         "changes": [
           {
             "type": "修复",
-            "description": "筛选拓展名输入框不能手动输入",
+            "description": "解决筛选拓展名输入框不能手动输入，解决删除插件没有删除.codeaskdata数据",
             "color": "#FF9800"
           },{
             "type": "优化",
-            "description": "插件列表增加提示词模板图标",
+            "description": "插件列表增加提示词模板图标，Ctrl+滚轮放大缩小代码，markdown截取",
             "color": "#2196F3"
           }
 
