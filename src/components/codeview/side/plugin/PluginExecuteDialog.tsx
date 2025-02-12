@@ -460,7 +460,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
           // 构建消息
           const messages = [
             new SystemMessage(plugin.systemPrompt),
-            new HumanMessage(plugin.userPrompt + "\n\n" + content)
+            new HumanMessage(`${plugin.userPrompt}\n\nFile: ${relativePath}\n\nCode:\n${content}`)
           ];
 
           // 调用模型分析
@@ -544,9 +544,6 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
     }
   };
 
-  const getAbsolutePath = (relativePath: string, rootPath: string) => {
-    return join(rootPath, relativePath);
-  };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
