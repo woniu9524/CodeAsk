@@ -11,6 +11,7 @@ export default function BaseLayout({
     <div className="flex flex-col h-screen">
       <DragWindowRegion/>
       {/* <NavigationMenu /> */}
+      <div className="border-t border-gray-300"></div>
       <main className="flex-1 overflow-hidden">{children}</main>
       <Toaster position="top-center" richColors closeButton />
     </div>

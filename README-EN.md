@@ -17,7 +17,7 @@
 
 ## 📖 Introduction
 
-### Ever stared at legacy code and felt:
+### Are you currently experiencing...:
 - Your code breeds like rabbits (I SWEAR I DIDN'T TOUCH THAT FILE!)
 - Previous dev was a part-time psychic ("needs optimization" → Optimize WHAT exactly?)
 - New hires resign after 3 days ("I've seen code, but this... this is ART")
