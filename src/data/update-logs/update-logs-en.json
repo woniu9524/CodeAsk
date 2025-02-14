@@ -1,6 +1,23 @@
 {
     "update_logs": [
       {
+        "version": "1.0.3",
+        "release_date": "2025-02-14",
+        "changes": [
+          {
+            "type": "Bug Fix",
+            "description": "Fixed extension filter input box manual entry and plugin deletion not removing .codeaskdata data",
+            "color": "#FF9800"
+          },
+          {
+            "type": "Optimization",
+            "description": "Added prompt template icon to plugin list, Ctrl+wheel for code zoom, and markdown capture",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://github.com/woniu9524/CodeAsk/releases"
+      },
+      {
         "version": "1.0.2",
         "release_date": "2025-02-10",
         "changes": [

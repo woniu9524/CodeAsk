@@ -1,6 +1,23 @@
 {
     "update_logs": [
       {
+        "version": "1.0.3",
+        "release_date": "2025-02-14",
+        "changes": [
+          {
+            "type": "バグ修正",
+            "description": "拡張子フィルターの手動入力とプラグイン削除時の.codeaskdataデータ未削除の問題を修正",
+            "color": "#FF9800"
+          },
+          {
+            "type": "最適化",
+            "description": "プラグインリストにプロンプトテンプレートアイコンを追加、Ctrl+ホイールでコードズーム、マークダウンキャプチャ",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://github.com/woniu9524/CodeAsk/releases"
+      },
+      {
         "version": "1.0.2",
         "release_date": "2025-02-10",
         "changes": [
