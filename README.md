@@ -43,7 +43,7 @@ CodeAsk是一款基于大模型代码分析工具，它可以通过提示词提�
 <div align="center">
 <table>
 <tr>
-<td align="center" width="40%">
+<td align="center" width="80%">
 <img src="images/demo-zh.gif" alt="CodeAsk Demo" width="100%"/>
 </td>
 </tr>
