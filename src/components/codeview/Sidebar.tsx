@@ -12,7 +12,7 @@ import path from '@/utils/path';
 import GlobalAnalysisList from './side/global/GlobalAnalysisList';
 import { usePluginStore } from '@/store/usePluginStore';
 import { usePluginExecutionStore } from '@/store/usePluginExecutionStore';
-import { useSplitStore } from '@/store/useSplitStore';
+import { useNavigate } from "@tanstack/react-router";
 
 // 定义侧边栏组件的属性类型
 type SidebarProps = {
@@ -34,6 +34,14 @@ export default function Sidebar({ className = "" }: SidebarProps) {
   const { plugins } = usePluginStore();
   const { getPluginExecution } = usePluginExecutionStore();
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleTabChange = (tab: TabType) => {
+    setActiveTab(tab);
+    if (tab === 'explorer') {
+      navigate({ to: '/code-view' });
+    }
+  };
 
   const handleFileClick = async (file: FileNode) => {
     if (file.type === 'file') {
@@ -120,7 +128,7 @@ export default function Sidebar({ className = "" }: SidebarProps) {
           variant={activeTab === 'explorer' ? 'secondary' : 'ghost'}
           size="icon"
           className="mb-1"
-          onClick={() => setActiveTab('explorer')}
+          onClick={() => handleTabChange('explorer')}
           title={t('codeview.sidebar.explorer')}
         >
           <FolderOpenDot className="h-5 w-5" />

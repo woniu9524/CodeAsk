@@ -39,7 +39,10 @@ export default function GlobalAnalysisList() {
             <div
               key={analysis.id}
               className="group flex items-center justify-between px-2 py-1 hover:bg-accent/50 rounded-md cursor-pointer"
-              onClick={() => navigate({ to: "/global-analysis" })}
+              onClick={() => navigate({ 
+                to: "/global-analysis",
+                replace: true 
+              })}
             >
               <div className="min-w-0 flex-1">
                 <div className="font-medium text-sm truncate flex items-center gap-1">

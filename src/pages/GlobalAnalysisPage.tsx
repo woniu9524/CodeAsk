@@ -5,6 +5,7 @@ import { useTranslation } from "react-i18next";
 import { GlobalAnalysisResult } from "@/store/useGlobalAnalysisExecutionStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { MarkdownPreview } from "@/components/codeview/preview/MarkdownPreview";
 
 interface GlobalAnalysisData {
   globalAnalysis?: {
@@ -47,26 +48,11 @@ export default function GlobalAnalysisPage() {
   return (
     <ScrollArea className="h-[calc(100vh-2rem)]">
       <div className="container mx-auto p-6 space-y-6">
-        <h1 className="text-2xl font-bold">
-          {t("codeview.globalAnalysis.title")}
-        </h1>
-
         {error ? (
           <div className="text-destructive">{error}</div>
         ) : (
           <div className="grid gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>{t("codeview.globalAnalysis.summary.title")}</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <ScrollArea className="h-[calc(100vh-16rem)]">
-                  <div className="prose dark:prose-invert max-w-none whitespace-pre-line">
-                    {summary}
-                  </div>
-                </ScrollArea>
-              </CardContent>
-            </Card>
+            <MarkdownPreview content={summary} />
           </div>
         )}
       </div>
