@@ -1,6 +1,7 @@
 import { createRoute } from "@tanstack/react-router";
 import { RootRoute } from "./__root";
 import CodeViewPage from "@/pages/CodeViewPage";
+import GlobalAnalysisPage from "@/pages/GlobalAnalysisPage";
 
 // TODO: Steps to add a new route:
 // 1. Create a new page component in the '../pages/' directory (e.g., NewPage.tsx)
@@ -34,7 +35,14 @@ export const CodeViewPageRoute = createRoute({
   component: CodeViewPage,
 });
 
+export const GlobalAnalysisPageRoute = createRoute({
+  getParentRoute: () => RootRoute,
+  path: "/global-analysis",
+  component: GlobalAnalysisPage,
+});
+
 export const rootTree = RootRoute.addChildren([
   HomeRoute,
-  CodeViewPageRoute
+  CodeViewPageRoute,
+  GlobalAnalysisPageRoute
 ]);

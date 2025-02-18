@@ -157,7 +157,10 @@ i18n.use(initReactI18next).init({
               analysisComplete: "Analysis Complete",
               selectExtensions: "Select File Extensions",
               noExtension: "No Extension",
-              confirm: "Confirm"
+              confirm: "Confirm",
+              noResults: "No analysis results available.",
+              noData: "No global analysis data found.",
+              loadError: "Failed to load global analysis data."
             }
           }
         },
@@ -326,7 +329,10 @@ i18n.use(initReactI18next).init({
               analysisComplete: "分析完成",
               selectExtensions: "选择文件扩展名",
               noExtension: "无扩展名",
-              confirm: "确认"
+              confirm: "确认",
+              noResults: "暂无分析结果。",
+              noData: "未找到全局分析数据。",
+              loadError: "加载全局分析数据失败。"
             }
           }
         },
@@ -495,7 +501,10 @@ i18n.use(initReactI18next).init({
               analysisComplete: "分析完了",
               selectExtensions: "ファイル拡張子を選択",
               noExtension: "拡張子なし",
-              confirm: "確認"
+              confirm: "確認",
+              noResults: "分析結果がありません。",
+              noData: "グローバル分析データが見つかりません。",
+              loadError: "グローバル分析データの読み込みに失敗しました。"
             }
           }
         },

@@ -7,11 +7,13 @@ import { PlusCircle, PlayCircle, Pencil, Trash2, Box, User } from 'lucide-react'
 import { GlobalAnalysisConfigDialog } from './GlobalAnalysisConfigDialog';
 import { GlobalAnalysisExecuteDialog } from './GlobalAnalysisExecuteDialog';
 import { GlobalAnalysisEditDialog } from './GlobalAnalysisEditDialog';
+import { useNavigate } from '@tanstack/react-router';
 
 export default function GlobalAnalysisList() {
   const { t } = useTranslation();
   const { analyses, deleteAnalysis } = useGlobalAnalysisStore();
   const { models } = useModelStore();
+  const navigate = useNavigate();
 
   return (
     <div className="space-y-2">
@@ -36,7 +38,8 @@ export default function GlobalAnalysisList() {
           return (
             <div
               key={analysis.id}
-              className="group flex items-center justify-between px-2 py-1 hover:bg-accent/50 rounded-md"
+              className="group flex items-center justify-between px-2 py-1 hover:bg-accent/50 rounded-md cursor-pointer"
+              onClick={() => navigate({ to: "/global-analysis" })}
             >
               <div className="min-w-0 flex-1">
                 <div className="font-medium text-sm truncate flex items-center gap-1">
@@ -61,12 +64,27 @@ export default function GlobalAnalysisList() {
               <div className="flex items-center gap-0.5 ml-2">
                 <div className="hidden group-hover:flex gap-0.5">
                   <GlobalAnalysisExecuteDialog analysisId={analysis.id} analysisName={analysis.name}>
-                    <Button variant="ghost" size="icon" className="h-7 w-7">
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-7 w-7"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
                       <PlayCircle className="h-4 w-4" />
                     </Button>
                   </GlobalAnalysisExecuteDialog>
                   <GlobalAnalysisEditDialog analysis={analysis}>
-                    <Button variant="ghost" size="icon" className="h-7 w-7" title={t('codeview.globalAnalysis.edit')}>
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
+                      className="h-7 w-7" 
+                      title={t('codeview.globalAnalysis.edit')}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                      }}
+                    >
                       <Pencil className="h-4 w-4" />
                     </Button>
                   </GlobalAnalysisEditDialog>
@@ -74,7 +92,10 @@ export default function GlobalAnalysisList() {
                     variant="ghost" 
                     size="icon"
                     className="h-7 w-7"
-                    onClick={() => deleteAnalysis(analysis.id)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteAnalysis(analysis.id);
+                    }}
                   >
                     <Trash2 className="h-4 w-4 text-destructive" />
                   </Button>
