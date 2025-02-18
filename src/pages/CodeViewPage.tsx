@@ -2,6 +2,7 @@ import React from "react";
 import TabsBar, { Tab, TabType } from "@/components/codeview/TabsBar";
 import { useFileStore } from "@/store/useFileStore";
 import { useSplitStore } from "@/store/useSplitStore";
+import { usePluginExecutionStore } from "@/store/usePluginExecutionStore";
 import path from "@/utils/path";
 import { ResizablePanelGroup, ResizablePanel, ResizableHandle } from "@/components/ui/resizable";
 import { TabContent } from "@/components/codeview/preview/TabContent";
@@ -15,9 +16,16 @@ export default function CodeViewPage() {
     currentFolderPath,
   } = useFileStore();
   const { isSplit, splitSizes, setSplitSizes } = useSplitStore();
+  const { initializeDataFile } = usePluginExecutionStore();
 
   const [activePluginFileId, setActivePluginFileId] = React.useState<string | null>(null);
   
+  React.useEffect(() => {
+    if (currentFolderPath) {
+      initializeDataFile(currentFolderPath);
+    }
+  }, [currentFolderPath]);
+
   // 先找到代码类型的标签ID
   const codeTabId = openedFiles.find(filePath => filePath && !filePath.startsWith("plugin_result:")) || null;
 
