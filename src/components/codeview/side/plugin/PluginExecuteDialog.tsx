@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -14,7 +14,7 @@ import { getFileHash, readTextFile } from "@/helpers/file_helpers";
 import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage, SystemMessage } from "@langchain/core/messages";
 import type { FileNode } from '@/components/codeview/side/FileTree';
-import { relative, join, extname } from "@/utils/path";
+import { relative, extname } from "@/utils/path";
 import type { PluginExecutionFile } from "@/store/usePluginExecutionStore";
 import { useTranslation } from "react-i18next";
 import { Progress } from "@/components/ui/progress";
@@ -47,7 +47,7 @@ function convertToSelectableTree(node: FileNode): FileNodeWithSelection {
 function FileTree({
   node,
   onSelect
-                  }: {
+}: {
   node: FileNodeWithSelection;
   onSelect: (node: FileNodeWithSelection, selected: boolean) => void;
   parentSelected?: boolean;
@@ -134,7 +134,6 @@ function FileExtensionsDialog({
   const { fileTree } = useFileStore();
   const [extensionStats, setExtensionStats] = useState<ExtensionStat[]>([]);
 
-  // Calculate extension statistics
   useEffect(() => {
     const stats: Record<string, number> = {};
 
@@ -245,7 +244,6 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
   const [progress, setProgress] = useState(0);
   const [extensionsDialogOpen, setExtensionsDialogOpen] = useState(false);
 
-  // 获取所有文件的哈希值
   const updateFileHashes = async (nodes: FileNodeWithSelection[]) => {
     const newHashes: Record<string, string> = {};
     const processNode = async (node: FileNodeWithSelection) => {
@@ -293,7 +291,6 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
   const filterNode = (node: FileNodeWithSelection): boolean => {
     const extensions = fileExtensions.split(',').map(ext => ext.trim()).filter(Boolean);
     if (node.type === 'file') {
-      // 检查文件扩展名
       if (extensions.length > 0) {
         const hasMatchingExtension = extensions.some(ext =>
           node.name.toLowerCase().endsWith(ext.toLowerCase())
@@ -545,6 +542,20 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
     }
   };
 
+  // 使用 useMemo 缓存过滤后的文件树
+  const filteredTree = useMemo(() => {
+    return filterTree(selectableTree);
+  }, [selectableTree, fileExtensions, displayMode, fileHashes, pluginId, currentFolderPath]);
+
+  // 使用 useMemo 缓存可见文件列表
+  const visibleFiles = useMemo(() => {
+    return getVisibleFiles(filteredTree);
+  }, [filteredTree]);
+
+  // 使用 useMemo 缓存选中的文件数量
+  const selectedFileCount = useMemo(() => {
+    return getSelectedFileCount(filteredTree);
+  }, [filteredTree]);
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
@@ -599,15 +610,15 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
               <div className="flex items-center gap-2">
                 <Label>{t('codeview.plugin.execute.fileSelection')}</Label>
                 <span className="text-sm text-gray-500">
-                  ({getSelectedFileCount(filterTree(selectableTree))} {t('codeview.plugin.execute.selectedFiles')})
+                  ({selectedFileCount} {t('codeview.plugin.execute.selectedFiles')})
                 </span>
               </div>
               <div className="flex items-center gap-2">
                 <Checkbox
                   id="select-all"
                   checked={
-                    getVisibleFiles(filterTree(selectableTree)).length > 0 &&
-                    getVisibleFiles(filterTree(selectableTree)).every(file => file.selected)
+                    visibleFiles.length > 0 &&
+                    visibleFiles.every(file => file.selected)
                   }
                   onCheckedChange={(checked) => {
                     const updateAllNodes = (nodes: FileNodeWithSelection[]): FileNodeWithSelection[] => {
@@ -629,7 +640,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
               </div>
             </div>
             <div className="max-h-[300px] overflow-auto border rounded-md p-4">
-              {filterTree(selectableTree).map((node) => (
+              {filteredTree.map((node) => (
                 <FileTree
                   key={node.id}
                   node={node}
