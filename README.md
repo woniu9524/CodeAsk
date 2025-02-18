@@ -56,7 +56,7 @@ CodeAsk是一款基于大模型代码分析工具，它可以通过提示词提�
 
 1. 克隆项目
 ```bash
-git clone https://github.com/yourusername/codeask.git
+git clone https://github.com/woniu9524/CodeAsk.git
 ```
 
 2. 安装依赖
