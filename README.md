@@ -46,9 +46,6 @@ CodeAsk是一款基于大模型代码分析工具，它可以通过提示词提�
 <td align="center" width="40%">
 <img src="images/demo-zh.gif" alt="CodeAsk Demo" width="100%"/>
 </td>
-<td align="center" width="40%">
-<img src="images/prompts-zh.png" alt="CodeAsk Prompts" width="100%"/>
-</td>
 </tr>
 </table>
 
@@ -115,7 +112,12 @@ npm run start
   - ESLint
   - Prettier
 
-## ⚠️ 特别说明
-如遇BUG，请默念「这不是BUG是特性」三次后提交issue。
+## 🚧 后续开发计划
+- 带有agent的单文件分析
+- 整个项目梳理
+- vs code插件
 
-提示词模板大多由DeepSeek生成，大多我也没有测试，只是希望给大家一些奇奇怪怪的灵感。具体还是需要根据自己使用模型和代码实际情况进行调整。欢迎大家在issues中分享有趣的提示词。
+## ⚠️ 特别说明
+- ⚠️ 如遇BUG，请默念「这不是BUG是特性」三次后提交issue。
+- ⚠️ 公司机密项目建议使用 [Ollama](https://ollama.com/) 本地部署
+- ⚠️ 提示词模板大多由DeepSeek生成，大多我也没有测试，只是希望给大家一些奇奇怪怪的灵感。具体还是需要根据自己使用模型和代码实际情况进行调整。欢迎大家在issues中分享有趣的提示词。
