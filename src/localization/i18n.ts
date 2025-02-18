@@ -116,6 +116,49 @@ i18n.use(initReactI18next).init({
             noResults: "No results found",
             searching: "Searching...",
             results: "{{count}} results found"
+          },
+          globalAnalysis: {
+            title: "Global Analysis",
+            add: "Add Analysis",
+            edit: "Edit Analysis",
+            name: "Analysis Name",
+            selectModel: "Select Model",
+            unknownModel: "Unknown Model",
+            models: "Single: {{single}}, Summary: {{summary}}",
+            projectAnalysis: "Project Analysis",
+            myAnalysis: "My Analysis",
+            convertToMine: "Convert to My Analysis",
+            save: "Save",
+            singlePage: {
+              title: "Single Page Analysis",
+              model: "Model",
+              prompt: "Prompt"
+            },
+            summary: {
+              title: "Summary Analysis",
+              model: "Model",
+              prompt: "Prompt"
+            },
+            execute: {
+              title: "Execute Analysis: {{name}}",
+              filterRules: "Filter Rules",
+              fileExtensions: "File Extensions (comma separated)",
+              fileExtensionsPlaceholder: "e.g. .ts,.tsx,.js",
+              fileSelection: "File Selection",
+              selectAll: "Select All",
+              selectedFiles: "selected files",
+              processing: "Processing...",
+              execute: "Execute",
+              modelNotFound: "Model not found. Please edit the analysis to select a model first",
+              analysisNotFound: "Analysis not found",
+              unknownError: "Unknown error",
+              analyzingFiles: "Analyzing Files",
+              generatingSummary: "Generating Summary",
+              analysisComplete: "Analysis Complete",
+              selectExtensions: "Select File Extensions",
+              noExtension: "No Extension",
+              confirm: "Confirm"
+            }
           }
         },
         dialog: {
@@ -242,6 +285,49 @@ i18n.use(initReactI18next).init({
             noResults: "未找到结果",
             searching: "搜索中...",
             results: "找到 {{count}} 个结果"
+          },
+          globalAnalysis: {
+            title: "全局分析",
+            add: "添加分析",
+            edit: "编辑分析",
+            name: "分析名称",
+            selectModel: "选择模型",
+            unknownModel: "未知模型",
+            models: "单页：{{single}}，总结：{{summary}}",
+            projectAnalysis: "项目分析",
+            myAnalysis: "我的分析",
+            convertToMine: "转换为我的分析",
+            save: "保存",
+            singlePage: {
+              title: "单页分析",
+              model: "使用模型",
+              prompt: "提示词"
+            },
+            summary: {
+              title: "总结分析",
+              model: "使用模型",
+              prompt: "提示词"
+            },
+            execute: {
+              title: "执行分析：{{name}}",
+              filterRules: "过滤规则",
+              fileExtensions: "文件扩展名（用逗号分隔）",
+              fileExtensionsPlaceholder: "例如：.ts,.tsx,.js",
+              fileSelection: "文件选择",
+              selectAll: "全选",
+              selectedFiles: "个已选择文件",
+              processing: "处理中...",
+              execute: "执行",
+              modelNotFound: "未找到模型，请先编辑分析选择模型",
+              analysisNotFound: "分析未找到",
+              unknownError: "未知错误",
+              analyzingFiles: "分析文件中",
+              generatingSummary: "生成总结中",
+              analysisComplete: "分析完成",
+              selectExtensions: "选择文件扩展名",
+              noExtension: "无扩展名",
+              confirm: "确认"
+            }
           }
         },
         dialog: {
@@ -368,6 +454,49 @@ i18n.use(initReactI18next).init({
             noResults: "結果が見つかりません",
             searching: "検索中...",
             results: "{{count}}件の結果が見つかりました"
+          },
+          globalAnalysis: {
+            title: "グローバル分析",
+            add: "分析を追加",
+            edit: "分析を編集",
+            name: "分析名",
+            selectModel: "モデルを選択",
+            unknownModel: "不明なモデル",
+            models: "単一：{{single}}、要約：{{summary}}",
+            projectAnalysis: "プロジェクト分析",
+            myAnalysis: "マイ分析",
+            convertToMine: "マイ分析に変換",
+            save: "保存",
+            singlePage: {
+              title: "単一ページ分析",
+              model: "使用モデル",
+              prompt: "プロンプト"
+            },
+            summary: {
+              title: "要約分析",
+              model: "使用モデル",
+              prompt: "プロンプト"
+            },
+            execute: {
+              title: "分析を実行：{{name}}",
+              filterRules: "フィルタールール",
+              fileExtensions: "ファイル拡張子（カンマ区切り）",
+              fileExtensionsPlaceholder: "例：.ts,.tsx,.js",
+              fileSelection: "ファイル選択",
+              selectAll: "すべて選択",
+              selectedFiles: "個のファイルを選択",
+              processing: "処理中...",
+              execute: "実行",
+              modelNotFound: "モデルが見つかりません。先に分析を編集してモデルを選択してください",
+              analysisNotFound: "分析が見つかりません",
+              unknownError: "不明なエラー",
+              analyzingFiles: "ファイル分析中",
+              generatingSummary: "要約生成中",
+              analysisComplete: "分析完了",
+              selectExtensions: "ファイル拡張子を選択",
+              noExtension: "拡張子なし",
+              confirm: "確認"
+            }
           }
         },
         dialog: {

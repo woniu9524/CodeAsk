@@ -22,22 +22,12 @@ interface ModelState {
   toggleModel: (id: string) => void                      // 切换模型启用状态方法
 }
 
-// 声明 window.storeAPI 的类型，解决 TypeScript 类型错误
-declare global {
-  interface Window {
-    storeAPI: {
-      get: (namespace: string, key: string) => Promise<ModelConfig[] | null>;
-      set: (namespace: string, key: string, value: ModelConfig[]) => Promise<void>;
-    }
-  }
-}
-
 // 创建模型存储，使用 Zustand 状态管理库
 export const useModelStore = create<ModelState>((set) => {
   // 初始化时从本地存储加载模型数据
-  window.storeAPI.get('models', 'models').then((models) => {
+  window.storeAPI.get('models', 'models').then((models: ModelConfig[] | null) => {
     // 如果没有数据，则设置为空数组
-    set({ models: models || [] });
+    set({ models: models ?? [] });
   });
 
   return {

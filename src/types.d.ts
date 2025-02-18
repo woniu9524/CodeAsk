@@ -5,6 +5,8 @@ declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;
 
 import type { FileNode } from "@/components/codeview/side/FileTree";
+import type { ModelConfig } from "@/store/useModelStore";
+import type { GlobalAnalysis } from "@/store/useGlobalAnalysisStore";
 
 // Preload types
 interface ThemeModeContext {
@@ -31,14 +33,26 @@ interface FileAPI {
   writeTextFile: (filePath: string, content: string) => Promise<void>;
 }
 
-declare interface Window {
-  themeMode: ThemeModeContext;
-  electronWindow: ElectronWindow;
-  folderAPI: FolderAPI;
-  fileAPI: FileAPI;
-  storeAPI: {
-    get: (storeName: string, key: string) => Promise<any>;
-    set: (storeName: string, key: string, value: any) => Promise<void>;
-    delete: (storeName: string, key: string) => Promise<void>;
-  };
+interface StoreAPI {
+  get(storeName: "plugins", key: string): Promise<ModelConfig[] | null>;
+  get(storeName: "globalAnalyses", key: string): Promise<GlobalAnalysis[] | null>;
+  get(storeName: "models", key: string): Promise<ModelConfig[] | null>;
+  get(storeName: string, key: string): Promise<any>;
+
+  set(storeName: "plugins", key: string, value: ModelConfig[]): Promise<void>;
+  set(storeName: "globalAnalyses", key: string, value: GlobalAnalysis[]): Promise<void>;
+  set(storeName: "models", key: string, value: ModelConfig[]): Promise<void>;
+  set(storeName: string, key: string, value: any): Promise<void>;
+
+  delete(storeName: string, key: string): Promise<void>;
+}
+
+declare global {
+  interface Window {
+    themeMode: ThemeModeContext;
+    electronWindow: ElectronWindow;
+    folderAPI: FolderAPI;
+    fileAPI: FileAPI;
+    storeAPI: StoreAPI;
+  }
 }
