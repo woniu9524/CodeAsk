@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { FolderOpenDot, Search, Puzzle, Bot, Locate, Sparkles } from "lucide-react";
+import { FolderOpenDot, Search, Puzzle, Bot, Locate, Sparkles, Brain } from "lucide-react";
 import FileTree, { FileNode } from './side/FileTree';
 import { useFileStore } from '@/store/useFileStore';
 import PluginList from './side/plugin/PluginList';
@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next';
 import { PromptTemplatesDialog } from './side/prompt/PromptTemplatesDialog';
 import SearchPanel from './side/search/SearchPanel';
 import path from '@/utils/path';
+import GlobalAnalysisList from './side/global/GlobalAnalysisList';
 
 // 定义侧边栏组件的属性类型
 type SidebarProps = {
@@ -17,7 +18,7 @@ type SidebarProps = {
 }
 
 // 定义侧边栏标签页类型
-type TabType = 'explorer' | 'search' | 'plugin' | 'model';
+type TabType = 'explorer' | 'search' | 'plugin' | 'model' | 'global';
 
 // 隐藏滚动条的样式配置
 const hideScrollbarStyle = {
@@ -78,6 +79,17 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
           title={t('codeview.sidebar.plugin')}
         >
           <Puzzle className="h-5 w-5" />
+        </Button>
+
+        {/* 全局分析按钮 */}
+        <Button
+          variant={activeTab === 'global' ? 'secondary' : 'ghost'}
+          size="icon"
+          className="mb-1"
+          onClick={() => setActiveTab('global')}
+          title={t('codeview.sidebar.globalAnalysis')}
+        >
+          <Brain className="h-5 w-5" />
         </Button>
 
         {/* 模型列表按钮 */}
@@ -170,6 +182,9 @@ export default function Sidebar({ className = "", onFileClick }: SidebarProps) {
 
         {/* 模型列表标签页 */}
         {activeTab === 'model' && <ModelList />}
+
+        {/* 全局分析列表标签页 */}
+        {activeTab === 'global' && <GlobalAnalysisList />}
       </div>
     </div>
   );

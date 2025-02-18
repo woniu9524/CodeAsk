@@ -36,7 +36,8 @@ i18n.use(initReactI18next).init({
             plugin: "Plugin",
             model: "Model",
             locate: "Locate",
-            promptTemplates: "Prompt Templates"
+            promptTemplates: "Prompt Templates",
+            globalAnalysis: "Global Analysis"
           },
           tabs: {
             splitScreen: "Split Screen",
@@ -161,7 +162,8 @@ i18n.use(initReactI18next).init({
             plugin: "插件",
             model: "模型",
             locate: "定位文件",
-            promptTemplates: "提示词模板"
+            promptTemplates: "提示词模板",
+            globalAnalysis: "全局分析"
           },
           tabs: {
             splitScreen: "分屏显示",
@@ -286,7 +288,8 @@ i18n.use(initReactI18next).init({
             plugin: "プラグイン",
             model: "モデル",
             locate: "ファイルを探す",
-            promptTemplates: "プロンプトテンプレート"
+            promptTemplates: "プロンプトテンプレート",
+            globalAnalysis: "グローバル分析"
           },
           tabs: {
             splitScreen: "分割画面表示",
