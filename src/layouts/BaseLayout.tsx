@@ -1,5 +1,5 @@
 import React from "react";
-import DragWindowRegion from "@/components/DragWindowRegion";
+import DragWindowRegion from "@/components/common/DragWindowRegion";
 import { Toaster } from "@/components/ui/sonner";
 
 export default function BaseLayout({

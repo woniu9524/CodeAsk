@@ -4,8 +4,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "./ui/dropdown-menu";
-import { Button } from "./ui/button";
+} from "../ui/dropdown-menu";
+import { Button } from "../ui/button";
 import { Globe } from "lucide-react";
 import langs from "@/localization/langs";
 import { useTranslation } from "react-i18next";
@@ -23,8 +23,8 @@ export default function LangToggle() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           size="sm"
           className="h-8 w-8 px-0"
         >
@@ -32,7 +32,7 @@ export default function LangToggle() {
           <span className="ml-2 text-xs">{currentLangData?.prefix}</span>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent 
+      <DropdownMenuContent
         align="end"
         className="w-[150px] animate-in slide-in-from-top-2"
       >

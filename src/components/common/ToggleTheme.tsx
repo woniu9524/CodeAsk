@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { toggleTheme, syncThemeWithLocal } from "@/helpers/theme_helpers";
-import "./ThemeToggle.css";
+import "../../styles/ThemeToggle.css";
 
 export default function ToggleTheme() {
   const [isDark, setIsDark] = React.useState(document.documentElement.classList.contains("dark"));

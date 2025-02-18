@@ -19,23 +19,38 @@ import {
   DropdownMenuSub,
   DropdownMenuSubTrigger,
   DropdownMenuSubContent,
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { useTranslation } from "react-i18next";
 import { selectFolder } from "@/helpers/folder_helpers";
 import path from "@/utils/path";
-import UpdateCheckDialog from "./dialogs/UpdateCheckDialog";
+import UpdateCheckDialog from "./UpdateCheckDialog";
 import { useUpdateCheck } from "@/hooks/useUpdateCheck";
-import pkg from "../../package.json";
+import pkg from "../../../package.json";
 
+// 主窗口拖拽区域和顶部菜单栏组件
 export default function DragWindowRegion() {
+  // 国际化翻译钩子
   const { t } = useTranslation();
+
+  // 获取设置当前文件夹的方法
   const setCurrentFolder = useFileStore(state => state.setCurrentFolder);
+
+  // 获取最近文件夹相关状态和方法
   const { recentFolders, addRecentFolder } = useRecentFoldersStore();
+
+  // 路由导航钩子
   const navigate = useNavigate();
+
+  // 控制更新弹窗显示的状态
   const [showUpdateDialog, setShowUpdateDialog] = useState(false);
+
+  // 更新检查相关钩子
   const { isChecking, updateLogs, checkForUpdates } = useUpdateCheck();
+
+  // 是否有新版本的状态
   const [hasNewVersion, setHasNewVersion] = useState(false);
 
+  // 组件挂载时自动检查更新
   useEffect(() => {
     const checkUpdate = async () => {
       await checkForUpdates();
@@ -43,18 +58,24 @@ export default function DragWindowRegion() {
     checkUpdate();
   }, []);
 
+  // 监听更新日志，判断是否有新版本
   useEffect(() => {
     if (updateLogs.length > 0 && updateLogs[0].version !== pkg.version) {
       setHasNewVersion(true);
     }
   }, [updateLogs, pkg.version]);
 
+  // 打开文件夹处理函数
   const handleOpenFolder = async () => {
     try {
+      // 选择文件夹
       const folderPath = await selectFolder();
       if (folderPath) {
+        // 设置当前文件夹
         await setCurrentFolder(folderPath);
+        // 添加到最近文件夹
         addRecentFolder(folderPath);
+        // 导航到代码视图页面
         await navigate({ to: "/code-view" });
       }
     } catch (error) {
@@ -62,16 +83,21 @@ export default function DragWindowRegion() {
     }
   };
 
+  // 打开最近文件夹处理函数
   const handleOpenRecentFolder = async (folderPath: string) => {
     try {
+      // 设置当前文件夹
       await setCurrentFolder(folderPath);
+      // 添加到最近文件夹
       addRecentFolder(folderPath);
+      // 导航到代码视图页面
       await navigate({ to: "/code-view" });
     } catch (error) {
       console.error('Failed to open recent folder:', error);
     }
   };
 
+  // 打开 GitHub 仓库
   const handleOpenGitHub = async () => {
     try {
       await openExternalUrl('https://github.com/woniu9524/CodeAsk');
@@ -80,6 +106,7 @@ export default function DragWindowRegion() {
     }
   };
 
+  // 手动检查更新
   const handleCheckForUpdates = async () => {
     await checkForUpdates();
     setShowUpdateDialog(true);
@@ -88,17 +115,19 @@ export default function DragWindowRegion() {
   return (
     <div className="flex w-screen items-stretch justify-between">
       <div className="flex w-full items-center">
+        {/* 文件菜单 */}
         <div className="flex items-center gap-2 px-2">
           <DropdownMenu>
             <DropdownMenuTrigger className="px-2 py-1 text-sm hover:bg-accent rounded-sm">
               {t('menu.file.title')}
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              {/*<DropdownMenuItem>{t('menu.file.openFile')}</DropdownMenuItem>*/}
+              {/* 打开文件夹和最近文件夹菜单项 */}
               <DropdownMenuItem onClick={handleOpenFolder}>{t('menu.file.openFolder')}</DropdownMenuItem>
               <DropdownMenuSub>
                 <DropdownMenuSubTrigger>{t('menu.file.openRecent')}</DropdownMenuSubTrigger>
                 <DropdownMenuSubContent>
+                  {/* 渲染最近文件夹列表 */}
                   {recentFolders.length > 0 ? (
                     recentFolders.map((folderPath) => (
                       <DropdownMenuItem
@@ -120,11 +149,13 @@ export default function DragWindowRegion() {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* 帮助菜单 */}
           <DropdownMenu>
             <DropdownMenuTrigger className="px-2 py-1 text-sm hover:bg-accent rounded-sm">
               {t('menu.help.title')}
             </DropdownMenuTrigger>
             <DropdownMenuContent>
+              {/* 检查更新菜单项 */}
               <DropdownMenuItem onClick={handleCheckForUpdates} disabled={isChecking}>
                 {isChecking ? t('menu.help.checkingUpdates') : t('menu.help.checkForUpdates')}
               </DropdownMenuItem>
@@ -134,6 +165,7 @@ export default function DragWindowRegion() {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          {/* 新版本提示按钮 */}
           {hasNewVersion && (
             <button
               onClick={handleCheckForUpdates}
@@ -157,7 +189,11 @@ export default function DragWindowRegion() {
             </button>
           )}
         </div>
+
+        {/* 可拖拽区域 */}
         <div className="draglayer flex-1 h-8"></div>
+
+        {/* 右侧功能按钮 */}
         <div className="flex items-center gap-2 px-2">
           <ToggleTheme />
           <LangToggle />
@@ -177,8 +213,11 @@ export default function DragWindowRegion() {
           </button>
         </div>
       </div>
+
+      {/* 窗口控制按钮 */}
       <WindowButtons />
-      
+
+      {/* 更新检查对话框 */}
       <UpdateCheckDialog
         open={showUpdateDialog}
         onOpenChange={setShowUpdateDialog}
@@ -189,9 +228,11 @@ export default function DragWindowRegion() {
   );
 }
 
+// 窗口控制按钮组件
 function WindowButtons() {
   return (
     <div className="flex">
+      {/* 最小化按钮 */}
       <button
         title="Minimize"
         type="button"
@@ -208,6 +249,8 @@ function WindowButtons() {
           <rect fill="currentColor" width="10" height="1" x="1" y="6"></rect>
         </svg>
       </button>
+
+      {/* 最大化按钮 */}
       <button
         title="Maximize"
         type="button"
@@ -231,6 +274,8 @@ function WindowButtons() {
           ></rect>
         </svg>
       </button>
+
+      {/* 关闭按钮 */}
       <button
         type="button"
         title="Close"

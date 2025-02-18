@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { ChevronRight, ChevronDown } from 'lucide-react';
 import { FolderIcon } from 'lucide-react';
-import SvgIcon from '@/components/SvgIcon';
+import SvgIcon from '@/components/common/SvgIcon';
 import { usePluginStore } from "@/store/usePluginStore";
 import { useFileStore } from "@/store/useFileStore";
 
@@ -26,7 +26,7 @@ export function getFileIcon(fileName: string) {
   // 获取文件名和扩展名
   const name = fileName.toLowerCase();
   const ext = name.slice(((name.lastIndexOf(".") - 1) >>> 0) + 2);
-  
+
   // 特殊文件名映射
   const specialFiles: { [key: string]: string } = {
     'dockerfile': 'docker',
@@ -189,14 +189,14 @@ export function getFileIcon(fileName: string) {
   return <SvgIcon name={iconName} size={16} className="mr-1" />;
 }
 
-function FileTreeItem({ 
-  data, 
-  level = 0, 
+function FileTreeItem({
+  data,
+  level = 0,
   onFileClick,
   expandedNodes,
   setExpandedNodes,
-  activeFile 
-}: FileTreeItemProps & { 
+  activeFile
+}: FileTreeItemProps & {
   expandedNodes: Record<string, boolean>,
   setExpandedNodes: React.Dispatch<React.SetStateAction<Record<string, boolean>>>
 }) {
@@ -267,7 +267,7 @@ export default function FileTree({ data, onFileClick, activeFile }: FileTreeProp
   const locateFile = (targetFile: string) => {
     // Reset expanded nodes
     const newExpandedNodes: Record<string, boolean> = {};
-    
+
     // Find and expand all parent directories of target file
     const expandParents = (nodes: FileNode[]): boolean => {
       for (const node of nodes) {
@@ -310,9 +310,9 @@ export default function FileTree({ data, onFileClick, activeFile }: FileTreeProp
   return (
     <div className="select-none h-full flex flex-col min-h-0" ref={treeRef} data-tree-ref>
       <div className="overflow-auto flex-1">
-        <FileTreeItem 
-          data={data} 
-          onFileClick={onFileClick} 
+        <FileTreeItem
+          data={data}
+          onFileClick={onFileClick}
           expandedNodes={expandedNodes}
           setExpandedNodes={setExpandedNodes}
           activeFile={activeFile}
@@ -320,4 +320,4 @@ export default function FileTree({ data, onFileClick, activeFile }: FileTreeProp
       </div>
     </div>
   );
-} 
+}
