@@ -160,7 +160,11 @@ i18n.use(initReactI18next).init({
               confirm: "Confirm",
               noResults: "No analysis results available.",
               noData: "No global analysis data found.",
-              loadError: "Failed to load global analysis data."
+              loadError: "Failed to load global analysis data.",
+              getFileHashError: "Failed to get file hash: {{filename}}",
+              processingFileError: "Failed to process file: {{filename}}",
+              summaryError: "Failed to generate summary",
+              executionError: "Execution failed"
             }
           }
         },
@@ -332,7 +336,11 @@ i18n.use(initReactI18next).init({
               confirm: "确认",
               noResults: "暂无分析结果。",
               noData: "未找到全局分析数据。",
-              loadError: "加载全局分析数据失败。"
+              loadError: "加载全局分析数据失败。",
+              getFileHashError: "获取文件哈希值失败：{{filename}}",
+              processingFileError: "处理文件失败：{{filename}}",
+              summaryError: "生成总结失败",
+              executionError: "执行失败"
             }
           }
         },
@@ -504,7 +512,11 @@ i18n.use(initReactI18next).init({
               confirm: "確認",
               noResults: "分析結果がありません。",
               noData: "グローバル分析データが見つかりません。",
-              loadError: "グローバル分析データの読み込みに失敗しました。"
+              loadError: "グローバル分析データの読み込みに失敗しました。",
+              getFileHashError: "ファイルハッシュの取得に失敗しました：{{filename}}",
+              processingFileError: "ファイルの処理に失敗しました：{{filename}}",
+              summaryError: "要約の生成に失敗しました",
+              executionError: "実行に失敗しました"
             }
           }
         },

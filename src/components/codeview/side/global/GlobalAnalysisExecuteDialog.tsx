@@ -179,11 +179,11 @@ function FileExtensionsDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[500px]">
         <DialogHeader>
-          <DialogTitle>{t('codeview.globalAnalysis.selectExtensions')}</DialogTitle>
+          <DialogTitle>{t('codeview.globalAnalysis.execute.selectExtensions')}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <Label>{t('codeview.globalAnalysis.fileExtensions')}</Label>
+            <Label>{t('codeview.globalAnalysis.execute.fileExtensions')}</Label>
             <div className="flex items-center gap-2">
               <Checkbox
                 id="select-all"
@@ -191,7 +191,7 @@ function FileExtensionsDialog({
                 onCheckedChange={handleSelectAll}
               />
               <Label htmlFor="select-all" className="text-sm cursor-pointer">
-                {t('codeview.globalAnalysis.selectAll')}
+                {t('codeview.globalAnalysis.execute.selectAll')}
               </Label>
             </div>
           </div>
@@ -208,7 +208,7 @@ function FileExtensionsDialog({
                         ));
                       }}
                     />
-                    <span className="text-sm">{stat.extension || t('codeview.globalAnalysis.noExtension')}</span>
+                    <span className="text-sm">{stat.extension || t('codeview.globalAnalysis.execute.noExtension')}</span>
                   </div>
                   <span className="text-sm text-gray-500">{stat.count}</span>
                 </div>
@@ -216,7 +216,7 @@ function FileExtensionsDialog({
             </div>
           </ScrollArea>
           <Button onClick={handleConfirm} className="w-full">
-            {t('codeview.globalAnalysis.confirm')}
+            {t('codeview.globalAnalysis.execute.confirm')}
           </Button>
         </div>
       </DialogContent>
@@ -247,7 +247,7 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
         try {
           await getFileHash(node.id);
         } catch (error) {
-          console.error(`获取文件哈希值失败: ${node.id}`, error);
+          console.error(t('codeview.globalAnalysis.execute.getFileHashError', { filename: node.id }), error);
         }
       }
       for (const child of node.children || []) {
@@ -452,7 +452,7 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
             status: "success" as const
           };
         } catch (error) {
-          console.error(`处理文件失败: ${filename}`, error);
+          console.error(t('codeview.globalAnalysis.execute.processingFileError', { filename }), error);
           const relativePath = currentFolderPath ? relative(currentFolderPath, filename) : filename;
           return {
             filename: relativePath,
@@ -509,15 +509,15 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
         });
 
         setProgress(100);
-        toast.success(t('codeview.globalAnalysis.analysisComplete'));
+        toast.success(t('codeview.globalAnalysis.execute.analysisComplete'));
       } catch (error) {
-        console.error('生成总结失败:', error);
+        console.error(t('codeview.globalAnalysis.execute.summaryError'), error);
         toast.error(error instanceof Error ? error.message : t('codeview.globalAnalysis.unknownError'));
       }
 
       setIsOpen(false);
     } catch (error) {
-      console.error('执行失败:', error);
+      console.error(t('codeview.globalAnalysis.execute.executionError'), error);
       toast.error(error instanceof Error ? error.message : t('codeview.globalAnalysis.unknownError'));
     } finally {
       setIsProcessing(false);

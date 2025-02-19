@@ -38,14 +38,14 @@ export default function GlobalAnalysisPage() {
             const latestResult = results.sort((a, b) => b.timestamp - a.timestamp)[0];
             setSummary(latestResult.summary);
           } else {
-            setSummary(t("codeview.globalAnalysis.noResults"));
+            setSummary(t("codeview.globalAnalysis.execute.noResults"));
           }
         } else {
-          setSummary(t("codeview.globalAnalysis.noData"));
+          setSummary(t("codeview.globalAnalysis.execute.noData"));
         }
       } catch (err) {
         console.error("Failed to load global analysis data:", err);
-        setError(t("codeview.globalAnalysis.loadError"));
+        setError(t("codeview.globalAnalysis.execute.loadError"));
       }
     }
     loadAnalysisData();

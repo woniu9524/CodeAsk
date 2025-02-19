@@ -6,7 +6,6 @@ import { useFileStore } from '@/store/useFileStore';
 import PluginList from './side/plugin/PluginList';
 import ModelList from './side/model/ModelList';
 import { useTranslation } from 'react-i18next';
-import { PromptTemplatesDialog } from './side/prompt/PromptTemplatesDialog';
 import SearchPanel from './side/search/SearchPanel';
 import path from '@/utils/path';
 import GlobalAnalysisList from './side/global/GlobalAnalysisList';
@@ -172,17 +171,6 @@ export default function Sidebar({ className = "" }: SidebarProps) {
         >
           <Search className="h-5 w-5" />
         </Button>
-
-        <PromptTemplatesDialog>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="mb-1"
-            title={t('codeview.sidebar.promptTemplates')}
-          >
-            <Sparkles className="h-5 w-5" />
-          </Button>
-        </PromptTemplatesDialog>
       </div>
 
       {/* 内容区域 - 根据当前活跃标签页显示不同的内容 */}
