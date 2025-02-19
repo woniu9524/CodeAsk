@@ -6,6 +6,7 @@ import { GlobalAnalysisResult } from "@/store/useGlobalAnalysisExecutionStore";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MarkdownPreview } from "@/components/codeview/preview/MarkdownPreview";
 import { useFileStore } from "@/store/useFileStore";
+import { useSearch } from '@tanstack/react-router';
 
 interface GlobalAnalysisData {
   globalAnalysis?: {
@@ -16,6 +17,7 @@ interface GlobalAnalysisData {
 export default function GlobalAnalysisPage() {
   const { t } = useTranslation();
   const { currentFolderPath } = useFileStore();
+  const { analysisId } = useSearch({ from: '/global-analysis' });
   const [summary, setSummary] = useState<string>("");
   const [error, setError] = useState<string>("");
 
@@ -33,12 +35,12 @@ export default function GlobalAnalysisPage() {
 
         if (data.globalAnalysis?.results) {
           const results = Object.values(data.globalAnalysis.results);
-          if (results.length > 0) {
-            // Sort by timestamp and get the latest result
-            const latestResult = results.sort((a, b) => b.timestamp - a.timestamp)[0];
-            setSummary(latestResult.summary);
+          if (analysisId) {
+            const targetResult = results.find(r => r.analysisId === analysisId);
+            setSummary(targetResult?.summary || t("codeview.globalAnalysis.execute.noResults"));
           } else {
-            setSummary(t("codeview.globalAnalysis.execute.noResults"));
+            const latestResult = results.sort((a, b) => b.timestamp - a.timestamp)[0];
+            setSummary(latestResult?.summary || t("codeview.globalAnalysis.execute.noResults"));
           }
         } else {
           setSummary(t("codeview.globalAnalysis.execute.noData"));
@@ -49,7 +51,7 @@ export default function GlobalAnalysisPage() {
       }
     }
     loadAnalysisData();
-  }, [t, currentFolderPath]);
+  }, [t, currentFolderPath, analysisId]);
 
   return (
     <ScrollArea className="h-[calc(100vh-2rem)]">

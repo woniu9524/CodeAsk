@@ -41,6 +41,7 @@ export default function GlobalAnalysisList() {
               className="group flex items-center justify-between px-2 py-1 hover:bg-accent/50 rounded-md cursor-pointer"
               onClick={() => navigate({ 
                 to: "/global-analysis",
+                search: { analysisId: analysis.id },
                 replace: true 
               })}
             >

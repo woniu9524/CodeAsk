@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { FolderOpenDot, Search, Puzzle, Bot, Locate, Sparkles, Brain } from "lucide-react";
+import { FolderOpenDot, Search, Puzzle, Bot, Locate, Brain } from "lucide-react";
 import FileTree, { FileNode } from './side/FileTree';
 import { useFileStore } from '@/store/useFileStore';
 import PluginList from './side/plugin/PluginList';
