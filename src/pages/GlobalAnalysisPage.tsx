@@ -3,9 +3,9 @@ import { readTextFile } from "@/helpers/file_helpers";
 import { join } from "@/utils/path";
 import { useTranslation } from "react-i18next";
 import { GlobalAnalysisResult } from "@/store/useGlobalAnalysisExecutionStore";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { MarkdownPreview } from "@/components/codeview/preview/MarkdownPreview";
+import { useFileStore } from "@/store/useFileStore";
 
 interface GlobalAnalysisData {
   globalAnalysis?: {
@@ -15,16 +15,22 @@ interface GlobalAnalysisData {
 
 export default function GlobalAnalysisPage() {
   const { t } = useTranslation();
+  const { currentFolderPath } = useFileStore();
   const [summary, setSummary] = useState<string>("");
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
     async function loadAnalysisData() {
+      if (!currentFolderPath) {
+        setSummary(t("codeview.globalAnalysis.noProject"));
+        return;
+      }
+
       try {
-        const dataFilePath = join("", ".codeaskdata");
+        const dataFilePath = join(currentFolderPath, ".codeaskdata");
         const content = await readTextFile(dataFilePath);
         const data: GlobalAnalysisData = JSON.parse(content);
-        
+
         if (data.globalAnalysis?.results) {
           const results = Object.values(data.globalAnalysis.results);
           if (results.length > 0) {
@@ -43,7 +49,7 @@ export default function GlobalAnalysisPage() {
       }
     }
     loadAnalysisData();
-  }, [t]);
+  }, [t, currentFolderPath]);
 
   return (
     <ScrollArea className="h-[calc(100vh-2rem)]">
@@ -58,4 +64,4 @@ export default function GlobalAnalysisPage() {
       </div>
     </ScrollArea>
   );
-} 
+}
