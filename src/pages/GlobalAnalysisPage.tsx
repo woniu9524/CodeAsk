@@ -17,7 +17,7 @@ interface GlobalAnalysisData {
 export default function GlobalAnalysisPage() {
   const { t } = useTranslation();
   const { currentFolderPath } = useFileStore();
-  const { analysisId } = useSearch({ from: '/global-analysis' });
+  const { analysisId, refresh } = useSearch({ from: '/global-analysis' });
   const [summary, setSummary] = useState<string>("");
   const [error, setError] = useState<string>("");
 
@@ -51,7 +51,7 @@ export default function GlobalAnalysisPage() {
       }
     }
     loadAnalysisData();
-  }, [t, currentFolderPath, analysisId]);
+  }, [t, currentFolderPath, analysisId, refresh]);
 
   return (
     <ScrollArea className="h-[calc(100vh-2rem)]">

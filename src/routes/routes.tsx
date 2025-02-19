@@ -39,8 +39,9 @@ export const GlobalAnalysisPageRoute = createRoute({
   getParentRoute: () => RootRoute,
   path: "/global-analysis",
   component: GlobalAnalysisPage,
-  validateSearch: (search: Record<string, unknown>): { analysisId?: string } => ({
-    analysisId: search.analysisId as string || undefined
+  validateSearch: (search: Record<string, unknown>): { analysisId?: string, refresh?: string } => ({
+    analysisId: (search.analysisId as string) || undefined,
+    refresh: (search.refresh as string) || undefined,
   }),
 });
 
