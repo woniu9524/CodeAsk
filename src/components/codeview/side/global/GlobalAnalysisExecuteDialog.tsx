@@ -441,12 +441,11 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
             : JSON.stringify(response.content);
 
           result = result.replace(/<think>[\s\S]*?<\/think>/g, '');
-          result = result.replace(/^```markdown\n([\s\S]*?)```$/, '$1');
+          result = result.replace(/^```markdown([\s\S]*?)```$/, '$1');
           result = result.replace(/^```([\s\S]*?)```$/, '$1');
 
           return {
             filename: relativePath,
-            filepath: filename,
             content: result,
             fileHash,
             status: "success" as const
@@ -456,7 +455,6 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
           const relativePath = currentFolderPath ? relative(currentFolderPath, filename) : filename;
           return {
             filename: relativePath,
-            filepath: filename,
             content: error instanceof Error ? error.message : '未知错误',
             fileHash: await getFileHash(filename),
             status: "error" as const
@@ -475,7 +473,7 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
         const batchPromises = batch.map(async (file) => {
           const result = await processFile(file);
           completedFiles++;
-          setProgress((completedFiles / selectedFiles.length) * 50); // 单页分析占总进度的 50%
+          setProgress((completedFiles / selectedFiles.length) * 90); // 单页分析占总进度的 90%
           return result;
         });
         const results = await Promise.all(batchPromises);
@@ -484,7 +482,7 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
 
       // 第二阶段：生成总结
       setCurrentStage('summary');
-      setProgress(50);
+      setProgress(90);
 
       try {
         const summaryMessages = [
@@ -503,7 +501,7 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
           singlePageResults,
           summary: summary
             .replace(/<think>[\s\S]*?<\/think>/g, '')
-            .replace(/^```markdown\n([\s\S]*?)```$/, '$1')
+            .replace(/^```markdown([\s\S]*?)```$/, '$1')
             .replace(/^```([\s\S]*?)```$/, '$1'),
           timestamp: Date.now()
         });
@@ -652,4 +650,4 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
       />
     </Dialog>
   );
-} 
+}

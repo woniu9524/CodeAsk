@@ -468,7 +468,7 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
 
           // Remove any <think></think> segments
           result = result.replace(/<think>[\s\S]*?<\/think>/g, '');
-          result = result.replace(/^```markdown\n([\s\S]*?)```$/, '$1');
+          result = result.replace(/^```markdown([\s\S]*?)```$/, '$1');
           result = result.replace(/^```([\s\S]*?)```$/, '$1');
           return {
             filename: relativePath,

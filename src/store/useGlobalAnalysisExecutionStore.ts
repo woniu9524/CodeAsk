@@ -5,7 +5,6 @@ import { join } from '@/utils/path';
 // 单页分析结果接口
 export interface SinglePageAnalysisResult {
   filename: string;
-  filepath: string;
   content: string;
   fileHash: string;
   status: "success" | "error";
