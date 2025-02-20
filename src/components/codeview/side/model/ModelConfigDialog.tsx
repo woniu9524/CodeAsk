@@ -6,6 +6,9 @@ import { Label } from "@/components/ui/label";
 import { useModelStore, ModelConfig } from "@/store/useModelStore";
 import { useForm } from "react-hook-form";
 import { useTranslation } from "react-i18next";
+import { ChatOpenAI } from "@langchain/openai";
+import { HumanMessage } from "@langchain/core/messages";
+import { toast } from "sonner";
 
 // 定义模型配置表单数据类型，排除 'id' 和 'enabled' 字段
 type ModelFormData = Omit<ModelConfig, 'id' | 'enabled'>;
@@ -39,6 +42,30 @@ export function ModelConfigDialog({ children }: ModelConfigDialogProps) {
     addModel({ ...data, enabled: true });
     // 重置表单
     reset();
+  };
+
+  // 添加测试函数
+  const handleTest = async (formData: ModelFormData) => {
+    try {
+      const chat = new ChatOpenAI({
+        openAIApiKey: formData.apiKey,
+        modelName: formData.name,
+        temperature: formData.temperature,
+        maxTokens: formData.maxOutputTokens,
+        maxConcurrency: formData.concurrency,
+        configuration: {
+          baseURL: formData.baseUrl,
+        },
+      });
+
+      const response = await chat.invoke([
+        new HumanMessage("回复Let's go!，不要说其他内容"),
+      ]);
+
+      toast.success(t('codeview.model.testSuccess', { content: response.content }));
+    } catch (error: any) {
+      toast.error(t('codeview.model.testFailed', { error: error.message }));
+    }
   };
 
   return (
@@ -143,8 +170,18 @@ export function ModelConfigDialog({ children }: ModelConfigDialogProps) {
             />
           </div>
 
-          {/* 保存按钮 */}
-          <Button type="submit" className="w-full">{t('codeview.model.save')}</Button>
+          {/* 按钮组 */}
+          <div className="flex gap-2">
+            <Button 
+              type="button" 
+              variant="outline"
+              onClick={() => handleSubmit(handleTest)()}
+              className="flex-1"
+            >
+              {t('codeview.model.test')}
+            </Button>
+            <Button type="submit" className="flex-1">{t('codeview.model.save')}</Button>
+          </div>
         </form>
       </DialogContent>
     </Dialog>

@@ -55,7 +55,10 @@ i18n.use(initReactI18next).init({
             maxContextTokens: "Max Context Tokens",
             maxOutputTokens: "Max Output Tokens",
             concurrency: "Concurrency",
-            save: "Save"
+            save: "Save",
+            test: "Test",
+            testSuccess: "Test Response: {{content}}",
+            testFailed: "Test Failed: {{error}}"
           },
           plugin: {
             title: "Plugin List",
@@ -94,7 +97,13 @@ i18n.use(initReactI18next).init({
               confirm: "Confirm",
               fileProcessError: "Failed to process file: {{filename}}",
               executionError: "Execution failed: {{error}}"
-            }
+            },
+            maxContextTokens: "Max Context Tokens",
+            maxOutputTokens: "Max Output Tokens",
+            concurrency: "Concurrency",
+            test: "Test",
+            testSuccess: "Test Response: {{content}}",
+            testFailed: "Test Failed: {{error}}"
           },
           promptTemplates: {
             title: "Prompt Templates",
@@ -236,7 +245,10 @@ i18n.use(initReactI18next).init({
             maxContextTokens: "最大上下文Token数",
             maxOutputTokens: "最大输出Token数",
             concurrency: "并发数",
-            save: "保存"
+            save: "保存",
+            test: "测试",
+            testSuccess: "测试响应: {{content}}",
+            testFailed: "测试失败: {{error}}"
           },
           plugin: {
             title: "插件列表",
@@ -275,7 +287,13 @@ i18n.use(initReactI18next).init({
               confirm: "确认",
               fileProcessError: "处理文件失败：{{filename}}",
               executionError: "执行失败：{{error}}"
-            }
+            },
+            maxContextTokens: "最大上下文Token数",
+            maxOutputTokens: "最大输出Token数",
+            concurrency: "并发数",
+            test: "测试",
+            testSuccess: "测试响应: {{content}}",
+            testFailed: "测试失败: {{error}}"
           },
           promptTemplates: {
             title: "提示词模板",
@@ -417,7 +435,10 @@ i18n.use(initReactI18next).init({
             maxContextTokens: "最大コンテキストトークン数",
             maxOutputTokens: "最大出力トークン数",
             concurrency: "同時実行数",
-            save: "保存"
+            save: "保存",
+            test: "テスト",
+            testSuccess: "テスト応答: {{content}}",
+            testFailed: "テスト失敗: {{error}}"
           },
           plugin: {
             title: "プラグイン一覧",
@@ -457,7 +478,13 @@ i18n.use(initReactI18next).init({
               fileProcessError: "ファイルの処理に失敗しました：{{filename}}",
               executionError: "実行に失敗しました：{{error}}",
               summaryGenerationError: "要約の生成に失敗しました：{{error}}"
-            }
+            },
+            maxContextTokens: "最大コンテキストトークン数",
+            maxOutputTokens: "最大出力トークン数",
+            concurrency: "同時実行数",
+            test: "テスト",
+            testSuccess: "テスト応答: {{content}}",
+            testFailed: "テスト失敗: {{error}}"
           },
           promptTemplates: {
             title: "プロンプトテンプレート",
