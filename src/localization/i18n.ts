@@ -91,7 +91,9 @@ i18n.use(initReactI18next).init({
               completed: "Completed",
               selectExtensions: "Select File Extensions",
               noExtension: "No Extension",
-              confirm: "Confirm"
+              confirm: "Confirm",
+              fileProcessError: "Failed to process file: {{filename}}",
+              executionError: "Execution failed: {{error}}"
             }
           },
           promptTemplates: {
@@ -104,7 +106,8 @@ i18n.use(initReactI18next).init({
             use: "Use Template",
             preview: "Preview",
             sharePrompt: "Have a better prompt idea? Share it now!",
-            addSuccess: "Added to plugin list successfully! Go check it out!"
+            addSuccess: "Added to plugin list successfully! Go check it out!",
+            fetchError: "Failed to fetch prompt templates"
           },
           search: {
             placeholder: "Search in files and plugin results...",
@@ -165,7 +168,8 @@ i18n.use(initReactI18next).init({
               getFileHashError: "Failed to get file hash: {{filename}}",
               processingFileError: "Failed to process file: {{filename}}",
               summaryError: "Failed to generate summary",
-              executionError: "Execution failed"
+              executionError: "Execution failed: {{error}}",
+              summaryGenerationError: "Failed to generate summary: {{error}}"
             }
           }
         },
@@ -268,7 +272,9 @@ i18n.use(initReactI18next).init({
               completed: "已完成",
               selectExtensions: "选择文件扩展名",
               noExtension: "无扩展名",
-              confirm: "确认"
+              confirm: "确认",
+              fileProcessError: "处理文件失败：{{filename}}",
+              executionError: "执行失败：{{error}}"
             }
           },
           promptTemplates: {
@@ -281,7 +287,8 @@ i18n.use(initReactI18next).init({
             use: "使用模板",
             preview: "预览",
             sharePrompt: "有更好的提示词创意？快来分享吧！",
-            addSuccess: "已添加到插件列表中！快去看看吧！"
+            addSuccess: "已添加到插件列表中！快去看看吧！",
+            fetchError: "获取提示词模板失败"
           },
           search: {
             placeholder: "搜索文件和插件结果...",
@@ -342,7 +349,8 @@ i18n.use(initReactI18next).init({
               getFileHashError: "获取文件哈希值失败：{{filename}}",
               processingFileError: "处理文件失败：{{filename}}",
               summaryError: "生成总结失败",
-              executionError: "执行失败"
+              executionError: "执行失败：{{error}}",
+              summaryGenerationError: "生成摘要失败：{{error}}"
             }
           }
         },
@@ -445,7 +453,10 @@ i18n.use(initReactI18next).init({
               completed: "完了",
               selectExtensions: "ファイル拡張子を選択",
               noExtension: "拡張子なし",
-              confirm: "確認"
+              confirm: "確認",
+              fileProcessError: "ファイルの処理に失敗しました：{{filename}}",
+              executionError: "実行に失敗しました：{{error}}",
+              summaryGenerationError: "要約の生成に失敗しました：{{error}}"
             }
           },
           promptTemplates: {
@@ -458,7 +469,8 @@ i18n.use(initReactI18next).init({
             use: "テンプレートを使用",
             preview: "プレビュー",
             sharePrompt: "より良いプロンプトのアイデアがありますか？共有してください！",
-            addSuccess: "プラグインリストに追加されました！確認してみましょう！"
+            addSuccess: "プラグインリストに追加されました！確認してみましょう！",
+            fetchError: "プロンプトテンプレートの取得に失敗しました"
           },
           search: {
             placeholder: "ファイルとプラグイン結果を検索...",
@@ -519,7 +531,8 @@ i18n.use(initReactI18next).init({
               getFileHashError: "ファイルハッシュの取得に失敗しました：{{filename}}",
               processingFileError: "ファイルの処理に失敗しました：{{filename}}",
               summaryError: "要約の生成に失敗しました",
-              executionError: "実行に失敗しました"
+              executionError: "実行に失敗しました：{{error}}",
+              summaryGenerationError: "要約の生成に失敗しました：{{error}}"
             }
           }
         },

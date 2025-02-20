@@ -455,7 +455,7 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
           const relativePath = currentFolderPath ? relative(currentFolderPath, filename) : filename;
           
           // Show error toast for each file processing error
-          toast.error(t('codeview.globalAnalysis.execute.fileProcessError', {
+          toast.error(t('codeview.globalAnalysis.execute.processingFileError', {
             filename: relativePath,
             error: error instanceof Error ? error.message : t('codeview.globalAnalysis.unknownError')
           }));
