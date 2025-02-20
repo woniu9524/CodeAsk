@@ -390,14 +390,14 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
       // 获取单页分析模型配置
       const singlePageModel = models.find(m => m.id === analysis.singlePageAnalysis.modelId);
       if (!singlePageModel) {
-        toast.error(t('codeview.globalAnalysis.modelNotFound'));
+        toast.error(t('codeview.globalAnalysis.execute.modelNotFound'));
         return;
       }
 
       // 获取总结模型配置
       const summaryModel = models.find(m => m.id === analysis.summaryAnalysis.modelId);
       if (!summaryModel) {
-        toast.error(t('codeview.globalAnalysis.modelNotFound'));
+        toast.error(t('codeview.globalAnalysis.execute.modelNotFound'));
         return;
       }
 

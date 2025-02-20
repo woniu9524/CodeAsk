@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useGlobalAnalysisStore } from '@/store/useGlobalAnalysisStore';
 import { useModelStore } from '@/store/useModelStore';
 import { Button } from '@/components/ui/button';
-import { PlusCircle, PlayCircle, Pencil, Trash2, Box, User } from 'lucide-react';
+import { PlusCircle, PlayCircle, Pencil, Trash2, Box, User, Sparkles } from 'lucide-react';
 import { GlobalAnalysisConfigDialog } from './GlobalAnalysisConfigDialog';
 import { GlobalAnalysisExecuteDialog } from './GlobalAnalysisExecuteDialog';
 import { GlobalAnalysisEditDialog } from './GlobalAnalysisEditDialog';
+import { GlobalAnalysisPromptTemplatesDialog } from './GlobalAnalysisPromptTemplatesDialog';
 import { useNavigate } from '@tanstack/react-router';
 
 export default function GlobalAnalysisList() {
@@ -22,6 +23,11 @@ export default function GlobalAnalysisList() {
           {t('codeview.sidebar.globalAnalysis')}
         </h2>
         <div className="flex items-center gap-1">
+          <GlobalAnalysisPromptTemplatesDialog>
+            <Button variant="ghost" size="icon" className="h-7 w-7" title={t('codeview.globalAnalysis.promptTemplates')}>
+              <Sparkles className="h-4 w-4" />
+            </Button>
+          </GlobalAnalysisPromptTemplatesDialog>
           <GlobalAnalysisConfigDialog>
             <Button variant="ghost" size="icon" className="h-7 w-7" title={t('codeview.globalAnalysis.add')}>
               <PlusCircle className="h-4 w-4" />

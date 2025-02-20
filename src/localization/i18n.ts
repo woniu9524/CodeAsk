@@ -129,6 +129,7 @@ i18n.use(initReactI18next).init({
             myAnalysis: "My Analysis",
             convertToMine: "Convert to My Analysis",
             save: "Save",
+            promptTemplates: "Prompt Templates",
             singlePage: {
               title: "Single Page Analysis",
               model: "Model",
@@ -305,6 +306,7 @@ i18n.use(initReactI18next).init({
             myAnalysis: "我的分析",
             convertToMine: "转换为我的分析",
             save: "保存",
+            promptTemplates: "提示词模板",
             singlePage: {
               title: "单页分析",
               model: "使用模型",
@@ -481,6 +483,7 @@ i18n.use(initReactI18next).init({
             myAnalysis: "マイ分析",
             convertToMine: "マイ分析に変換",
             save: "保存",
+            promptTemplates: "プロンプトテンプレート",
             singlePage: {
               title: "単一ページ分析",
               model: "使用モデル",
