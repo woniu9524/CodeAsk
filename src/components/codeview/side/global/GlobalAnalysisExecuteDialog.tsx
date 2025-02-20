@@ -453,9 +453,16 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
         } catch (error) {
           console.error(t('codeview.globalAnalysis.execute.processingFileError', { filename }), error);
           const relativePath = currentFolderPath ? relative(currentFolderPath, filename) : filename;
+          
+          // Show error toast for each file processing error
+          toast.error(t('codeview.globalAnalysis.execute.fileProcessError', {
+            filename: relativePath,
+            error: error instanceof Error ? error.message : t('codeview.globalAnalysis.unknownError')
+          }));
+
           return {
             filename: relativePath,
-            content: error instanceof Error ? error.message : '未知错误',
+            content: error instanceof Error ? error.message : t('codeview.globalAnalysis.unknownError'),
             fileHash: await getFileHash(filename),
             status: "error" as const
           };
@@ -510,7 +517,9 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
         toast.success(t('codeview.globalAnalysis.execute.analysisComplete'));
       } catch (error) {
         console.error(t('codeview.globalAnalysis.execute.summaryError'), error);
-        toast.error(error instanceof Error ? error.message : t('codeview.globalAnalysis.unknownError'));
+        toast.error(t('codeview.globalAnalysis.execute.summaryGenerationError', {
+          error: error instanceof Error ? error.message : t('codeview.globalAnalysis.unknownError')
+        }));
       }
 
       setIsOpen(false);

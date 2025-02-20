@@ -479,10 +479,17 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
         } catch (error) {
           console.error(`处理文件失败: ${filename}`, error);
           const relativePath = currentFolderPath ? relative(currentFolderPath, filename) : filename;
+
+          // Show error toast for each file processing error
+          toast.error(t('codeview.plugin.execute.fileProcessError', {
+            filename: relativePath,
+            error: error instanceof Error ? error.message : t('codeview.plugin.execute.unknownError')
+          }));
+
           return {
             filename: relativePath,
             fileHash: await getFileHash(filename),
-            result: error instanceof Error ? error.message : '未知错误',
+            result: error instanceof Error ? error.message : t('codeview.plugin.execute.unknownError'),
             status: "error" as const
           };
         }
@@ -535,7 +542,9 @@ export function PluginExecuteDialog({ children, pluginId, pluginName }: PluginEx
       setIsOpen(false);
     } catch (error) {
       console.error('执行失败:', error);
-      toast.error(error instanceof Error ? error.message : t('codeview.plugin.execute.unknownError'));
+      toast.error(t('codeview.plugin.execute.executionError', {
+        error: error instanceof Error ? error.message : t('codeview.plugin.execute.unknownError')
+      }));
     } finally {
       setIsProcessing(false);
       setProgress(0);
