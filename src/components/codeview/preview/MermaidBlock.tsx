@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import mermaid from 'mermaid';
+import React, { useState } from 'react';
 import { Maximize2, Download } from 'lucide-react';
 import { ImagePreview } from '@/components/common/ImagePreview';
 
@@ -18,11 +17,6 @@ export function MermaidBlock({ children }: MermaidBlockProps) {
   // 存储放大后的SVG内容
   const [zoomedSvg, setZoomedSvg] = useState<string>('');
   
-  // 在组件挂载后初始化Mermaid
-  useEffect(() => {
-    mermaid.contentLoaded();
-  }, []);
-
   // 处理图表放大功能
   const handleZoom = () => {
     // 获取当前Mermaid图表的SVG元素

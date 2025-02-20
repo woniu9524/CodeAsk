@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { getCurrentTheme } from "@/helpers/theme_helpers";
@@ -19,6 +19,7 @@ export function MarkdownPreview({ content }: MarkdownPreviewProps) {
   
   // 记录已复制的代码块，用于显示复制成功状态
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
+  const mermaidInitialized = useRef(false);
 
   useEffect(() => {
     // 异步加载主题配置
@@ -29,22 +30,49 @@ export function MarkdownPreview({ content }: MarkdownPreviewProps) {
         // 设置主题，如果没有本地设置则默认为深色
         setTheme(local || 'dark');
       } catch (error) {
-        console.error("加载主题失败:", error);
+        console.error("Failed to load theme:", error);
       }
     };
     loadTheme();
 
+    // 初始化 Mermaid 配置
+    if (!mermaidInitialized.current) {
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: theme === 'dark' ? 'dark' : 'default',
+        securityLevel: 'loose',
+      });
+      mermaidInitialized.current = true;
+    }
+
     // 使用 Prism 高亮代码块
     Prism.highlightAll();
+  }, [theme]);
 
-    // 初始化 Mermaid 图表渲染
-    mermaid.initialize({
-      startOnLoad: true,
-      // 根据主题选择 Mermaid 图表样式
-      theme: theme === 'dark' ? 'dark' : 'default',
-      securityLevel: 'loose', // 安全级别设置
-    });
-  }, [theme]); // 当主题变化时重新执行
+  // 当内容变化时重新渲染所有 Mermaid 图表
+  useEffect(() => {
+    const renderMermaidDiagrams = async () => {
+      try {
+        // 清理所有现有的 Mermaid SVG
+        document.querySelectorAll('.mermaid svg').forEach(svg => svg.remove());
+        
+        // 重新渲染所有 Mermaid 图表
+        await mermaid.run({
+          querySelector: '.mermaid',
+          suppressErrors: true
+        });
+      } catch (error) {
+        console.error('Failed to render Mermaid diagrams:', error);
+      }
+    };
+
+    // 给 React 一点时间来渲染 DOM
+    const timeoutId = setTimeout(() => {
+      renderMermaidDiagrams();
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [content]);
 
   // 处理代码块复制功能
   const handleCopyCode = (code: string) => {
