@@ -13,7 +13,7 @@ export interface SinglePageAnalysisResult {
 // 全局分析结果接口
 export interface GlobalAnalysisResult {
   analysisId: string;
-  singlePageResults: SinglePageAnalysisResult[];
+  singlePageResults?: SinglePageAnalysisResult[];
   summary: string;
   timestamp: number;
 }
@@ -67,9 +67,16 @@ export const useGlobalAnalysisExecutionStore = create<GlobalAnalysisExecutionSta
     const { dataFilePath, results } = get();
     if (!dataFilePath) return;
 
+    // Create a new result object without singlePageResults
+    const resultToSave = {
+      analysisId: result.analysisId,
+      summary: result.summary,
+      timestamp: result.timestamp
+    };
+
     const newResults = {
       ...results,
-      [analysisId]: result
+      [analysisId]: resultToSave
     };
 
     try {

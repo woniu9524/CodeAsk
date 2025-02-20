@@ -1,0 +1,143 @@
+{
+  "zh": {
+    "需求文档": {
+      "name": "需求文档",
+      "singlePageAnalysis": {
+        "prompt": "请简要分析此代码文件，提供以下要点：\n1. 核心功能和目的（50字内）\n2. 主要功能模块列表\n3. 输入输出及系统交互方式\n4. 关键技术依赖\n请保持简洁，总字数不超过100字。"
+      },
+      "summaryAnalysis": {
+        "prompt": "基于各文件的功能概要，请撰写一份专业的产品需求文档（PRD）。文档结构如下：\n\n1. **产品概述**\n   - 产品背景与价值\n   - 目标用户群体\n   - 核心价值主张\n   - 市场定位\n\n2. **功能规格**\n   - 核心功能模块\n   - 功能架构图（使用Mermaid）\n   - 详细功能描述\n   - 功能优先级矩阵\n\n3. **用户场景**\n   - 典型用户画像\n   - 用户旅程地图\n   - 关键场景用例\n\n4. **技术架构**\n   - 系统架构图（使用Mermaid）\n   - 核心业务流程图\n   - 技术栈清单\n   - 外部依赖说明\n\n5. **接口规范**\n   - 系统集成方案\n   - 数据流转说明\n   - 关键接口定义"
+      }
+    },
+    "技术债务报告": {
+      "name": "技术债务报告",
+      "singlePageAnalysis": {
+        "prompt": "请简要分析此代码文件的技术债务：\n1. 代码质量问题（重复代码、复杂度）\n2. 性能隐患\n3. 文档完整性\n4. 最佳实践符合度\n请保持简洁，总字数不超过50字。"
+      },
+      "summaryAnalysis": {
+        "prompt": "基于代码分析结果，生成专业的技术债务评估报告：\n\n1. **技术债务概览**\n   - 债务分类统计\n   - 严重程度分布\n   - 影响范围评估\n   - 技术债务热力图\n\n2. **详细分析**\n   - 代码质量指标\n   - 性能瓶颈分析\n   - 架构隐患评估\n   - 安全风险排查\n\n3. **优先级评估**\n   - 评估矩阵\n   - ROI分析\n   - 修复成本估算\n   - 风险影响评级\n\n4. **改进方案**\n   - 短期优化建议\n   - 长期重构计划\n   - 具体实施步骤\n   - 收益预期分析\n\n5. **监控指标**\n   - 关键指标定义\n   - 监控方案\n   - 告警阈值\n   - 评估周期"
+      }
+    },
+    "安全分析报告": {
+      "name": "安全分析报告",
+      "singlePageAnalysis": {
+        "prompt": "请简要分析此代码文件的安全隐患：\n1. 常见安全漏洞\n2. 数据安全问题\n3. 权限控制缺陷\n如无明显问题直接回答未发现明显安全隐患。总字数不超过50字。"
+      },
+      "summaryAnalysis": {
+        "prompt": "基于安全分析结果，生成专业的安全评估报告：\n\n1. **安全风险概览**\n   - 风险等级分布\n   - 漏洞类型统计\n   - OWASP Top 10对照\n   - 整体安全评分\n\n2. **漏洞详情**\n   - 漏洞描述\n   - 影响范围\n   - 利用难度\n   - 危害程度\n\n3. **风险评估**\n   - CVSS评分\n   - 攻击向量分析\n   - 威胁模型\n   - 风险暴露面\n\n4. **修复方案**\n   - 应急修复建议\n   - 长期防护策略\n   - 最佳实践指南\n   - 安全加固方案\n\n5. **安全治理**\n   - 安全开发流程\n   - 代码审查要点\n   - 持续监控方案\n   - 应急响应预案"
+      }
+    },
+    "API文档": {
+      "name": "API文档",
+      "singlePageAnalysis": {
+        "prompt": "请分析以下代码文件，提取所有定义的API接口，并为每个接口提供详细描述。请包括：\n1. 每个API接口的路径、请求方法（GET/POST等）及功能描述。\n2. 请求参数，包括参数名称、类型、是否必需及默认值。\n3. 响应格式，包括字段名称、类型和说明。\n4. 错误码及其对应的含义。\n如果没有直接回答没有。"
+      },
+      "summaryAnalysis": {
+        "prompt": "以下是从代码文件提取的API接口信息。请基于这些信息，生成一份API文档。文档应包括：\n1. **API接口列表**：列出所有API接口，包含路径、方法、功能描述、请求参数和响应数据格式。\n2. **请求示例**：为每个API接口提供一个请求示例，包括请求方法、路径、请求参数等。\n3. **响应示例**：为每个API接口提供响应示例，展示返回的数据格式及其字段。\n4. **错误处理**：列出所有可能的错误码，并解释每个错误的含义和应对方式。"
+      }
+    },
+    "用户行为分析": {
+      "name": "用户行为分析",
+      "singlePageAnalysis": {
+        "prompt": "请分析以下代码文件，提取其中的功能模块，并推测用户可能的行为。请提供以下内容：\n1. 该文件的主要功能模块和每个模块的作用。\n2. 用户在使用这些功能时可能的操作路径和行为流程。\n3. 是否有用户体验痛点，如功能复杂、交互不友好等？\n4. 是否存在用户行为预测或日志记录的功能？用户如何与系统交互？\n5. 是否有任何流程可简化或优化，以提高用户体验？"
+      },
+      "summaryAnalysis": {
+        "prompt": "以下是从代码文件提取的用户行为分析信息。请基于这些信息，生成一份用户行为分析报告。报告应包括：\n1. **用户行为流程**：展示用户在系统中执行任务的流程，包括关键功能的使用路径。\n2. **用户痛点分析**：分析可能存在的用户痛点，例如功能的复杂性或不直观的交互。\n3. **优化建议**：基于用户行为分析，提供功能优化和流程改进的建议，帮助提升用户体验。\n4. **数据追踪**：列出系统如何追踪用户行为及其应用（例如：事件日志、分析工具等）。"
+      }
+    }
+  },
+  "en": {
+    "Requirements Doc": {
+      "name": "Requirements Document",
+      "singlePageAnalysis": {
+        "prompt": "Please analyze this code file and provide the following points:\n1. Core functionality and purpose (within 50 words)\n2. List of main functional modules\n3. Input/output and system interaction methods\n4. Key technical dependencies\nPlease keep it concise, total word count under 100."
+      },
+      "summaryAnalysis": {
+        "prompt": "Based on the functional overview of each file, please write a professional Product Requirements Document (PRD). Document structure:\n\n1. **Product Overview**\n   - Product background and value\n   - Target user groups\n   - Core value proposition\n   - Market positioning\n\n2. **Functional Specifications**\n   - Core functional modules\n   - Functional architecture diagram (using Mermaid)\n   - Detailed feature descriptions\n   - Feature priority matrix\n\n3. **User Scenarios**\n   - Typical user personas\n   - User journey map\n   - Key use cases\n\n4. **Technical Architecture**\n   - System architecture diagram (using Mermaid)\n   - Core business flow\n   - Tech stack list\n   - External dependencies\n\n5. **Interface Specifications**\n   - System integration plan\n   - Data flow description\n   - Key interface definitions"
+      }
+    },
+    "Tech Debt Report": {
+      "name": "Technical Debt Report",
+      "singlePageAnalysis": {
+        "prompt": "Please briefly analyze the technical debt in this code file:\n1. Code quality issues (code duplication, complexity)\n2. Performance concerns\n3. Documentation completeness\n4. Best practices compliance\nPlease keep it concise, total word count under 50."
+      },
+      "summaryAnalysis": {
+        "prompt": "Based on the code analysis results, generate a professional technical debt assessment report:\n\n1. **Technical Debt Overview**\n   - Debt classification statistics\n   - Severity distribution\n   - Impact scope assessment\n   - Technical debt heat map\n\n2. **Detailed Analysis**\n   - Code quality metrics\n   - Performance bottleneck analysis\n   - Architectural risk assessment\n   - Security risk review\n\n3. **Priority Assessment**\n   - Assessment matrix\n   - ROI analysis\n   - Fix cost estimation\n   - Risk impact rating\n\n4. **Improvement Plan**\n   - Short-term optimization suggestions\n   - Long-term refactoring plan\n   - Implementation steps\n   - Expected benefits analysis\n\n5. **Monitoring Metrics**\n   - Key indicator definitions\n   - Monitoring plan\n   - Alert thresholds\n   - Assessment cycle"
+      }
+    },
+    "Security Report": {
+      "name": "Security Analysis Report",
+      "singlePageAnalysis": {
+        "prompt": "Please analyze the security vulnerabilities in this code file:\n1. Common security vulnerabilities\n2. Data security issues\n3. Access control deficiencies\nIf no obvious issues are found, simply respond with \"No apparent security vulnerabilities found\". Keep it under 50 words."
+      },
+      "summaryAnalysis": {
+        "prompt": "Based on the security analysis results, generate a professional security assessment report:\n\n1. **Security Risk Overview**\n   - Risk level distribution\n   - Vulnerability type statistics\n   - OWASP Top 10 comparison\n   - Overall security score\n\n2. **Vulnerability Details**\n   - Vulnerability description\n   - Impact scope\n   - Exploitation difficulty\n   - Severity level\n\n3. **Risk Assessment**\n   - CVSS scoring\n   - Attack vector analysis\n   - Threat model\n   - Risk exposure surface\n\n4. **Remediation Plan**\n   - Emergency fix recommendations\n   - Long-term protection strategy\n   - Best practices guide\n   - Security hardening plan\n\n5. **Security Governance**\n   - Secure development process\n   - Code review checklist\n   - Continuous monitoring plan\n   - Incident response plan"
+      }
+    },
+    "API Documentation": {
+      "name": "API Documentation",
+      "singlePageAnalysis": {
+        "prompt": "Please analyze this code file and extract all defined API interfaces. Include:\n1. Each API endpoint's path, request method (GET/POST etc.), and functionality description.\n2. Request parameters, including parameter names, types, required status, and default values.\n3. Response format, including field names, types, and descriptions.\n4. Error codes and their meanings.\nIf none found, simply respond with \"No API interfaces found\"."
+      },
+      "summaryAnalysis": {
+        "prompt": "Based on the extracted API interface information, generate an API documentation. Include:\n1. **API Interface List**: List all API interfaces with paths, methods, functionality descriptions, request parameters, and response data formats.\n2. **Request Examples**: Provide request examples for each API interface, including method, path, and parameters.\n3. **Response Examples**: Provide response examples showing the data format and fields.\n4. **Error Handling**: List all possible error codes and explain their meanings and handling approaches."
+      }
+    },
+    "User Behavior Analysis": {
+      "name": "User Behavior Analysis",
+      "singlePageAnalysis": {
+        "prompt": "Please analyze this code file, extract its functional modules, and predict possible user behaviors. Include:\n1. Main functional modules and their purposes.\n2. Possible user operation paths and behavior flows when using these features.\n3. Are there any user experience pain points, such as complex functionality or unfriendly interactions?\n4. Are there any user behavior prediction or logging functions? How do users interact with the system?\n5. Are there any processes that could be simplified or optimized to improve user experience?"
+      },
+      "summaryAnalysis": {
+        "prompt": "Based on the extracted user behavior information, generate a user behavior analysis report. Include:\n1. **User Behavior Flow**: Show task execution flows in the system, including key feature usage paths.\n2. **User Pain Point Analysis**: Analyze potential user pain points, such as functionality complexity or unintuitive interactions.\n3. **Optimization Suggestions**: Based on behavior analysis, provide suggestions for feature optimization and process improvements.\n4. **Data Tracking**: List how user behavior is tracked and applied (e.g., event logs, analytics tools)."
+      }
+    }
+  },
+  "ja": {
+    "要件文書": {
+      "name": "要件文書",
+      "singlePageAnalysis": {
+        "prompt": "このコードファイルを分析し、以下の点を提供してください：\n1. 主要機能と目的（50文字以内）\n2. 主要機能モジュールのリスト\n3. 入出力とシステム相互作用方式\n4. 主要技術依存関係\n簡潔に保ち、合計文字数は100文字以内にしてください。"
+      },
+      "summaryAnalysis": {
+        "prompt": "各ファイルの機能概要に基づき、専門的な製品要件文書（PRD）を作成してください。文書構成：\n\n1. **製品概要**\n   - 製品背景と価値\n   - ターゲットユーザー層\n   - 核心的価値提案\n   - 市場ポジショニング\n\n2. **機能仕様**\n   - 核心機能モジュール\n   - 機能アーキテクチャ図（Mermaidを使用）\n   - 詳細機能説明\n   - 機能優先度マトリックス\n\n3. **ユーザーシナリオ**\n   - 典型的なユーザーペルソナ\n   - ユーザージャーニーマップ\n   - 主要ユースケース\n\n4. **技術アーキテクチャ**\n   - システムアーキテクチャ図（Mermaidを使用）\n   - 核心ビジネスフロー\n   - 技術スタックリスト\n   - 外部依存関係\n\n5. **インターフェース仕様**\n   - システム統合計画\n   - データフロー説明\n   - 主要インターフェース定義"
+      }
+    },
+    "技術負債レポート": {
+      "name": "技術負債レポート",
+      "singlePageAnalysis": {
+        "prompt": "このコードファイルの技術負債を簡潔に分析してください：\n1. コード品質の問題（コードの重複、複雑性）\n2. パフォーマンスの懸念事項\n3. ドキュメントの完全性\n4. ベストプラクティスへの準拠\n簡潔に保ち、合計文字数は50文字以内にしてください。"
+      },
+      "summaryAnalysis": {
+        "prompt": "コード分析結果に基づき、専門的な技術負債評価レポートを生成してください：\n\n1. **技術負債概要**\n   - 負債分類統計\n   - 深刻度分布\n   - 影響範囲評価\n   - 技術負債ヒートマップ\n\n2. **詳細分析**\n   - コード品質指標\n   - パフォーマンスボトルネック分析\n   - アーキテクチャリスク評価\n   - セキュリティリスク調査\n\n3. **優先度評価**\n   - 評価マトリックス\n   - ROI分析\n   - 修正コスト見積もり\n   - リスク影響度評価\n\n4. **改善計画**\n   - 短期最適化提案\n   - 長期リファクタリング計画\n   - 実装ステップ\n   - 期待される効果分析\n\n5. **モニタリング指標**\n   - 主要指標定義\n   - モニタリング計画\n   - アラート閾値\n   - 評価サイクル"
+      }
+    },
+    "セキュリティレポート": {
+      "name": "セキュリティ分析レポート",
+      "singlePageAnalysis": {
+        "prompt": "このコードファイルのセキュリティ脆弱性を分析してください：\n1. 一般的なセキュリティ脆弱性\n2. データセキュリティの問題\n3. アクセス制御の欠陥\n明らかな問題が見つからない場合は、「明らかなセキュリティ脆弱性は見つかりませんでした」と回答してください。50文字以内に収めてください。"
+      },
+      "summaryAnalysis": {
+        "prompt": "セキュリティ分析結果に基づき、専門的なセキュリティ評価レポートを生成してください：\n\n1. **セキュリティリスク概要**\n   - リスクレベル分布\n   - 脆弱性タイプ統計\n   - OWASP Top 10との比較\n   - 全体的なセキュリティスコア\n\n2. **脆弱性詳細**\n   - 脆弱性の説明\n   - 影響範囲\n   - 悪用の難易度\n   - 深刻度レベル\n\n3. **リスク評価**\n   - CVSSスコアリング\n   - 攻撃ベクトル分析\n   - 脅威モデル\n   - リスク露出面\n\n4. **改善計画**\n   - 緊急修正推奨事項\n   - 長期的保護戦略\n   - ベストプラクティスガイド\n   - セキュリティ強化計画\n\n5. **セキュリティガバナンス**\n   - セキュア開発プロセス\n   - コードレビューチェックリスト\n   - 継続的モニタリング計画\n   - インシデント対応計画"
+      }
+    },
+    "APIドキュメント": {
+      "name": "APIドキュメント",
+      "singlePageAnalysis": {
+        "prompt": "このコードファイルを分析し、定義されているすべてのAPIインターフェースを抽出してください。含めるべき内容：\n1. 各APIエンドポイントのパス、リクエストメソッド（GET/POSTなど）、および機能説明。\n2. リクエストパラメータ（パラメータ名、型、必須状態、デフォルト値を含む）。\n3. レスポンス形式（フィールド名、型、説明を含む）。\n4. エラーコードとその意味。\n見つからない場合は、「APIインターフェースは見つかりませんでした」と回答してください。"
+      },
+      "summaryAnalysis": {
+        "prompt": "抽出したAPIインターフェース情報に基づき、APIドキュメントを生成してください。含めるべき内容：\n1. **APIインターフェースリスト**：すべてのAPIインターフェースをパス、メソッド、機能説明、リクエストパラメータ、レスポンスデータ形式とともにリスト化。\n2. **リクエスト例**：各APIインターフェースのリクエスト例（メソッド、パス、パラメータを含む）を提供。\n3. **レスポンス例**：データ形式とフィールドを示すレスポンス例を提供。\n4. **エラー処理**：可能性のあるすべてのエラーコードとその意味、対処方法を説明。"
+      }
+    },
+    "ユーザー行動分析": {
+      "name": "ユーザー行動分析",
+      "singlePageAnalysis": {
+        "prompt": "このコードファイルを分析し、機能モジュールを抽出し、想定されるユーザー行動を予測してください。含めるべき内容：\n1. 主要機能モジュールとその目的。\n2. これらの機能を使用する際の想定されるユーザー操作パスと行動フロー。\n3. 機能の複雑さや操作の分かりにくさなど、ユーザー体験の問題点はありますか？\n4. ユーザー行動予測やログ記録の機能はありますか？ユーザーはシステムとどのように相互作用しますか？\n5. ユーザー体験を向上させるために簡素化または最適化できるプロセスはありますか？"
+      },
+      "summaryAnalysis": {
+        "prompt": "抽出したユーザー行動情報に基づき、ユーザー行動分析レポートを生成してください。含めるべき内容：\n1. **ユーザー行動フロー**：システムでのタスク実行フロー（主要機能の使用パスを含む）を示す。\n2. **ユーザー問題点分析**：機能の複雑さや直感的でない操作など、潜在的なユーザーの問題点を分析。\n3. **最適化提案**：行動分析に基づき、機能最適化とプロセス改善の提案を提供。\n4. **データトラッキング**：ユーザー行動の追跡方法とその適用（イベントログ、分析ツールなど）をリスト化。"
+      }
+    }
+  }
+} 

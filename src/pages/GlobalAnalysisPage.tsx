@@ -10,7 +10,7 @@ import { useSearch } from '@tanstack/react-router';
 
 interface GlobalAnalysisData {
   globalAnalysis?: {
-    results?: Record<string, GlobalAnalysisResult>;
+    results?: Record<string, Omit<GlobalAnalysisResult, 'singlePageResults'>>;
   };
 }
 
