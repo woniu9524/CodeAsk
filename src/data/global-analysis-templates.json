@@ -45,8 +45,8 @@
         "prompt": "基于用户行为分析信息，生成用户行为分析报告：\n\n1. **用户行为流程**\n   - 展示用户在系统中的行为路径（流程图）\n   - 关键功能使用路径\n\n2. **用户痛点分析**\n   - 分析功能复杂性\n   - 交互不友好之处\n   - 用户反馈（如果有）\n\n3. **优化建议**\n   - 功能优化建议\n   - 流程改进建议\n   - 用户体验提升措施\n\n请使用Mermaid图表和具体示例支持分析，确保报告具有实用性。"
       }
     },
-    "项目结构分析": {
-      "name": "项目结构分析",
+    "项目结构分析报告": {
+      "name": "项目结构分析报告",
       "singlePageAnalysis": {
         "prompt": "请分析此代码文件在项目中的角色：\n1. 简述该文件的主要功能和职责。\n2. 列出该文件依赖的其他文件或模块。\n请保持简洁，总字数不超过100字。"
       },
@@ -101,8 +101,8 @@
         "prompt": "Based on user behavior analysis, generate a User Behavior Analysis Report: \n\n1. **User Behavior Flow** \n   - Display user behavior paths in the system (flowchart) \n   - Key function usage paths \n\n2. **User Pain Point Analysis** \n   - Function complexity analysis \n   - Interaction friction points \n   - User feedback (if available) \n\n3. **Optimization Suggestions** \n   - Function optimization ideas \n   - Process improvement suggestions \n   - User experience enhancements \n\nUse Mermaid diagrams and examples to support analysis, ensuring practical insights."
       }
     },
-    "Project Structure Analysis": {
-      "name": "Project Structure Analysis",
+    "Project Structure Analysis Report": {
+      "name": "Project Structure Analysis Report",
       "singlePageAnalysis": {
         "prompt": "Please analyze the role of this code file in the project:\n1. Briefly describe the main functions and responsibilities of this file.\n2. List other files or modules that this file depends on.\nPlease keep it concise, with no more than 100 words in total."
       },
@@ -157,8 +157,8 @@
         "prompt": "ユーザー行動分析情報に基づき、ユーザー行動分析レポートを作成してください：\n\n1. **ユーザー行動フロー**\n   - システム内のユーザー行動パスを表示（フローチャート）\n   - 主要機能使用パス\n\n2. **ユーザー課題分析**\n   - 機能の複雑さ分析\n   - インタラクションの不親切な点\n   - ユーザーフィードバック（ある場合）\n\n3. **最適化提案**\n   - 機能最適化案\n   - プロセス改善案\n   - ユーザー体験向上策\n\nMermaid図と具体例で分析を裏付け、実用的なレポートにしてください。"
       }
     },
-    "プロジェクト構造分析": {
-      "name": "プロジェクト構造分析",
+    "プロジェクト構造分析レポート": {
+      "name": "プロジェクト構造分析レポート",
       "singlePageAnalysis": {
         "prompt": "このコードファイルのプロジェクトにおける役割を分析してください：\n1. このファイルの主な機能と責任を簡潔に説明してください。\n2. このファイルが依存する他のファイルやモジュールを列挙してください。\n簡潔に保ち、合計100語以内でお願いします。"
       },

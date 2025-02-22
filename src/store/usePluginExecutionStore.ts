@@ -110,14 +110,26 @@ export const usePluginExecutionStore = create<PluginExecutionState>((set, get) =
       [pluginId]: execution
     };
 
-    // 将更新后的执行记录写入数据文件
-    await writeTextFile(
-      dataFilePath,
-      JSON.stringify({ plugins: newExecutions }, null, 2)
-    );
+    try {
+      // 先读取现有的文件内容
+      const content = await readTextFile(dataFilePath);
+      const data = JSON.parse(content);
 
-    // 更新状态
-    set({ executions: newExecutions });
+      // 更新 plugins 部分，保留其他数据
+      await writeTextFile(
+        dataFilePath,
+        JSON.stringify({
+          ...data,
+          plugins: newExecutions
+        }, null, 2)
+      );
+
+      // 更新状态
+      set({ executions: newExecutions });
+    } catch (error) {
+      console.error('保存插件执行数据失败:', error);
+      throw error;
+    }
   },
 
   // 获取指定插件的执行记录方法

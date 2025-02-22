@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { useNavigate } from '@tanstack/react-router';
 
 interface GlobalAnalysisExecuteDialogProps {
   children?: React.ReactNode;
@@ -230,6 +231,7 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
   const { initializeDataFile, saveAnalysisResult } = useGlobalAnalysisExecutionStore();
   const { models } = useModelStore();
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
   const [selectableTree, setSelectableTree] = useState<FileNodeWithSelection[]>([]);
   const [fileExtensions, setFileExtensions] = useState("");
@@ -516,6 +518,16 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
 
         setProgress(100);
         toast.success(t('codeview.globalAnalysis.execute.analysisComplete'));
+        
+        // 执行完成后自动刷新页面
+        navigate({ 
+          to: "/global-analysis",
+          search: { 
+            analysisId: analysisId, 
+            refresh: Date.now().toString()
+          },
+          replace: true 
+        });
       } catch (error) {
         console.error(t('codeview.globalAnalysis.execute.summaryError'), error);
         toast.error(t('codeview.globalAnalysis.execute.summaryGenerationError', {

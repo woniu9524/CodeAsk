@@ -37,8 +37,11 @@ export default function GlobalAnalysisPage() {
           if (analysisId && data.globalAnalysis.results[analysisId]) {
             // 如果指定了analysisId，直接从results对象中获取
             setSummary(data.globalAnalysis.results[analysisId].summary);
+          } else if (analysisId) {
+            // 如果指定了analysisId但找不到对应结果
+            setSummary(t("codeview.globalAnalysis.execute.noResults"));
           } else {
-            // 否则获取最新的分析结果
+            // 如果没有指定analysisId，获取最新的分析结果
             const results = Object.entries(data.globalAnalysis.results);
             if (results.length > 0) {
               const latestResult = results.reduce((latest, current) => {
