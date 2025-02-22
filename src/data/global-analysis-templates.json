@@ -21,7 +21,7 @@
     "安全评估报告": {
       "name": "安全评估报告",
       "singlePageAnalysis": {
-        "prompt": "请分析此代码文件的安全隐患：\n1. 常见漏洞（SQL注入、XSS等）\n2. 数据安全（敏感数据处理）\n3. 权限控制（访问控制问题）\n如无明显问题，回答‘未发现明显安全隐患’。总字数不超过50字。"
+        "prompt": "请分析此代码文件的安全隐患：\n1. 常见漏洞（SQL注入、XSS等）\n2. 数据安全（敏感数据处理）\n3. 权限控制（访问控制问题）\n如无明显问题，回答'未发现明显安全隐患'。总字数不超过50字。"
       },
       "summaryAnalysis": {
         "prompt": "基于安全分析结果，生成安全评估报告：\n\n1. **安全风险概览**\n   - 风险等级分布（高、中、低）\n   - 漏洞类型统计（柱状图）\n   - OWASP Top 10对照\n   - 整体安全评分\n\n2. **漏洞详情**\n   - 漏洞描述\n   - 影响范围\n   - 利用难度\n   - 危害程度\n\n3. **风险评估**\n   - CVSS评分\n   - 攻击向量分析\n   - 威胁模型\n   - 风险暴露面\n\n4. **修复方案**\n   - 应急修复建议\n   - 长期防护策略\n   - 最佳实践指南\n   - 安全加固方案\n\n5. **安全治理**\n   - 安全开发流程\n   - 代码审查要点\n   - 持续监控方案\n   - 应急响应预案\n\n请确保报告内容详实，提供具体的安全建议和措施。"
@@ -30,7 +30,7 @@
     "API文档": {
       "name": "API文档",
       "singlePageAnalysis": {
-        "prompt": "请分析此代码文件，提取API接口信息：\n1. 接口路径和方法（GET/POST等）\n2. 功能简述\n3. 请求参数（名称、类型、是否必需）\n4. 响应格式（字段名称、类型）\n5. 错误码及含义\n如无API，直接回答‘未发现API接口’。"
+        "prompt": "请分析此代码文件，提取API接口信息：\n1. 接口路径和方法（GET/POST等）\n2. 功能简述\n3. 请求参数（名称、类型、是否必需）\n4. 响应格式（字段名称、类型）\n5. 错误码及含义\n如无API，直接回答'未发现API接口'。"
       },
       "summaryAnalysis": {
         "prompt": "基于提取的API接口信息，生成API文档：\n\n1. **API接口列表**\n   - 路径\n   - 方法（GET/POST等）\n   - 功能描述\n   - 请求参数（表格：名称、类型、是否必需、默认值）\n   - 响应数据格式（表格：字段名称、类型、说明）\n\n2. **请求示例**\n   - 为每个API提供curl命令或HTTP请求示例\n\n3. **响应示例**\n   - 为每个API提供JSON响应示例\n\n4. **错误处理**\n   - 错误码列表（表格：错误码、含义、应对方式）\n\n请确保文档结构清晰，易于开发人员理解和使用。"
@@ -43,6 +43,15 @@
       },
       "summaryAnalysis": {
         "prompt": "基于用户行为分析信息，生成用户行为分析报告：\n\n1. **用户行为流程**\n   - 展示用户在系统中的行为路径（流程图）\n   - 关键功能使用路径\n\n2. **用户痛点分析**\n   - 分析功能复杂性\n   - 交互不友好之处\n   - 用户反馈（如果有）\n\n3. **优化建议**\n   - 功能优化建议\n   - 流程改进建议\n   - 用户体验提升措施\n\n请使用Mermaid图表和具体示例支持分析，确保报告具有实用性。"
+      }
+    },
+    "项目结构分析": {
+      "name": "项目结构分析",
+      "singlePageAnalysis": {
+        "prompt": "请分析此代码文件在项目中的角色：\n1. 简述该文件的主要功能和职责。\n2. 列出该文件依赖的其他文件或模块。\n请保持简洁，总字数不超过100字。"
+      },
+      "summaryAnalysis": {
+        "prompt": "基于各文件分析，生成项目结构分析报告：\n\n1. **项目架构概览**\n   - 描述项目的主要模块和组件。\n   - 提供项目的目录结构树形图。\n   - 说明项目采用的架构设计模式（如MVC、MVVM等）。\n   - 使用Mermaid图表展示项目的分层关系。\n\n2. **模块依赖分析**\n   - 使用Mermaid图表展示模块间的依赖关系。\n   - 简述每个关键模块的职责。\n\n3. **代码组织评估**\n   - 统计文件的分布情况（如按功能、按模块等）。\n   - 分析命名规范的遵循情况。\n   - 评估代码的分层是否合理。\n\n4. **项目结构优化建议**\n   - 提出目录结构的优化建议。\n   - 建议模块的拆分或合并。\n   - 提供依赖关系的优化方案。\n   - 指出组件复用的机会。\n\n请确保分析清晰易懂，并使用Mermaid图表来可视化项目结构和依赖关系。"
       }
     }
   },
@@ -68,7 +77,7 @@
     "Security Assessment Report": {
       "name": "Security Assessment Report",
       "singlePageAnalysis": {
-        "prompt": "Analyze security risks in this code file: \n1. Common vulnerabilities (SQL injection, XSS, etc.) \n2. Data security (sensitive data handling) \n3. Access control (permission issues) \nIf no obvious issues, state ‘No significant security risks found.’ Under 50 words."
+        "prompt": "Analyze security risks in this code file: \n1. Common vulnerabilities (SQL injection, XSS, etc.) \n2. Data security (sensitive data handling) \n3. Access control (permission issues) \nIf no obvious issues, state 'No significant security risks found.' Under 50 words."
       },
       "summaryAnalysis": {
         "prompt": "Based on security analysis, generate a Security Assessment Report: \n\n1. **Security Risk Overview** \n   - Risk level distribution (high, medium, low) \n   - Vulnerability type stats (bar chart) \n   - OWASP Top 10 comparison \n   - Overall security score \n\n2. **Vulnerability Details** \n   - Vulnerability descriptions \n   - Impact scope \n   - Exploit difficulty \n   - Severity level \n\n3. **Risk Assessment** \n   - CVSS scoring \n   - Attack vector analysis \n   - Threat model \n   - Risk exposure \n\n4. **Mitigation Plan** \n   - Emergency fix suggestions \n   - Long-term protection strategies \n   - Best practice guidelines \n   - Security hardening plan \n\n5. **Security Governance** \n   - Secure development process \n   - Code review checklist \n   - Continuous monitoring plan \n   - Incident response plan \n\nEnsure detailed content with specific security recommendations and measures."
@@ -77,7 +86,7 @@
     "API Documentation": {
       "name": "API Documentation",
       "singlePageAnalysis": {
-        "prompt": "Analyze this code file to extract API details: \n1. Endpoint path and method (GET/POST, etc.) \n2. Function overview \n3. Request parameters (name, type, required) \n4. Response format (field name, type) \n5. Error codes and meanings \nIf no API, state ‘No API endpoints found.’"
+        "prompt": "Analyze this code file to extract API details: \n1. Endpoint path and method (GET/POST, etc.) \n2. Function overview \n3. Request parameters (name, type, required) \n4. Response format (field name, type) \n5. Error codes and meanings \nIf no API, state 'No API endpoints found.'"
       },
       "summaryAnalysis": {
         "prompt": "Based on extracted API details, generate API Documentation: \n\n1. **API Endpoint List** \n   - Path \n   - Method (GET/POST, etc.) \n   - Function description \n   - Request parameters (table: name, type, required, default) \n   - Response data format (table: field name, type, description) \n\n2. **Request Examples** \n   - Provide curl commands or HTTP request samples for each API \n\n3. **Response Examples** \n   - Provide JSON response samples for each API \n\n4. **Error Handling** \n   - Error code list (table: code, meaning, resolution) \n\nEnsure a clear, developer-friendly structure."
@@ -90,6 +99,15 @@
       },
       "summaryAnalysis": {
         "prompt": "Based on user behavior analysis, generate a User Behavior Analysis Report: \n\n1. **User Behavior Flow** \n   - Display user behavior paths in the system (flowchart) \n   - Key function usage paths \n\n2. **User Pain Point Analysis** \n   - Function complexity analysis \n   - Interaction friction points \n   - User feedback (if available) \n\n3. **Optimization Suggestions** \n   - Function optimization ideas \n   - Process improvement suggestions \n   - User experience enhancements \n\nUse Mermaid diagrams and examples to support analysis, ensuring practical insights."
+      }
+    },
+    "Project Structure Analysis": {
+      "name": "Project Structure Analysis",
+      "singlePageAnalysis": {
+        "prompt": "Please analyze the role of this code file in the project:\n1. Briefly describe the main functions and responsibilities of this file.\n2. List other files or modules that this file depends on.\nPlease keep it concise, with no more than 100 words in total."
+      },
+      "summaryAnalysis": {
+        "prompt": "Based on the analysis of each file, generate a project structure analysis report:\n\n1. **Project Architecture Overview**\n   - Describe the main modules and components of the project.\n   - Provide a directory structure tree diagram.\n   - Explain the architectural design patterns used (e.g., MVC, MVVM).\n   - Use Mermaid diagrams to show project layering.\n\n2. **Module Dependency Analysis**\n   - Use Mermaid diagrams to show dependencies between modules.\n   - Briefly describe the responsibilities of each key module.\n\n3. **Code Organization Assessment**\n   - Analyze file distribution (by function, by module, etc.).\n   - Review naming convention compliance.\n   - Evaluate the rationality of code layering.\n\n4. **Project Structure Optimization Suggestions**\n   - Propose directory structure optimizations.\n   - Suggest module splitting or merging.\n   - Provide dependency optimization solutions.\n   - Identify component reuse opportunities.\n\nPlease ensure the analysis is clear and use Mermaid diagrams to visualize project structure and dependencies."
       }
     }
   },
@@ -137,6 +155,15 @@
       },
       "summaryAnalysis": {
         "prompt": "ユーザー行動分析情報に基づき、ユーザー行動分析レポートを作成してください：\n\n1. **ユーザー行動フロー**\n   - システム内のユーザー行動パスを表示（フローチャート）\n   - 主要機能使用パス\n\n2. **ユーザー課題分析**\n   - 機能の複雑さ分析\n   - インタラクションの不親切な点\n   - ユーザーフィードバック（ある場合）\n\n3. **最適化提案**\n   - 機能最適化案\n   - プロセス改善案\n   - ユーザー体験向上策\n\nMermaid図と具体例で分析を裏付け、実用的なレポートにしてください。"
+      }
+    },
+    "プロジェクト構造分析": {
+      "name": "プロジェクト構造分析",
+      "singlePageAnalysis": {
+        "prompt": "このコードファイルのプロジェクトにおける役割を分析してください：\n1. このファイルの主な機能と責任を簡潔に説明してください。\n2. このファイルが依存する他のファイルやモジュールを列挙してください。\n簡潔に保ち、合計100語以内でお願いします。"
+      },
+      "summaryAnalysis": {
+        "prompt": "各ファイルの分析に基づき、プロジェクト構造分析レポートを生成してください：\n\n1. **プロジェクトアーキテクチャ概要**\n   - プロジェクトの主要モジュールとコンポーネントを説明。\n   - ディレクトリ構造のツリー図を提供。\n   - 採用されているアーキテクチャパターン（MVC、MVVMなど）を説明。\n   - Mermaidダイアグラムを使用してプロジェクトの階層関係を表示。\n\n2. **モジュール依存関係分析**\n   - Mermaidダイアグラムを使用してモジュール間の依存関係を表示。\n   - 各主要モジュールの責任を簡潔に説明。\n\n3. **コード構成評価**\n   - ファイルの分布状況（機能別、モジュール別など）を分析。\n   - 命名規則の遵守状況を確認。\n   - コードの階層化の妥当性を評価。\n\n4. **プロジェクト構造の最適化提案**\n   - ディレクトリ構造の最適化を提案。\n   - モジュールの分割または統合を提案。\n   - 依存関係の最適化案を提供。\n   - コンポーネント再利用の機会を指摘。\n\n分析は明確で理解しやすいものとし、Mermaidダイアグラムを使用してプロジェクト構造と依存関係を視覚化してください。"
       }
     }
   }

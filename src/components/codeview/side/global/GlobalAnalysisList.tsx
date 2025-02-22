@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useGlobalAnalysisStore } from '@/store/useGlobalAnalysisStore';
 import { useModelStore } from '@/store/useModelStore';
+import { useFileStore } from '@/store/useFileStore';
 import { Button } from '@/components/ui/button';
 import { PlusCircle, PlayCircle, Pencil, Trash2, Box, User, Sparkles } from 'lucide-react';
 import { GlobalAnalysisConfigDialog } from './GlobalAnalysisConfigDialog';
@@ -14,7 +15,14 @@ export default function GlobalAnalysisList() {
   const { t } = useTranslation();
   const { analyses, deleteAnalysis } = useGlobalAnalysisStore();
   const { models } = useModelStore();
+  const { currentFolderPath } = useFileStore();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (currentFolderPath) {
+      useGlobalAnalysisStore.getState().loadProjectAnalyses(currentFolderPath);
+    }
+  }, [currentFolderPath]);
 
   return (
     <div className="space-y-2">

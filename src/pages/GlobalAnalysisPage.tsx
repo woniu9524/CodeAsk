@@ -10,7 +10,7 @@ import { useSearch } from '@tanstack/react-router';
 
 interface GlobalAnalysisData {
   globalAnalysis?: {
-    results?: Record<string, Omit<GlobalAnalysisResult, 'singlePageResults'>>;
+    results?: Record<string, GlobalAnalysisResult>;
   };
 }
 
@@ -34,13 +34,20 @@ export default function GlobalAnalysisPage() {
         const data: GlobalAnalysisData = JSON.parse(content);
 
         if (data.globalAnalysis?.results) {
-          const results = Object.values(data.globalAnalysis.results);
-          if (analysisId) {
-            const targetResult = results.find(r => r.analysisId === analysisId);
-            setSummary(targetResult?.summary || t("codeview.globalAnalysis.execute.noResults"));
+          if (analysisId && data.globalAnalysis.results[analysisId]) {
+            // 如果指定了analysisId，直接从results对象中获取
+            setSummary(data.globalAnalysis.results[analysisId].summary);
           } else {
-            const latestResult = results.sort((a, b) => b.timestamp - a.timestamp)[0];
-            setSummary(latestResult?.summary || t("codeview.globalAnalysis.execute.noResults"));
+            // 否则获取最新的分析结果
+            const results = Object.entries(data.globalAnalysis.results);
+            if (results.length > 0) {
+              const latestResult = results.reduce((latest, current) => {
+                return latest[1].timestamp > current[1].timestamp ? latest : current;
+              })[1];
+              setSummary(latestResult.summary);
+            } else {
+              setSummary(t("codeview.globalAnalysis.execute.noResults"));
+            }
           }
         } else {
           setSummary(t("codeview.globalAnalysis.execute.noData"));

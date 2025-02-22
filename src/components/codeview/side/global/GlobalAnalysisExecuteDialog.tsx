@@ -504,8 +504,9 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
 
         // 保存分析结果
         await saveAnalysisResult(analysisId, {
-          analysisId,
-          singlePageResults,
+          globalAnalysisName: analysisName,
+          singlePagePrompt: analysis.singlePageAnalysis.prompt,
+          summaryPrompt: analysis.summaryAnalysis.prompt,
           summary: summary
             .replace(/<think>[\s\S]*?<\/think>/g, '')
             .replace(/^```markdown([\s\S]*?)```$/, '$1')
