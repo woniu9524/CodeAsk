@@ -1,6 +1,23 @@
 {
     "update_logs": [
       {
+        "version": "1.0.4",
+        "release_date": "2025-02-23",
+        "changes": [
+          {
+            "type": "修复",
+            "description": "修复已知bug",
+            "color": "#FF9800"
+          },
+          {
+            "type": "新增",
+            "description": "新增全局分析功能",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://github.com/woniu9524/CodeAsk/releases"
+      },
+      {
         "version": "1.0.3",
         "release_date": "2025-02-14",
         "changes": [

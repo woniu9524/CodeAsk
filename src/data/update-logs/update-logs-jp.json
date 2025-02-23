@@ -1,6 +1,23 @@
 {
     "update_logs": [
       {
+        "version": "1.0.4",
+        "release_date": "2025-02-23",
+        "changes": [
+          {
+            "type": "バグ修正",
+            "description": "既知のバグを修正",
+            "color": "#FF9800"
+          },
+          {
+            "type": "新機能",
+            "description": "グローバル分析機能を追加",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://github.com/woniu9524/CodeAsk/releases"
+      },
+      {
         "version": "1.0.3",
         "release_date": "2025-02-14",
         "changes": [
