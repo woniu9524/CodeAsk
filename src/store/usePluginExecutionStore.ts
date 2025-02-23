@@ -41,100 +41,125 @@ interface PluginExecutionState {
   getPluginExecution: (pluginId: string) => PluginExecution | null;  // 获取插件执行记录
 }
 
+// 创建一个写入队列类来处理并发写入
+class WriteQueue {
+  private queue: Promise<void>;
+
+  constructor() {
+    this.queue = Promise.resolve();
+  }
+
+  enqueue<T>(task: () => Promise<T>): Promise<T> {
+    return new Promise((resolve, reject) => {
+      this.queue = this.queue
+        .then(() => task())
+        .then(resolve)
+        .catch(reject);
+    });
+  }
+}
+
 // 创建插件执行状态存储
-export const usePluginExecutionStore = create<PluginExecutionState>((set, get) => ({
-  // 初始状态
-  dataFilePath: null,
-  executions: {},
+export const usePluginExecutionStore = create<PluginExecutionState>((set, get) => {
+  // 创建写入队列实例
+  const writeQueue = new WriteQueue();
 
-  // 初始化数据文件方法
-  initializeDataFile: async (folderPath: string) => {
-    // 构建数据文件路径
-    const dataFilePath = join(folderPath, '.codeaskdata');
-    try {
-      // 尝试读取现有数据文件
-      const content = await readTextFile(dataFilePath);
-      const data = JSON.parse(content);
-      
-      // 设置状态：数据文件路径和执行记录
-      set({
-        dataFilePath,
-        executions: data.plugins || {}
-      });
-    } catch {
-      // 如果文件不存在或读取失败，创建新文件
-      await writeTextFile(dataFilePath, JSON.stringify({ plugins: {} }));
-      set({
-        dataFilePath,
-        executions: {}
-      });
-    }
-  },
+  return {
+    // 初始状态
+    dataFilePath: null,
+    executions: {},
 
-  // 保存插件执行记录方法
-  savePluginExecution: async (pluginId: string, execution: PluginExecution) => {
-    const { dataFilePath, executions } = get();
-    if (!dataFilePath) return;
+    // 初始化数据文件方法
+    initializeDataFile: async (folderPath: string) => {
+      // 构建数据文件路径
+      const dataFilePath = join(folderPath, '.codeaskdata');
+      try {
+        // 尝试读取现有数据文件
+        const content = await readTextFile(dataFilePath);
+        const data = JSON.parse(content);
+        
+        // 设置状态：数据文件路径和执行记录
+        set({
+          dataFilePath,
+          executions: data.plugins || {}
+        });
+      } catch {
+        // 如果文件不存在或读取失败，创建新文件
+        await writeTextFile(dataFilePath, JSON.stringify({ plugins: {} }));
+        set({
+          dataFilePath,
+          executions: {}
+        });
+      }
+    },
 
-    // 获取已存在的插件执行记录
-    const existingExecution = executions[pluginId];
-    
-    // 合并文件列表
-    let mergedFiles: PluginExecutionFile[] = [];
-    if (existingExecution) {
-      // 合并规则设置，保留现有规则
-      execution.rules = {
-        ...existingExecution.rules,
-        ...execution.rules
-      };
-      
-      // 合并文件列表
-      mergedFiles = [...existingExecution.files];
-      execution.files.forEach(newFile => {
-        const index = mergedFiles.findIndex(f => f.filename === newFile.filename);
-        if (index !== -1) {
-          // 如果文件已存在，更新它
-          mergedFiles[index] = newFile;
-        } else {
-          // 如果是新文件，添加到列表末尾
-          mergedFiles.push(newFile);
+    // 修改后的保存插件执行记录方法
+    savePluginExecution: async (pluginId: string, execution: PluginExecution) => {
+      return writeQueue.enqueue(async () => {
+        const { dataFilePath, executions } = get();
+        if (!dataFilePath) return;
+
+        // 获取已存在的插件执行记录
+        const existingExecution = executions[pluginId];
+        
+        // 合并文件列表
+        let mergedFiles: PluginExecutionFile[] = [];
+        if (existingExecution) {
+          // 合并规则设置，保留现有规则
+          execution.rules = {
+            ...existingExecution.rules,
+            ...execution.rules
+          };
+          
+          // 合并文件列表
+          mergedFiles = [...existingExecution.files];
+          execution.files.forEach(newFile => {
+            const index = mergedFiles.findIndex(f => f.filename === newFile.filename);
+            if (index !== -1) {
+              // 如果文件已存在，更新它
+              mergedFiles[index] = newFile;
+            } else {
+              // 如果是新文件，添加到列表末尾
+              mergedFiles.push(newFile);
+            }
+          });
+          
+          execution.files = mergedFiles;
+        }
+
+        // 创建新的执行记录映射
+        const newExecutions = {
+          ...executions,
+          [pluginId]: execution
+        };
+
+        try {
+          // 先读取现有的文件内容
+          const content = await readTextFile(dataFilePath);
+          const data = JSON.parse(content);
+
+          // 更新 plugins 部分，保留其他数据
+          await writeTextFile(
+            dataFilePath,
+            JSON.stringify({
+              ...data,
+              plugins: newExecutions
+            }, null, 2)
+          );
+
+          // 更新状态
+          set({ executions: newExecutions });
+        } catch (error) {
+          console.error('保存插件执行数据失败:', error);
+          throw error;
         }
       });
-      
-      execution.files = mergedFiles;
+    },
+
+    // 获取指定插件的执行记录方法
+    getPluginExecution: (pluginId: string) => {
+      const { executions } = get();
+      return executions[pluginId] || null;
     }
-
-    // 创建新的执行记录映射
-    const newExecutions = {
-      ...executions,
-      [pluginId]: execution
-    };
-
-    try {
-      // 先读取现有的文件内容
-      const content = await readTextFile(dataFilePath);
-      const data = JSON.parse(content);
-
-      // 更新 plugins 部分，保留其他数据
-      await writeTextFile(
-        dataFilePath,
-        JSON.stringify({
-          ...data,
-          plugins: newExecutions
-        }, null, 2)
-      );
-
-      // 更新状态
-      set({ executions: newExecutions });
-    } catch (error) {
-      console.error('保存插件执行数据失败:', error);
-      throw error;
-    }
-  },
-
-  // 获取指定插件的执行记录方法
-  getPluginExecution: (pluginId: string) => {
-    const { executions } = get();
-    return executions[pluginId] || null;
-  }
-})); 
+  };
+}); 

@@ -443,6 +443,7 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
             : JSON.stringify(response.content);
 
           result = result.replace(/<think>[\s\S]*?<\/think>/g, '');
+          result = result.trim();
           result = result.replace(/^```markdown([\s\S]*?)```$/, '$1');
           result = result.replace(/^```([\s\S]*?)```$/, '$1');
 
@@ -511,6 +512,7 @@ export function GlobalAnalysisExecuteDialog({ children, analysisId, analysisName
           summaryPrompt: analysis.summaryAnalysis.prompt,
           summary: summary
             .replace(/<think>[\s\S]*?<\/think>/g, '')
+            .trim()
             .replace(/^```markdown([\s\S]*?)```$/, '$1')
             .replace(/^```([\s\S]*?)```$/, '$1'),
           timestamp: Date.now()
