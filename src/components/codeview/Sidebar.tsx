@@ -66,7 +66,7 @@ export default function Sidebar({ className = "" }: SidebarProps) {
             // 为插件结果创建新标签
             const resultTabId = `plugin_result:${plugin.name}:${file.id}`;
             await openFile(resultTabId);
-            break; // 只打开第一个匹配的插件标签
+            continue
           }
         }
       }

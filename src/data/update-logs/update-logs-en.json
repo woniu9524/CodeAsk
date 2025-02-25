@@ -1,6 +1,23 @@
 {
     "update_logs": [
       {
+        "version": "1.0.4",
+        "release_date": "2025-02-23",
+        "changes": [
+          {
+            "type": "Bug Fix",
+            "description": "Fixed known bugs",
+            "color": "#FF9800"
+          },
+          {
+            "type": "New Feature",
+            "description": "Added global analysis functionality",
+            "color": "#2196F3"
+          }
+        ],
+        "download_link": "https://github.com/woniu9524/CodeAsk/releases"
+      },
+      {
         "version": "1.0.3",
         "release_date": "2025-02-14",
         "changes": [

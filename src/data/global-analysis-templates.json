@@ -6,7 +6,7 @@
         "prompt": "请分析此代码文件，提供以下要点：\n1. 核心功能和目的（一句话描述）\n2. 主要功能模块\n3. 输入输出及交互方式（简述）\n4. 关键技术依赖\n请保持简洁，总字数不超过100字。"
       },
       "summaryAnalysis": {
-        "prompt": "基于各文件的功能概要，撰写产品需求文档（PRD）：\n\n1. **产品概述**\n   - 背景与价值\n   - 目标用户\n   - 核心价值\n   - 市场定位\n\n2. **功能规格**\n   - 核心功能模块\n   - 功能架构图（Mermaid）\n   - 详细功能描述\n   - 功能优先级矩阵\n\n3. **用户场景**\n   - 用户画像\n   - 用户旅程地图\n   - 关键场景用例\n\n4. **技术架构**\n   - 系统架构图（Mermaid）\n   - 业务流程图\n   - 技术栈\n   - 外部依赖\n\n5. **接口规范**\n   - 集成方案\n   - 数据流转\n   - 关键接口定义\n\n请确保内容详细、结构清晰，并使用Mermaid图表增强可读性。"
+        "prompt": "基于各文件的功能概要，撰写产品需求文档（PRD）：\n\n1. **产品概述**\n   - 背景与价值\n   描述产品诞生的业务背景及其市场价值，例如解决的问题、满足的市场需求或带来的商业机会。避免涉及技术背景。\n   - 目标用户\n   明确产品的目标用户群体，包括他们的特征、需求和行为。\n   - 核心价值\n   突出产品的核心竞争力以及对用户的价值主张，例如提升效率、改善体验等。\n   - 市场定位\n   说明产品在市场中的定位，确保与功能需求直接相关，避免过于技术化。\n\n2. **功能规格**\n   - 核心功能模块\n   列出产品的核心功能模块，清晰划分功能边界。\n   - 功能架构图（Mermaid）\n   使用Mermaid图表展示功能模块之间的关系，直观呈现产品功能结构。\n   - 详细功能描述\n   对每个功能模块进行详细描述，包括功能的目的、输入、输出及预期行为，确保内容具体且可理解。\n   - 功能优先级矩阵\n   定义各功能的优先级（如必须、重要、次要），帮助团队明确开发顺序。\n\n3. **用户场景**\n   - 用户画像\n   描述目标用户的典型特征（如年龄、职业、习惯），帮助理解用户需求。\n   - 用户旅程地图\n   展示用户与产品的完整交互过程，从接触产品到完成目标的每一步。\n   - 关键场景用例\n   详细描述用户在特定场景下的使用流程，包括触发条件、操作步骤和预期结果。\n\n4. **业务流程**\n   - 业务流程图（Mermaid）\n   使用Mermaid图表展示业务流程，突出用户与系统之间的交互逻辑。\n   - 详细业务流程描述\n   文字描述业务流程的关键步骤，确保逻辑清晰且与功能需求一致。\n\n5. **接口与集成（可选）**\n   - 集成需求\n   如果产品需要与外部系统集成，简要说明集成目标和范围。\n   - 数据流转\n   描述业务层面的数据流转过程（如数据从哪里来，到哪里去），避免涉及技术实现细节。\n\n请确保内容详细、结构清晰，并使用Mermaid图表增强可读性。文档应以需求为导向，聚焦于用户体验和产品功能，避免过多技术细节。"
       }
     },
     "技术债务评估报告": {
@@ -21,7 +21,7 @@
     "安全评估报告": {
       "name": "安全评估报告",
       "singlePageAnalysis": {
-        "prompt": "请分析此代码文件的安全隐患：\n1. 常见漏洞（SQL注入、XSS等）\n2. 数据安全（敏感数据处理）\n3. 权限控制（访问控制问题）\n如无明显问题，回答‘未发现明显安全隐患’。总字数不超过50字。"
+        "prompt": "请分析此代码文件的安全隐患：\n1. 常见漏洞（SQL注入、XSS等）\n2. 数据安全（敏感数据处理）\n3. 权限控制（访问控制问题）\n如无明显问题，回答'未发现明显安全隐患'。总字数不超过50字。"
       },
       "summaryAnalysis": {
         "prompt": "基于安全分析结果，生成安全评估报告：\n\n1. **安全风险概览**\n   - 风险等级分布（高、中、低）\n   - 漏洞类型统计（柱状图）\n   - OWASP Top 10对照\n   - 整体安全评分\n\n2. **漏洞详情**\n   - 漏洞描述\n   - 影响范围\n   - 利用难度\n   - 危害程度\n\n3. **风险评估**\n   - CVSS评分\n   - 攻击向量分析\n   - 威胁模型\n   - 风险暴露面\n\n4. **修复方案**\n   - 应急修复建议\n   - 长期防护策略\n   - 最佳实践指南\n   - 安全加固方案\n\n5. **安全治理**\n   - 安全开发流程\n   - 代码审查要点\n   - 持续监控方案\n   - 应急响应预案\n\n请确保报告内容详实，提供具体的安全建议和措施。"
@@ -30,7 +30,7 @@
     "API文档": {
       "name": "API文档",
       "singlePageAnalysis": {
-        "prompt": "请分析此代码文件，提取API接口信息：\n1. 接口路径和方法（GET/POST等）\n2. 功能简述\n3. 请求参数（名称、类型、是否必需）\n4. 响应格式（字段名称、类型）\n5. 错误码及含义\n如无API，直接回答‘未发现API接口’。"
+        "prompt": "请分析此代码文件，提取API接口信息：\n1. 接口路径和方法（GET/POST等）\n2. 功能简述\n3. 请求参数（名称、类型、是否必需）\n4. 响应格式（字段名称、类型）\n5. 错误码及含义\n如无API，直接回答'未发现API接口'。"
       },
       "summaryAnalysis": {
         "prompt": "基于提取的API接口信息，生成API文档：\n\n1. **API接口列表**\n   - 路径\n   - 方法（GET/POST等）\n   - 功能描述\n   - 请求参数（表格：名称、类型、是否必需、默认值）\n   - 响应数据格式（表格：字段名称、类型、说明）\n\n2. **请求示例**\n   - 为每个API提供curl命令或HTTP请求示例\n\n3. **响应示例**\n   - 为每个API提供JSON响应示例\n\n4. **错误处理**\n   - 错误码列表（表格：错误码、含义、应对方式）\n\n请确保文档结构清晰，易于开发人员理解和使用。"
@@ -42,7 +42,16 @@
         "prompt": "请分析此代码文件，关注用户行为：\n1. 功能简述\n2. 用户操作路径（简述）\n3. 潜在痛点（1-2个）\n4. 优化建议（简要）\n请保持简洁，总字数不超过100字。"
       },
       "summaryAnalysis": {
-        "prompt": "基于用户行为分析信息，生成用户行为分析报告：\n\n1. **用户行为流程**\n   - 展示用户在系统中的行为路径（流程图）\n   - 关键功能使用路径\n\n2. **用户痛点分析**\n   - 分析功能复杂性\n   - 交互不友好之处\n   - 用户反馈（如果有）\n\n3. **优化建议**\n   - 功能优化建议\n   - 流程改进建议\n   - 用户体验提升措施\n\n请使用Mermaid图表和具体示例支持分析，确保报告具有实用性。"
+        "prompt": "基于代码的行为描述，生成用户行为分析报告：\n\n1. **用户行为流程**\n   - 用户行为路径（流程图）\n   使用Mermaid流程图展示用户在系统中的典型行为路径，突出关键操作和决策点，帮助读者直观理解用户如何与系统交互。\n   - 关键功能使用路径\n   详细描述用户在使用核心功能时的具体步骤和交互流程，确保内容简洁明了，易于理解，反映用户的实际操作习惯。\n\n2. **用户痛点分析**\n   - 功能复杂性分析\n   识别用户在使用功能时遇到的复杂或困惑点，例如操作步骤繁琐、功能入口难以找到等，并分析其对用户的影响。\n   - 交互不友好之处\n   指出用户界面或交互设计中的问题，如导航不直观、按钮位置不合理或反馈不及时等，具体说明问题表现。\n\n3. **优化建议**\n   - 功能优化建议\n   针对识别的痛点，提出具体的功能改进措施，例如简化操作步骤、优化功能布局或增加提示信息。\n   - 流程改进建议\n   建议优化用户行为流程，例如减少冗余步骤或调整操作顺序，以提升整体流畅度和效率。\n   - 用户体验提升措施\n   提供改善用户体验的具体方法，如优化界面设计、增强操作反馈或提供个性化引导，确保建议实用且可执行。"
+      }
+    },
+    "项目结构分析报告": {
+      "name": "项目结构分析报告",
+      "singlePageAnalysis": {
+        "prompt": "请分析此代码文件在项目中的角色：\n1. 简述该文件的主要功能和职责。\n2. 列出该文件依赖的其他文件或模块。\n请保持简洁，总字数不超过100字。"
+      },
+      "summaryAnalysis": {
+        "prompt": "基于各文件分析，生成项目结构分析报告：\n\n1. **项目架构概览**\n   - 描述项目的主要模块和组件。\n   - 提供项目的目录结构树形图。\n   - 说明项目采用的架构设计模式（如MVC、MVVM等）。\n   - 使用Mermaid图表展示项目的分层关系。\n\n2. **模块依赖分析**\n   - 使用Mermaid图表展示模块间的依赖关系。\n   - 简述每个关键模块的职责。\n\n3. **代码组织评估**\n   - 统计文件的分布情况（如按功能、按模块等）。\n   - 分析命名规范的遵循情况。\n   - 评估代码的分层是否合理。\n\n4. **项目结构优化建议**\n   - 提出目录结构的优化建议。\n   - 建议模块的拆分或合并。\n   - 提供依赖关系的优化方案。\n   - 指出组件复用的机会。\n\n请确保分析清晰易懂，并使用Mermaid图表来可视化项目结构和依赖关系。"
       }
     }
   },
@@ -53,7 +62,7 @@
         "prompt": "Please analyze this code file and provide: \n1. Core function and purpose (one sentence) \n2. Main functional modules \n3. Input/output and interaction (brief) \n4. Key technical dependencies \nKeep it concise, under 100 words."
       },
       "summaryAnalysis": {
-        "prompt": "Based on the functional summaries of each file, create a Product Requirements Document (PRD): \n\n1. **Product Overview** \n   - Background and value \n   - Target users \n   - Core value \n   - Market positioning \n\n2. **Functional Specifications** \n   - Core functional modules \n   - Functional architecture diagram (Mermaid) \n   - Detailed function descriptions \n   - Function priority matrix \n\n3. **User Scenarios** \n   - User personas \n   - User journey map \n   - Key scenario use cases \n\n4. **Technical Architecture** \n   - System architecture diagram (Mermaid) \n   - Business process diagram \n   - Tech stack \n   - External dependencies \n\n5. **Interface Specifications** \n   - Integration plan \n   - Data flow \n   - Key interface definitions \n\nEnsure detailed content, clear structure, and use Mermaid diagrams for readability."
+        "prompt": "Based on the functional summaries of each file, create a Product Requirements Document (PRD):\n\n1. **Product Overview**\n   - Background and Value\n   Describe the business background and market value of the product, such as problems solved, market needs met, or business opportunities created. Avoid technical background.\n   - Target Users\n   Clearly define the target user groups, including their characteristics, needs, and behaviors.\n   - Core Value\n   Highlight the product's core competitiveness and value proposition to users, such as improving efficiency, enhancing experience, etc.\n   - Market Positioning\n   Explain the product's market positioning, ensuring direct relevance to functional requirements while avoiding technical details.\n\n2. **Functional Specifications**\n   - Core Functional Modules\n   List the product's core functional modules with clear functional boundaries.\n   - Functional Architecture Diagram (Mermaid)\n   Use Mermaid diagrams to show relationships between functional modules, visually presenting the product's functional structure.\n   - Detailed Function Descriptions\n   Provide detailed descriptions of each functional module, including purpose, inputs, outputs, and expected behavior, ensuring content is specific and understandable.\n   - Function Priority Matrix\n   Define priorities for each function (must-have, important, secondary) to help teams determine development order.\n\n3. **User Scenarios**\n   - User Personas\n   Describe typical characteristics of target users (age, occupation, habits) to help understand user needs.\n   - User Journey Map\n   Show the complete user interaction process, from first contact with the product to goal completion.\n   - Key Scenario Use Cases\n   Detail user workflows in specific scenarios, including triggers, operation steps, and expected outcomes.\n\n4. **Business Process**\n   - Business Process Diagram (Mermaid)\n   Use Mermaid diagrams to show business processes, highlighting user-system interaction logic.\n   - Detailed Process Description\n   Describe key steps in business processes, ensuring clear logic and alignment with functional requirements.\n\n5. **Integration and Interfaces (Optional)**\n   - Integration Requirements\n   If product requires external system integration, briefly explain integration goals and scope.\n   - Data Flow\n   Describe business-level data flow processes (where data comes from and goes to), avoiding technical implementation details.\n\nEnsure detailed content, clear structure, and use Mermaid diagrams for readability. Document should be requirements-driven, focusing on user experience and product functionality while avoiding excessive technical details."
       }
     },
     "Technical Debt Assessment Report": {
@@ -68,7 +77,7 @@
     "Security Assessment Report": {
       "name": "Security Assessment Report",
       "singlePageAnalysis": {
-        "prompt": "Analyze security risks in this code file: \n1. Common vulnerabilities (SQL injection, XSS, etc.) \n2. Data security (sensitive data handling) \n3. Access control (permission issues) \nIf no obvious issues, state ‘No significant security risks found.’ Under 50 words."
+        "prompt": "Analyze security risks in this code file: \n1. Common vulnerabilities (SQL injection, XSS, etc.) \n2. Data security (sensitive data handling) \n3. Access control (permission issues) \nIf no obvious issues, state 'No significant security risks found.' Under 50 words."
       },
       "summaryAnalysis": {
         "prompt": "Based on security analysis, generate a Security Assessment Report: \n\n1. **Security Risk Overview** \n   - Risk level distribution (high, medium, low) \n   - Vulnerability type stats (bar chart) \n   - OWASP Top 10 comparison \n   - Overall security score \n\n2. **Vulnerability Details** \n   - Vulnerability descriptions \n   - Impact scope \n   - Exploit difficulty \n   - Severity level \n\n3. **Risk Assessment** \n   - CVSS scoring \n   - Attack vector analysis \n   - Threat model \n   - Risk exposure \n\n4. **Mitigation Plan** \n   - Emergency fix suggestions \n   - Long-term protection strategies \n   - Best practice guidelines \n   - Security hardening plan \n\n5. **Security Governance** \n   - Secure development process \n   - Code review checklist \n   - Continuous monitoring plan \n   - Incident response plan \n\nEnsure detailed content with specific security recommendations and measures."
@@ -77,7 +86,7 @@
     "API Documentation": {
       "name": "API Documentation",
       "singlePageAnalysis": {
-        "prompt": "Analyze this code file to extract API details: \n1. Endpoint path and method (GET/POST, etc.) \n2. Function overview \n3. Request parameters (name, type, required) \n4. Response format (field name, type) \n5. Error codes and meanings \nIf no API, state ‘No API endpoints found.’"
+        "prompt": "Analyze this code file to extract API details: \n1. Endpoint path and method (GET/POST, etc.) \n2. Function overview \n3. Request parameters (name, type, required) \n4. Response format (field name, type) \n5. Error codes and meanings \nIf no API, state 'No API endpoints found.'"
       },
       "summaryAnalysis": {
         "prompt": "Based on extracted API details, generate API Documentation: \n\n1. **API Endpoint List** \n   - Path \n   - Method (GET/POST, etc.) \n   - Function description \n   - Request parameters (table: name, type, required, default) \n   - Response data format (table: field name, type, description) \n\n2. **Request Examples** \n   - Provide curl commands or HTTP request samples for each API \n\n3. **Response Examples** \n   - Provide JSON response samples for each API \n\n4. **Error Handling** \n   - Error code list (table: code, meaning, resolution) \n\nEnsure a clear, developer-friendly structure."
@@ -89,7 +98,16 @@
         "prompt": "Analyze this code file for user behavior: \n1. Function overview \n2. User operation path (brief) \n3. Potential pain points (1-2) \n4. Optimization suggestions (brief) \nKeep it concise, under 100 words."
       },
       "summaryAnalysis": {
-        "prompt": "Based on user behavior analysis, generate a User Behavior Analysis Report: \n\n1. **User Behavior Flow** \n   - Display user behavior paths in the system (flowchart) \n   - Key function usage paths \n\n2. **User Pain Point Analysis** \n   - Function complexity analysis \n   - Interaction friction points \n   - User feedback (if available) \n\n3. **Optimization Suggestions** \n   - Function optimization ideas \n   - Process improvement suggestions \n   - User experience enhancements \n\nUse Mermaid diagrams and examples to support analysis, ensuring practical insights."
+        "prompt": "Based on code behavior descriptions, generate a User Behavior Analysis Report:\n\n1. **User Behavior Flow**\n   - User Behavior Paths (Flowchart)\n   Use Mermaid flowcharts to show typical user behavior paths in the system, highlighting key operations and decision points to help readers intuitively understand how users interact with the system.\n   - Key Function Usage Paths\n   Provide detailed descriptions of specific steps and interaction processes when users use core functions, ensuring content is concise and easy to understand, reflecting actual user operation habits.\n\n2. **User Pain Point Analysis**\n   - Function Complexity Analysis\n   Identify complex or confusing points users encounter when using functions, such as complicated operation steps or hard-to-find function entries, and analyze their impact on users.\n   - Interaction Unfriendly Points\n   Point out issues in user interface or interaction design, such as unintuitive navigation, unreasonable button placement, or delayed feedback, with specific problem descriptions.\n\n3. **Optimization Suggestions**\n   - Function Optimization Suggestions\n   Propose specific functional improvements for identified pain points, such as simplifying operation steps, optimizing function layout, or adding prompt information.\n   - Process Improvement Suggestions\n   Suggest optimizations for user behavior flow, such as reducing redundant steps or adjusting operation sequence, to enhance overall smoothness and efficiency.\n   - User Experience Enhancement Measures\n   Provide specific methods to improve user experience, such as optimizing interface design, enhancing operation feedback, or providing personalized guidance, ensuring suggestions are practical and executable."
+      }
+    },
+    "Project Structure Analysis Report": {
+      "name": "Project Structure Analysis Report",
+      "singlePageAnalysis": {
+        "prompt": "Please analyze the role of this code file in the project:\n1. Briefly describe the main functions and responsibilities of this file.\n2. List other files or modules that this file depends on.\nPlease keep it concise, with no more than 100 words in total."
+      },
+      "summaryAnalysis": {
+        "prompt": "Based on the analysis of each file, generate a project structure analysis report:\n\n1. **Project Architecture Overview**\n   - Describe the main modules and components of the project.\n   - Provide a directory structure tree diagram.\n   - Explain the architectural design patterns used (e.g., MVC, MVVM).\n   - Use Mermaid diagrams to show project layering.\n\n2. **Module Dependency Analysis**\n   - Use Mermaid diagrams to show dependencies between modules.\n   - Briefly describe the responsibilities of each key module.\n\n3. **Code Organization Assessment**\n   - Analyze file distribution (by function, by module, etc.).\n   - Review naming convention compliance.\n   - Evaluate the rationality of code layering.\n\n4. **Project Structure Optimization Suggestions**\n   - Propose directory structure optimizations.\n   - Suggest module splitting or merging.\n   - Provide dependency optimization solutions.\n   - Identify component reuse opportunities.\n\nPlease ensure the analysis is clear and use Mermaid diagrams to visualize project structure and dependencies."
       }
     }
   },
@@ -100,7 +118,7 @@
         "prompt": "このコードファイルを分析し、以下を提供してください：\n1. コア機能と目的（1文で）\n2. 主な機能モジュール\n3. 入出力とインタラクション（簡述）\n4. 主要技術依存関係\n簡潔に、100語以内で。"
       },
       "summaryAnalysis": {
-        "prompt": "各ファイルの機能概要に基づき、製品要件ドキュメント（PRD）を作成してください：\n\n1. **製品概要**\n   - 背景と価値\n   - ターゲットユーザー\n   - コア価値\n   - 市場ポジショニング\n\n2. **機能仕様**\n   - コア機能モジュール\n   - 機能アーキテクチャ図（Mermaid）\n   - 詳細機能説明\n   - 機能優先度マトリクス\n\n3. **ユーザーシナリオ**\n   - ユーザーペルソナ\n   - ユーザー旅程マップ\n   - 主要シナリオユースケース\n\n4. **技術アーキテクチャ**\n   - システムアーキテクチャ図（Mermaid）\n   - 業務プロセス図\n   - 技術スタック\n   - 外部依存関係\n\n5. **インターフェース仕様**\n   - 統合計画\n   - データフロー\n   - 主要インターフェース定義\n\n内容は詳細かつ構造化し、Mermaid図で可読性を高めてください。"
+        "prompt": "各ファイルの機能概要に基づき、製品要件ドキュメント（PRD）を作成してください：\n\n1. **製品概要**\n   - 背景と価値\n   製品が生まれたビジネス背景と市場価値を説明し、解決する問題、満たす市場ニーズ、もたらすビジネス機会などを記述。技術的背景は避ける。\n   - ターゲットユーザー\n   製品のターゲットユーザーグループを明確にし、その特徴、ニーズ、行動を含める。\n   - コア価値\n   製品の核となる競争力とユーザーへの価値提案を強調（効率向上、体験改善など）。\n   - 市場ポジショニング\n   製品の市場での位置づけを説明し、機能要件との直接的な関連性を確保。技術的な詳細は避ける。\n\n2. **機能仕様**\n   - コア機能モジュール\n   製品のコア機能モジュールを列挙し、機能の境界を明確に区分。\n   - 機能アーキテクチャ図（Mermaid）\n   Mermaid図を使用して機能モジュール間の関係を示し、製品の機能構造を視覚的に表現。\n   - 詳細機能説明\n   各機能モジュールの目的、入力、出力、期待される動作を含む詳細な説明。内容は具体的で理解しやすいものに。\n   - 機能優先度マトリクス\n   各機能の優先度（必須、重要、二次的）を定義し、開発順序の決定を支援。\n\n3. **ユーザーシナリオ**\n   - ユーザーペルソナ\n   ターゲットユーザーの典型的な特徴（年齢、職業、習慣など）を記述し、ユーザーニーズの理解を促進。\n   - ユーザージャーニーマップ\n   製品との最初の接触から目標達成までの完全な相互作用プロセスを表示。\n   - 主要シナリオユースケース\n   特定のシナリオにおけるユーザーの利用フロー（トリガー、操作手順、期待される結果）を詳細に記述。\n\n4. **業務プロセス**\n   - 業務プロセス図（Mermaid）\n   Mermaid図を使用して業務プロセスを表示し、ユーザーとシステム間の相互作用ロジックを強調。\n   - 詳細プロセス説明\n   業務プロセスの重要なステップを文章で説明し、ロジックの明確さと機能要件との一貫性を確保。\n\n5. **インターフェースと統合（オプション）**\n   - 統合要件\n   外部システムとの統合が必要な場合、統合の目的と範囲を簡潔に説明。\n   - データフロー\n   ビジネスレベルでのデータフロープロセス（データの出所と行先）を説明し、技術的な実装詳細は避ける。\n\n内容は詳細かつ構造化し、Mermaid図で可読性を高めてください。文書は要件主導で、ユーザー体験と製品機能に焦点を当て、過度な技術的詳細は避けてください。"
       }
     },
     "技術的負債評価レポート": {
@@ -136,7 +154,16 @@
         "prompt": "このコードファイルを分析し、ユーザー行動に注目してください：\n1. 機能概要\n2. ユーザー操作パス（簡述）\n3. 潜在的課題（1-2点）\n4. 最適化提案（簡要）\n簡潔に、100語以内で。"
       },
       "summaryAnalysis": {
-        "prompt": "ユーザー行動分析情報に基づき、ユーザー行動分析レポートを作成してください：\n\n1. **ユーザー行動フロー**\n   - システム内のユーザー行動パスを表示（フローチャート）\n   - 主要機能使用パス\n\n2. **ユーザー課題分析**\n   - 機能の複雑さ分析\n   - インタラクションの不親切な点\n   - ユーザーフィードバック（ある場合）\n\n3. **最適化提案**\n   - 機能最適化案\n   - プロセス改善案\n   - ユーザー体験向上策\n\nMermaid図と具体例で分析を裏付け、実用的なレポートにしてください。"
+        "prompt": "コードの行動記述に基づき、ユーザー行動分析レポートを作成してください：\n\n1. **ユーザー行動フロー**\n   - ユーザー行動パス（フローチャート）\n   Mermaidフローチャートを使用してシステム内の典型的なユーザー行動パスを表示し、重要な操作と判断ポイントを強調して、ユーザーがシステムとどのように相互作用するかを直感的に理解できるようにします。\n   - 主要機能使用パス\n   ユーザーがコア機能を使用する際の具体的なステップと相互作用プロセスを詳細に説明し、内容を簡潔で分かりやすく、実際のユーザーの操作習慣を反映させます。\n\n2. **ユーザー課題分析**\n   - 機能の複雑さ分析\n   ユーザーが機能を使用する際に遭遇する複雑さや混乱ポイントを特定します（例：操作手順が煩雑、機能の入り口が見つけにくいなど）、それらがユーザーに与える影響を分析します。\n   - インタラクションの不親切な点\n   ユーザーインターフェースや相互作用設計の問題点を指摘します（ナビゲーションが直感的でない、ボタンの配置が不適切、フィードバックが遅いなど）、具体的な問題の現れ方を説明します。\n\n3. **最適化提案**\n   - 機能最適化提案\n   特定された課題に対して具体的な機能改善措置を提案します（操作手順の簡素化、機能レイアウトの最適化、ガイド情報の追加など）。\n   - プロセス改善提案\n   ユーザー行動フローの最適化を提案します（冗長なステップの削減や操作順序の調整など）、全体的な流れと効率性を向上させます。\n   - ユーザー体験向上策\n   ユーザー体験を改善するための具体的な方法を提供します（インターフェースデザインの最適化、操作フィードバックの強化、パーソナライズされたガイダンスの提供など）、提案が実用的で実行可能であることを確保します。"
+      }
+    },
+    "プロジェクト構造分析レポート": {
+      "name": "プロジェクト構造分析レポート",
+      "singlePageAnalysis": {
+        "prompt": "このコードファイルのプロジェクトにおける役割を分析してください：\n1. このファイルの主な機能と責任を簡潔に説明してください。\n2. このファイルが依存する他のファイルやモジュールを列挙してください。\n簡潔に保ち、合計100語以内でお願いします。"
+      },
+      "summaryAnalysis": {
+        "prompt": "各ファイルの分析に基づき、プロジェクト構造分析レポートを生成してください：\n\n1. **プロジェクトアーキテクチャ概要**\n   - プロジェクトの主要モジュールとコンポーネントを説明。\n   - ディレクトリ構造のツリー図を提供。\n   - 採用されているアーキテクチャパターン（MVC、MVVMなど）を説明。\n   - Mermaidダイアグラムを使用してプロジェクトの階層関係を表示。\n\n2. **モジュール依存関係分析**\n   - Mermaidダイアグラムを使用してモジュール間の依存関係を表示。\n   - 各主要モジュールの責任を簡潔に説明。\n\n3. **コード構成評価**\n   - ファイルの分布状況（機能別、モジュール別など）を分析。\n   - 命名規則の遵守状況を確認。\n   - コードの階層化の妥当性を評価。\n\n4. **プロジェクト構造の最適化提案**\n   - ディレクトリ構造の最適化を提案。\n   - モジュールの分割または統合を提案。\n   - 依存関係の最適化案を提供。\n   - コンポーネント再利用の機会を指摘。\n\n分析は明確で理解しやすいものとし、Mermaidダイアグラムを使用してプロジェクト構造と依存関係を視覚化してください。"
       }
     }
   }
