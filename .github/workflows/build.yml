@@ -30,7 +30,7 @@ jobs:
 
       - name: Clean install artifacts
         run: |
-          rm -rf node_modules package-lock.json || true
+          rm -rf node_modules || true
 
       - name: Install dependencies
         run: |
