@@ -116,7 +116,8 @@ i18n.use(initReactI18next).init({
             preview: "Preview",
             sharePrompt: "Have a better prompt idea? Share it now!",
             addSuccess: "Added to plugin list successfully! Go check it out!",
-            fetchError: "Failed to fetch prompt templates"
+            fetchError: "Failed to fetch prompt templates",
+            usingLocalTemplates: "Using local templates"
           },
           search: {
             placeholder: "Search in files and plugin results...",
@@ -306,7 +307,8 @@ i18n.use(initReactI18next).init({
             preview: "预览",
             sharePrompt: "有更好的提示词创意？快来分享吧！",
             addSuccess: "已添加到插件列表中！快去看看吧！",
-            fetchError: "获取提示词模板失败"
+            fetchError: "获取提示词模板失败",
+            usingLocalTemplates: "使用本地模板"
           },
           search: {
             placeholder: "搜索文件和插件结果...",
@@ -497,7 +499,8 @@ i18n.use(initReactI18next).init({
             preview: "プレビュー",
             sharePrompt: "より良いプロンプトのアイデアがありますか？共有してください！",
             addSuccess: "プラグインリストに追加されました！確認してみましょう！",
-            fetchError: "プロンプトテンプレートの取得に失敗しました"
+            fetchError: "プロンプトテンプレートの取得に失敗しました",
+            usingLocalTemplates: "ローカルテンプレートを使用しています"
           },
           search: {
             placeholder: "ファイルとプラグイン結果を検索...",

@@ -9,6 +9,7 @@ import { useTranslation } from "react-i18next";
 import { ExternalLink, Eye, Loader2 } from "lucide-react";
 import { openExternalUrl } from "@/helpers/window_helpers";
 import { toast } from "sonner";
+import localTemplates from "@/data/prompt-templates.json";
 
 interface PromptTemplate {
   name: string;
@@ -42,8 +43,9 @@ export function PromptTemplatesDialog({ children }: PromptTemplatesDialogProps) 
         const data = await response.json();
         setTemplates(data);
       } catch (error) {
-        console.error('Error fetching templates:', error);
-        toast.error(t('codeview.promptTemplates.fetchError'));
+        console.warn('Error fetching templates from GitHub, using local templates instead:', error);
+        setTemplates(localTemplates as Record<string, Record<string, PromptTemplate>>);
+        toast.info(t('codeview.promptTemplates.usingLocalTemplates'));
       } finally {
         setIsLoading(false);
       }

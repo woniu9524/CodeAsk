@@ -7,6 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useGlobalAnalysisStore } from "@/store/useGlobalAnalysisStore";
 import { useTranslation } from "react-i18next";
 import { Eye } from "lucide-react";
+import localTemplates from "@/data/global-analysis-templates.json";
 
 const TEMPLATE_URL = 'https://raw.githubusercontent.com/woniu9524/CodeAsk/main/src/data/global-analysis-templates.json';
 
@@ -52,7 +53,9 @@ export function GlobalAnalysisPromptTemplatesDialog({ children }: GlobalAnalysis
         const data: TemplateData = await response.json();
         setTemplates(data);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load templates');
+        console.warn('Failed to fetch templates from GitHub, using local templates instead:', err);
+        setError(null);
+        setTemplates(localTemplates as TemplateData);
       } finally {
         setIsLoading(false);
       }
