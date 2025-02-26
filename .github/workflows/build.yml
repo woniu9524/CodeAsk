@@ -20,7 +20,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
 
       - name: Install Linux Dependencies
         if: runner.os == 'Linux'
@@ -34,8 +33,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          npm install --legacy-peer-deps
-          npm install @rollup/rollup-${{ runner.os == 'macOS' && 'darwin' || 'linux' }}-${{ runner.arch }} --legacy-peer-deps --no-save || true
+          npm install --no-package-lock --legacy-peer-deps
+          npm install @rollup/rollup-${{ runner.os == 'macOS' && 'darwin' || 'linux' }}-${{ runner.arch }} --legacy-peer-deps --no-save --no-package-lock || true
 
       - name: Build and Make
         run: |
