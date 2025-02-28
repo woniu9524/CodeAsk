@@ -92,4 +92,4 @@ const config: ForgeConfig = {
   ],
 };
 
-module.exports = config;
+export default config;
