@@ -31,23 +31,6 @@
 
 CodeAsk 旨在解决开发者在面对复杂代码库时理解和维护困难的问题。通过利用大语言模型 (LLM) 的能力，CodeAsk 能够快速分析代码，检测潜在的安全漏洞，评估代码质量，并提供代码梳理与分析报告，从而提高开发效率，降低维护成本，并提升代码质量。
 
-## 🎥 预览
-
-<div align="center">
-<table>
-<tr>
-<td align="center" width="50%">
-<img src="images/demo-zh-01.png" alt="CodeAsk Demo 1" width="100%"/>
-</td>
-<td align="center" width="50%">
-<img src="images/demo-zh-02.png" alt="CodeAsk Demo 2" width="100%"/>
-</td>
-</tr>
-</table>
-
-📺 [观看演示视频](https://bilibili.com/video/BV1eQNzeuEEb/)
-</div>
-
 ## 🌟 核心功能
 
 - **代码分析**：使用大模型分析代码库，生成代码分析报告。
@@ -57,6 +40,21 @@ CodeAsk 旨在解决开发者在面对复杂代码库时理解和维护困难的
 - **插件管理**：管理代码查看器插件，允许用户启用/禁用、执行、编辑和删除插件。
 - **模型管理**：管理语言模型，允许用户添加、编辑、删除和启用/禁用模型。
 - **分屏显示**：支持分屏显示不同的代码文件或插件 Markdown。
+- **IntelliJ插件**：支持在JetBrains的IDE中使用 CodeAsk插件查看代码分析。
+
+## 🎥 预览
+
+<div align="center">
+
+📺 [观看演示视频](https://bilibili.com/video/BV1eQNzeuEEb/)
+
+<img src="images/demo-zh-01.png" alt="单页分析" width="80%"/>
+
+<img src="images/demo-zh-02.png" alt="全局分析" width="80%"/>
+
+<img src="images/demo-zh-03.jpg" alt="IntelliJ插件" width="80%"/>
+
+</div>
 
 ## 🚀 快速开始
 
@@ -125,6 +123,12 @@ npm run start
 - 其他人收到后，放在代码的同一位置
 - 在 CodeAsk 中打开文件夹即可查看分析结果
 
+## 2.9 在 JetBrains IDE 中使用
+- 前置条件：已经在CodeAsk中生成分析数据(`.codeaskdata`)
+- 安装插件：搜索 CodeAsk，安装插件(暂时还没有上架) 或则手动下载插件：https://github.com/woniu9524/codeask-jb
+- 安装完成后，在右侧面板点击图标即可
+  
+
 ## ❓ 常见问题
 
 ### 模型配置注意点
@@ -155,6 +159,7 @@ npm run start
 
 ## 🚧 后续开发计划
 - ✅ 整个项目分析梳理
+- ✅ IntelliJ 插件
 - 🚧 VS Code 插件
 
 ## ⚠️ 特别说明
