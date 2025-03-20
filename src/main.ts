@@ -51,11 +51,9 @@ async function installExtensions() {
 
 app.whenReady().then(createWindow).then(installExtensions);
 
-//osX only
+
 app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
     app.quit();
-  }
 });
 
 app.on("activate", () => {
