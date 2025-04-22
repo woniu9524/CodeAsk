@@ -44,6 +44,8 @@ i18n.use(initReactI18next).init({
             cancelSplit: "Cancel Split"
           },
           noOpenedFile: "No opened file",
+          export: "Export",
+          exportMarkdown: "Export as Markdown",
           model: {
             title: "Model List",
             add: "Add Model",
@@ -235,6 +237,8 @@ i18n.use(initReactI18next).init({
             cancelSplit: "取消分屏"
           },
           noOpenedFile: "没有打开的文件",
+          export: "导出",
+          exportMarkdown: "导出为Markdown",
           model: {
             title: "模型列表",
             add: "添加模型",
@@ -426,6 +430,8 @@ i18n.use(initReactI18next).init({
             cancelSplit: "分割解除"
           },
           noOpenedFile: "開いているファイルがありません",
+          export: "エクスポート",
+          exportMarkdown: "Markdownとしてエクスポート",
           model: {
             title: "モデル一覧",
             add: "モデルを追加",

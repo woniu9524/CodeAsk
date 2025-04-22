@@ -6,20 +6,23 @@ import Prism from 'prismjs';
 import type { Components } from 'react-markdown';
 import mermaid from 'mermaid';
 import { MermaidBlock } from './MermaidBlock';
-import { Copy } from 'lucide-react';
+import { Copy, Download } from 'lucide-react';
+import { useTranslation } from "react-i18next";
 
 // MarkdownPreview 组件的属性接口
 interface MarkdownPreviewProps {
   content: string; // 要渲染的 Markdown 内容
+  fileName?: string; // 可选的文件名，用于导出
 }
 
-export function MarkdownPreview({ content }: MarkdownPreviewProps) {
+export function MarkdownPreview({ content, fileName }: MarkdownPreviewProps) {
   // 主题状态，默认为深色主题
   const [theme, setTheme] = React.useState<'dark' | 'light' | 'system'>('dark');
   
   // 记录已复制的代码块，用于显示复制成功状态
   const [copiedCode, setCopiedCode] = useState<string | null>(null);
   const mermaidInitialized = useRef(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     // 异步加载主题配置
@@ -82,6 +85,33 @@ export function MarkdownPreview({ content }: MarkdownPreviewProps) {
     setCopiedCode(code);
     // 2秒后清除复制状态
     setTimeout(() => setCopiedCode(null), 2000);
+  };
+
+  // 处理导出Markdown功能
+  const handleExportMarkdown = () => {
+    try {
+      // 创建Blob对象
+      const markdownBlob = new Blob([content], { type: 'text/markdown;charset=utf-8' });
+      
+      // 创建下载链接
+      const downloadLink = document.createElement('a');
+      downloadLink.href = URL.createObjectURL(markdownBlob);
+      
+      // 设置下载文件名
+      const timestamp = new Date().toISOString().replace(/[:.]/g, '-').substring(0, 19);
+      const defaultName = `codeask-summary-${timestamp}.md`;
+      downloadLink.download = fileName || defaultName;
+      
+      // 触发下载
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      
+      // 清理
+      document.body.removeChild(downloadLink);
+      URL.revokeObjectURL(downloadLink.href);
+    } catch (error) {
+      console.error('导出Markdown失败:', error);
+    }
   };
 
   // 自定义 Markdown 渲染组件
@@ -258,7 +288,17 @@ export function MarkdownPreview({ content }: MarkdownPreviewProps) {
 
   // 渲染 Markdown 内容
   return (
-    <div className="h-full p-6 overflow-auto bg-background">
+    <div className="h-full p-6 overflow-auto bg-background relative">
+      {/* 导出按钮 */}
+      <button
+        onClick={handleExportMarkdown}
+        className="absolute top-2 right-2 p-2 rounded-md bg-primary/10 hover:bg-primary/20 text-primary transition-colors flex items-center gap-1.5"
+        title={t('codeview.exportMarkdown')}
+      >
+        <Download size={16} />
+        <span className="text-sm font-medium">{t('codeview.export')}</span>
+      </button>
+
       <div className="max-w-4xl mx-auto prose prose-invert prose-headings:font-bold prose-a:text-primary prose-pre:bg-muted prose-pre:border prose-pre:border-border">
         <ReactMarkdown 
           remarkPlugins={[remarkGfm]} // 启用 GitHub Flavored Markdown 扩展
@@ -269,4 +309,4 @@ export function MarkdownPreview({ content }: MarkdownPreviewProps) {
       </div>
     </div>
   );
-} 
+}
