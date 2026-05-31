@@ -1,3 +1,7 @@
+### 这个项目已经没有存在的意义了，此时此刻，任何一个agent工具都可以轻易完成这个需求，此时此刻，我们可能不太需要阅读代码。
+
+---
+
 <div align="center">
   <img src="images/icons/logo.png" alt="CodeAsk Logo" width="200"/>
   <h3>CodeAsk - 代码分析工具</h3>
